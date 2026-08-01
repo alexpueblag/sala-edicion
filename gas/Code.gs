@@ -21,7 +21,7 @@
  */
 
 var TZ = 'America/Hermosillo';
-var PORTAL = 'https://yodesarrollo.github.io/sala-edicion/';
+var PORTAL = 'https://alexpueblag.github.io/sala-edicion/';  // al migrar: yodesarrollo.github.io/sala-edicion
 var CORREO = 'direccion@aurumarquitectos.com';
 
 var PESTANAS = {
