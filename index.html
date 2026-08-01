@@ -54,6 +54,49 @@ main{max-width:1560px;margin:0 auto;padding:28px 30px calc(var(--pie) + 40px)}
 .ftit h2{margin:0;font-size:24px;font-weight:400}
 .ftit .mini{font-size:13px;color:var(--guia);margin-left:auto}
 
+/* parrilla: el mes en una pared */
+.parrilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:9px}
+.celda{background:var(--papel);border:1px solid var(--linea);border-radius:8px;
+  padding:10px 12px;min-height:86px;display:flex;flex-direction:column;gap:5px}
+.celda.vacia{border-style:dashed;opacity:.55}
+.celda .dia{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--guia)}
+.celda .pieza{font-size:13px;line-height:1.3}
+.celda.vacia .pieza{color:var(--guia);font-style:italic}
+.gate{margin-top:auto;align-self:flex-start;border-radius:999px;padding:2px 10px;
+  font-size:11px;border:1px solid var(--linea2);color:var(--gris);white-space:nowrap}
+.gate.g0{border-color:#5b5648;color:#b3ab99}
+.gate.g1{border-color:#7d6a3f;color:#d9c08a}
+.gate.g2{border-color:var(--oro);color:var(--oro-cl)}
+.gate.g3{border-color:var(--si);color:var(--si-cl)}
+.gate.pub{background:var(--teal);border-color:var(--teal);color:#e8efe9}
+.gate.med{background:#26221a;border-color:var(--oro);color:var(--oro-cl)}
+.gate.roja{border-color:var(--no);color:#e0968b}
+.celda.detenida{border-color:#4a2a26}
+
+/* control y retadores */
+.control{display:flex;gap:16px;flex-wrap:wrap;background:var(--papel);
+  border:1px solid var(--linea);border-radius:10px;padding:18px 20px;margin-bottom:18px}
+.control .quien{min-width:220px;flex:1}
+.control .corona{font-size:11px;letter-spacing:2.6px;text-transform:uppercase;color:var(--oro)}
+.control h4{margin:4px 0 2px;font-size:21px;font-weight:400}
+.control .desde{font-size:12px;color:var(--guia)}
+.control .cifras{display:flex;gap:22px;align-items:center}
+.control .cifra .n{font-size:24px;font-family:Georgia,serif;color:var(--oro-cl)}
+.control .cifra .t{font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:var(--guia)}
+.control.vacante{border-style:dashed}
+.control.vacante h4{color:var(--gris);font-style:italic}
+
+/* propuestas de texto (ejes y guiones): compuertas baratas */
+.opciones{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.opcion{border:1px solid var(--linea);border-radius:7px;background:var(--papel);
+  display:flex;flex-direction:column;transition:border-color .13s,box-shadow .13s}
+.opcion.si{border-color:var(--si);box-shadow:0 0 0 1px var(--si)}
+.opcion.no{border-color:#4a2a26;opacity:.5}
+.opcion .cuerpo{padding:16px 18px;flex:1}
+.opcion .letra{font-size:11px;letter-spacing:2.4px;color:var(--oro);text-transform:uppercase}
+.opcion h4{margin:8px 0 8px;font-size:19px;font-weight:400;line-height:1.3}
+.opcion p{margin:0;font-size:14px;color:var(--gris);line-height:1.55}
+
 /* retro de ayer */
 .retro{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
 .tarj{background:var(--papel);border:1px solid var(--linea);border-radius:9px;padding:15px 17px}
@@ -179,6 +222,8 @@ dialog input{width:100%;background:var(--tinta);color:var(--crema);border:1px so
       <span class="pastilla">aprobadas <b id="ns">0</b></span>
       <span class="pastilla">tiradas <b id="nn">0</b></span>
       <span class="pastilla" id="pp">sin marcar <b id="np">0</b></span>
+      <span class="pastilla" id="colchon" title="Piezas listas sin publicar — la meta son 2">colchón <b>0/2</b></span>
+      <span class="pastilla" id="andon" title="Piezas con más de 2 días detenidas en el mismo estado" style="display:none">detenidas <b>0</b></span>
       <span class="pastilla lig" id="con" title="Conexión con el Sheet">⚙︎</span>
     </div>
   </div>
@@ -229,6 +274,9 @@ function ficha(pid){
 }
 const prop=pid=>(D.propuestas||[]).find(x=>x.id===pid);
 const estado=(pid,i)=>ficha(pid).laminas[i]||null;
+// una propuesta trae laminas (imagenes) u opciones (texto: ejes y guiones);
+// las marcas usan el mismo arreglo por indice en los dos casos
+const items=p=>p.laminas&&p.laminas.length?p.laminas:(p.opciones||[]);
 
 function guardarLocal(){
   sucio=true; pintarPie();
@@ -239,28 +287,32 @@ function refrescar(pid,i){
   const f=document.querySelector(`section.prop[data-p="${CSS.escape(pid)}"] figure[data-i="${i}"]`);
   if(!f) return;
   const e=estado(pid,i);
-  f.className=e||'';
-  f.querySelector('.b-si').className='b-si'+(e==='si'?' on-si':'');
-  f.querySelector('.b-no').className='b-no'+(e==='no'?' on-no':'');
+  f.classList.toggle('si',e==='si');       // toggle y no className=: las opciones
+  f.classList.toggle('no',e==='no');       // de texto llevan su propia clase base
+  f.querySelector('.b-si').classList.toggle('on-si',e==='si');
+  f.querySelector('.b-no').classList.toggle('on-no',e==='no');
 }
 function refrescarProp(pid){
   const p=prop(pid); if(!p) return;
-  p.laminas.forEach((_,i)=>refrescar(pid,i));
+  items(p).forEach((_,i)=>refrescar(pid,i));
   const sec=document.querySelector(`section.prop[data-p="${CSS.escape(pid)}"]`);
   const c=sec&&sec.querySelector('.cuenta');
-  if(c){ const d=p.laminas.filter((_,i)=>estado(pid,i)).length;
-    c.innerHTML=`<b>${d}</b> de ${p.laminas.length} decididas`;
-    c.classList.toggle('viva', d===p.laminas.length); }
+  if(c){ const n=items(p).length, d=items(p).filter((_,i)=>estado(pid,i)).length;
+    c.innerHTML=`<b>${d}</b> de ${n} decididas`;
+    c.classList.toggle('viva', d===n); }
 }
 function marcar(pid,i,v){
-  const p=ficha(pid);
+  const p=ficha(pid), pr=prop(pid);
   p.laminas[i]=p.laminas[i]===v?null:v;
-  refrescar(pid,i); refrescarProp(pid); cuenta(); guardarLocal();
+  // un EJE se escoge, no se colecciona: palomear una opcion des-palomea las demas
+  if(pr&&pr.tipo==='eje'&&v==='si'&&p.laminas[i]==='si')
+    items(pr).forEach((_,j)=>{ if(j!==i&&p.laminas[j]==='si') p.laminas[j]=null });
+  refrescarProp(pid); cuenta(); guardarLocal();
 }
 function todas(pid,v){
   const p=prop(pid); if(!p) return;
   const antes=[...ficha(pid).laminas];
-  ficha(pid).laminas=p.laminas.map(()=>v);
+  ficha(pid).laminas=items(p).map(()=>v);
   refrescarProp(pid); cuenta(); guardarLocal();
   mostrarDeshacer(v===null?'Marcas quitadas':(v==='si'?'Propuesta aprobada':'Propuesta tirada'),
     ()=>{ ficha(pid).laminas=antes; refrescarProp(pid); cuenta(); guardarLocal() });
@@ -276,12 +328,22 @@ function mostrarDeshacer(txt,fn){
 }
 function cuenta(){
   let s=0,n=0,t=0;
-  for(const p of D.propuestas||[]) p.laminas.forEach((_,i)=>{
+  for(const p of D.propuestas||[]) items(p).forEach((_,i)=>{
     t++; const e=estado(p.id,i); if(e==='si')s++; else if(e==='no')n++;
   });
   $('#ns').textContent=s; $('#nn').textContent=n; $('#np').textContent=t-s-n;
   $('#pp').classList.toggle('viva', t>0 && t-s-n===0);
   document.title=(t-s-n)>0?`Sala de Edición · ${t-s-n} sin marcar`:`Sala de Edición · ${dia(fecha)}`;
+  // colchon: piezas con video listo sin publicar · andon: >2 dias detenidas
+  const pr=D.produccion||[], hoyMs=new Date((fecha||'')+'T12:00:00').getTime();
+  const col=pr.filter(x=>x.estado==='video').length;
+  const det=pr.filter(x=>x.estado!=='publicada'&&x.estado!=='medida'&&x.fecha&&
+    (hoyMs-new Date(x.fecha+'T12:00:00').getTime())/864e5>=2).length;
+  $('#colchon').innerHTML=`colchón <b>${col}/2</b>`;
+  $('#colchon').classList.toggle('viva',col>=2);
+  $('#andon').style.display=det?'':'none';
+  if(det){ $('#andon').innerHTML=`detenidas <b>${det}</b>`; $('#andon').style.borderColor='var(--no)';
+    $('#andon').style.color='#e0968b' }
   pintarPie();
 }
 function pintarPie(){
@@ -309,6 +371,26 @@ function pintar(){
       </div></section>`;
   }
 
+  // PARRILLA — el mes en una pared: cada hueco con su pieza y su compuerta
+  const GN={g0:'G0 · eje',g1:'G1 · guion',g2:'G2 · láminas',g3:'G3 · video',
+            pub:'publicada',med:'medida',rehacer:'en rehechura'};
+  const pa=D.parrilla||[];
+  if(pa.length){
+    const hoyMs=new Date((D.fecha||'')+'T12:00:00').getTime();
+    h+=`<section class="franja"><div class="ftit"><span class="kick">Parrilla</span>
+      <h2 class="serif">Las próximas semanas, de un vistazo</h2>
+      <span class="mini">${pa.filter(x=>!x.pieza).length} hueco(s) por llenar</span></div>
+      <div class="parrilla">${pa.map(c=>{
+        const det=c.pieza&&c.gate!=='pub'&&c.gate!=='med'&&c.desde&&
+          (hoyMs-new Date(c.desde+'T12:00:00').getTime())/864e5>=2;
+        return `<div class="celda ${c.pieza?'':'vacia'} ${det?'detenida':''}">
+          <span class="dia">${esc(new Date(c.fecha+'T12:00:00').toLocaleDateString('es-MX',{weekday:'short',day:'numeric',month:'short'}))}</span>
+          <span class="pieza">${esc(c.pieza||'hueco — se llena con un formato probado')}</span>
+          ${c.pieza?`<span class="gate ${esc(c.gate)} ${det?'roja':''}">${GN[c.gate]||esc(c.gate)}${det?' · detenida':''}</span>`:''}
+        </div>`}).join('')}
+      </div></section>`;
+  }
+
   // HOY — lo que se revisa
   h+=`<section class="franja"><div class="ftit"><span class="kick">Hoy</span>
     <h2 class="serif">Para tu revisión</h2>
@@ -319,22 +401,38 @@ function pintar(){
   }else{
     const tot=D.propuestas.length;
     h+=D.propuestas.map((p,k)=>{
-      const dn=p.laminas.filter((_,i)=>estado(p.id,i)).length;
+      const its=items(p), dn=its.filter((_,i)=>estado(p.id,i)).length;
+      const esTexto=!!(p.opciones&&p.opciones.length);
+      const GDES={eje:'Compuerta G0 · escoge UN eje — tres líneas hoy ahorran catorce láminas mañana',
+                  guion:'Compuerta G1 · el guion: apruébalo antes de gastar una sola imagen'};
       return `
       <section class="prop" data-p="${esc(p.id)}">
         <div class="cab">
           <div>
-            <span class="kick">Propuesta ${k+1} de ${tot} · ${p.laminas.length} láminas · ${p.video?'con video':'sin video todavía'}</span>
+            <span class="kick">${esTexto?(GDES[p.tipo]||'Propuesta de texto'):`Propuesta ${k+1} de ${tot} · ${its.length} láminas · ${p.video?'con video':'sin video todavía'}`}</span>
             <h3 class="serif">${esc((p.titulo||'').replace(/^Pub\s*\d+\s*[-–]\s*/i,''))}</h3>
           </div>
-          <span class="pastilla cuenta ${dn===p.laminas.length?'viva':''}"><b>${dn}</b> de ${p.laminas.length} decididas</span>
+          <span class="pastilla cuenta ${dn===its.length?'viva':''}"><b>${dn}</b> de ${its.length} decididas</span>
           <div class="acciones">
-            <button data-todas="si">Aprobar todas</button>
+            ${p.tipo==='eje'?'':'<button data-todas="si">Aprobar todas</button>'}
             <button class="menor" data-todas="null">Quitar marcas</button>
             <button class="destruye" data-todas="no">Tirar todas</button>
           </div>
         </div>
-        <div class="tira">${p.laminas.map((l,i)=>{
+        ${esTexto?`<div class="opciones">${p.opciones.map((o,i)=>{
+          const e=estado(p.id,i);
+          return `<figure class="opcion ${e||''}" data-i="${i}">
+            <div class="cuerpo">
+              <span class="letra">Opción ${String.fromCharCode(65+i)}</span>
+              <h4 class="serif">${esc(o.titulo)}</h4>
+              <p>${esc(o.texto)}</p>
+            </div>
+            <div class="mando">
+              <button class="b-si${e==='si'?' on-si':''}" data-v="si" aria-label="Escoger opción ${String.fromCharCode(65+i)}">✓</button>
+              <button class="b-no${e==='no'?' on-no':''}" data-v="no" aria-label="Descartar opción ${String.fromCharCode(65+i)}">✕</button>
+            </div></figure>`}).join('')}
+        </div>`
+        :`<div class="tira">${p.laminas.map((l,i)=>{
           const e=estado(p.id,i);
           return `<figure class="${e||''}" data-i="${i}">
             <div class="lienzo" title="Ver en grande">
@@ -347,7 +445,7 @@ function pintar(){
               <button class="b-no${e==='no'?' on-no':''}" data-v="no"
                 title="Tirar — pícale otra vez para quitar la marca" aria-label="Tirar lámina ${i+1}">✕</button>
             </div></figure>`}).join('')}
-        </div>
+        </div>`}
         ${p.video?`<span class="eti">El video</span>
           <video src="${esc(p.video)}" controls preload="metadata" playsinline></video>`:''}
         <span class="eti">Qué cambio en esta propuesta</span>
@@ -363,6 +461,24 @@ function pintar(){
   h+=`<section class="franja"><div class="ftit"><span class="kick">Producción</span>
     <h2 class="serif">Lo que va en camino y lo que ya salió</h2>
     <span class="mini">${pr.length} pieza(s)</span></div>`;
+
+  // EL CONTROL — la pieza campeona; toda pieza nueva es un retador que debe vencerla
+  const c=D.control;
+  h+= c&&c.pieza
+    ? `<div class="control"><div class="quien">
+        <span class="corona">El control vigente</span>
+        <h4 class="serif">${esc(c.pieza)}</h4>
+        <span class="desde">campeona desde ${esc(c.desde||'')} · ${esc(c.formula||'')}</span>
+      </div><div class="cifras">
+        <div class="cifra"><div class="n">${esc(String(c.alcance??'—'))}</div><div class="t">alcance</div></div>
+        <div class="cifra"><div class="n">${esc(String(c.clics??'—'))}</div><div class="t">clics a la liga</div></div>
+        <div class="cifra"><div class="n">${esc(String(c.leads??'—'))}</div><div class="t">leads</div></div>
+      </div></div>`
+    : `<div class="control vacante"><div class="quien">
+        <span class="corona">El control · vacante</span>
+        <h4 class="serif">Todavía nadie se corona</h4>
+        <span class="desde">${esc((c&&c.nota)||'La primera pieza que traiga leads medidos se vuelve el control, y toda pieza nueva tendrá que vencerla con números.')}</span>
+      </div></div>`;
   h+= pr.length ? `<table><thead><tr><th>Pieza</th><th>Estado</th><th>Última novedad</th><th>Fecha</th></tr></thead>
     <tbody>${pr.map(x=>`<tr>
       <td>${esc(x.pieza)}</td>

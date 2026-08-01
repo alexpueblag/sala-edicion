@@ -26,8 +26,10 @@ var CORREO = 'direccion@aurumarquitectos.com';
 
 var PESTANAS = {
   CONFIG:     ['clave', 'valor'],
-  PROPUESTAS: ['fecha', 'prop_id', 'titulo', 'laminas_json', 'video', 'estado'],
+  PROPUESTAS: ['fecha', 'prop_id', 'titulo', 'tipo', 'laminas_json', 'opciones_json', 'video', 'estado'],
   DECISIONES: ['guardado', 'fecha', 'prop_id', 'lamina', 'marca', 'nota_propuesta', 'nota_dia'],
+  PARRILLA:   ['fecha', 'pieza', 'gate', 'desde'],
+  CONTROL:    ['pieza', 'desde', 'formula', 'alcance', 'clics', 'leads', 'nota'],
   PRODUCCION: ['fecha', 'pieza', 'estado', 'detalle', 'enlace'],
   BITACORA:   ['fecha_hora', 'evento', 'detalle']
 };
@@ -91,8 +93,11 @@ function doGet(e) {
   var f = /^\d{4}-\d{2}-\d{2}$/.test(p.f || '') ? p.f : hoy();
   var props = filas('PROPUESTAS').filter(function (x) { return fechaDe(x.fecha) === f; })
     .map(function (x) {
-      var lam; try { lam = JSON.parse(x.laminas_json); } catch (err) { lam = []; }
-      return { id: String(x.prop_id), titulo: String(x.titulo), laminas: lam,
+      var lam, opc;
+      try { lam = JSON.parse(x.laminas_json); } catch (err) { lam = []; }
+      try { opc = JSON.parse(x.opciones_json); } catch (err) { opc = []; }
+      return { id: String(x.prop_id), titulo: String(x.titulo),
+               tipo: String(x.tipo || 'laminas'), laminas: lam, opciones: opc,
                video: String(x.video || '') || null };
     });
 
@@ -131,9 +136,23 @@ function doGet(e) {
     return { hora: String(b.fecha_hora).slice(11, 16), evento: String(b.evento) };
   });
 
+  // parrilla: solo de hoy en adelante (5 semanas) · control: la ultima fila coronada
+  var lim = Utilities.formatDate(new Date(new Date(f + 'T12:00:00').getTime() + 35 * 864e5), TZ, 'yyyy-MM-dd');
+  var parr = filas('PARRILLA').filter(function (x) {
+    var d = fechaDe(x.fecha); return d >= f && d <= lim;
+  }).map(function (x) {
+    return { fecha: fechaDe(x.fecha), pieza: String(x.pieza || ''),
+             gate: String(x.gate || ''), desde: x.desde ? fechaDe(x.desde) : '' };
+  }).sort(function (a, b) { return a.fecha < b.fecha ? -1 : 1; });
+  var ctrl = filas('CONTROL').pop() || null;
+
   return json({
     fecha: f, dias: Object.keys(dias).sort(), propuestas: props, decisiones: dec,
-    retro: r, produccion: filas('PRODUCCION').reverse().slice(0, 30), bitacora: bit
+    retro: r, parrilla: parr, control: ctrl,
+    produccion: filas('PRODUCCION').reverse().slice(0, 30).map(function (x) {
+      x.fecha = fechaDe(x.fecha); return x;
+    }),
+    bitacora: bit
   });
 }
 
@@ -161,10 +180,21 @@ function doPost(e) {
   if (d.accion === 'proponer') {          // la Mac sube las propuestas del día
     var hp = hoja('PROPUESTAS');
     (d.propuestas || []).forEach(function (p) {
-      hp.appendRow([d.fecha || hoy(), p.id, p.titulo, JSON.stringify(p.laminas || []),
+      hp.appendRow([d.fecha || hoy(), p.id, p.titulo, p.tipo || 'laminas',
+                    JSON.stringify(p.laminas || []), JSON.stringify(p.opciones || []),
                     p.video || '', 'en revisión']);
     });
     bitacora('Propuestas del día montadas', (d.propuestas || []).length + ' propuesta(s)');
+    return json({ ok: true });
+  }
+
+  if (d.accion === 'parrilla') {          // la Mac actualiza el hueco de una fecha
+    var hpa = hoja('PARRILLA'), datos = hpa.getDataRange().getValues(), fila = -1;
+    for (var i = 1; i < datos.length; i++)
+      if (fechaDe(datos[i][0]) === d.dia) { fila = i + 1; break; }
+    var v = [d.dia, d.pieza || '', d.gate || '', d.desde || hoy()];
+    if (fila > 0) hpa.getRange(fila, 1, 1, 4).setValues([v]); else hpa.appendRow(v);
+    bitacora('Parrilla: ' + d.dia + ' → ' + (d.pieza || 'hueco') + ' (' + (d.gate || '—') + ')');
     return json({ ok: true });
   }
 
