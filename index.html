@@ -3,11 +3,12 @@
 <title>Sala de Edición · Yo Desarrollo</title>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <style>
+/* ══ Sala de Edición v3 — la espec consensuada de la mesa (piso 8.5, cero vetos) ══
+   Umbral → Turno (overlay) → Firma → Cierre → la Mesa. Fintech Editorial intacto. */
 :root{
   --tinta:#0a0a0c; --papel:#101014; --linea:#22222a; --linea2:#2e2e38;
   --oro:#c2a06b; --oro-cl:#debc7e; --crema:#f4f1ec; --gris:#8a867e; --guia:#78736b;
   --si:#3f7d62; --si-cl:#57a582; --no:#a3453a; --teal:#15514c;
-  --pie:calc(78px + env(safe-area-inset-bottom));
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -15,555 +16,617 @@ body{margin:0;background:var(--tinta);color:var(--crema);
   font:16px/1.55 -apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
   -webkit-font-smoothing:antialiased}
 .serif{font-family:"Playfair Display","Iowan Old Style",Georgia,serif}
-a{color:var(--oro-cl)}
-
-header{position:sticky;top:0;z-index:30;background:rgba(10,10,12,.95);
-  backdrop-filter:blur(14px);border-bottom:1px solid var(--linea)}
-.barra{max-width:1560px;margin:0 auto;padding:16px 30px;display:flex;
-  align-items:center;gap:18px;flex-wrap:wrap}
-h1{margin:0;font-size:25px;font-weight:400;line-height:1.15}
-h1 em{color:var(--oro-cl);font-style:italic}
-.guia{font-size:13px;color:var(--guia);margin:3px 0 0}
-select{font:inherit;font-size:11px;letter-spacing:2.2px;text-transform:uppercase;
-  background:transparent;color:var(--gris);border:0;padding:5px 4px;cursor:pointer}
-select:focus{outline:1px solid var(--linea2);border-radius:6px}
-.marcador{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.pastilla{border:1px solid var(--linea);border-radius:999px;padding:5px 13px;
-  color:var(--gris);font-size:13px;white-space:nowrap}
-.pastilla b{color:var(--crema);font-weight:600}
-.pastilla.viva{border-color:var(--oro);color:var(--oro-cl)}
-.pastilla.lig{border-style:dashed;cursor:pointer}
-
-button{font:inherit;cursor:pointer;border:1px solid var(--linea2);
-  background:transparent;color:var(--crema);border-radius:8px;padding:9px 16px;
-  transition:.13s;min-height:40px}
+button{font:inherit;cursor:pointer;border:1px solid var(--linea2);background:transparent;
+  color:var(--crema);border-radius:9px;padding:10px 16px;transition:.13s;min-height:44px}
 button:hover{border-color:var(--oro)}
 button:focus-visible{outline:2px solid var(--oro);outline-offset:2px}
-.destruye{color:#c98c83}
-.destruye:hover{border-color:var(--no);background:rgba(163,69,58,.14)}
 .menor{color:var(--gris);border-color:transparent}
 .menor:hover{color:var(--crema);border-color:var(--linea2)}
-
-main{max-width:1560px;margin:0 auto;padding:28px 30px calc(var(--pie) + 40px)}
-
-/* ---- franjas ---- */
-.franja{margin:0 0 46px}
-.ftit{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--linea);
-  padding-bottom:10px;margin-bottom:18px}
-.ftit .kick{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--oro)}
-.ftit h2{margin:0;font-size:24px;font-weight:400}
-.ftit .mini{font-size:13px;color:var(--guia);margin-left:auto}
-
-/* parrilla: el mes en una pared */
-.parrilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:9px}
-.celda{background:var(--papel);border:1px solid var(--linea);border-radius:8px;
-  padding:10px 12px;min-height:86px;display:flex;flex-direction:column;gap:5px}
-.celda.vacia{border-style:dashed;opacity:.55}
-.celda .dia{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--guia)}
-.celda .pieza{font-size:13px;line-height:1.3}
-.celda.vacia .pieza{color:var(--guia);font-style:italic}
-.gate{margin-top:auto;align-self:flex-start;border-radius:999px;padding:2px 10px;
-  font-size:11px;border:1px solid var(--linea2);color:var(--gris);white-space:nowrap}
-.gate.g0{border-color:#5b5648;color:#b3ab99}
-.gate.g1{border-color:#7d6a3f;color:#d9c08a}
-.gate.g2{border-color:var(--oro);color:var(--oro-cl)}
-.gate.g3{border-color:var(--si);color:var(--si-cl)}
-.gate.pub{background:var(--teal);border-color:var(--teal);color:#e8efe9}
-.gate.med{background:#26221a;border-color:var(--oro);color:var(--oro-cl)}
-.gate.roja{border-color:var(--no);color:#e0968b}
-.celda.detenida{border-color:#4a2a26}
-
-/* control y retadores */
-.control{display:flex;gap:16px;flex-wrap:wrap;background:var(--papel);
-  border:1px solid var(--linea);border-radius:10px;padding:18px 20px;margin-bottom:18px}
-.control .quien{min-width:220px;flex:1}
-.control .corona{font-size:11px;letter-spacing:2.6px;text-transform:uppercase;color:var(--oro)}
-.control h4{margin:4px 0 2px;font-size:21px;font-weight:400}
-.control .desde{font-size:12px;color:var(--guia)}
-.control .cifras{display:flex;gap:22px;align-items:center}
-.control .cifra .n{font-size:24px;font-family:Georgia,serif;color:var(--oro-cl)}
-.control .cifra .t{font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:var(--guia)}
-.control.vacante{border-style:dashed}
-.control.vacante h4{color:var(--gris);font-style:italic}
-
-/* propuestas de texto (ejes y guiones): compuertas baratas */
-.opciones{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.opcion{border:1px solid var(--linea);border-radius:7px;background:var(--papel);
-  display:flex;flex-direction:column;transition:border-color .13s,box-shadow .13s}
-.opcion.si{border-color:var(--si);box-shadow:0 0 0 1px var(--si)}
-.opcion.no{border-color:#4a2a26;opacity:.5}
-.opcion .cuerpo{padding:16px 18px;flex:1}
-.opcion .letra{font-size:11px;letter-spacing:2.4px;color:var(--oro);text-transform:uppercase}
-.opcion h4{margin:8px 0 8px;font-size:19px;font-weight:400;line-height:1.3}
-.opcion p{margin:0;font-size:14px;color:var(--gris);line-height:1.55}
-
-/* retro de ayer */
-.retro{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
-.tarj{background:var(--papel);border:1px solid var(--linea);border-radius:9px;padding:15px 17px}
-.tarj .n{font-size:26px;font-family:Georgia,serif;color:var(--oro-cl);line-height:1.1}
-.tarj .t{font-size:13px;color:var(--gris);margin-top:3px}
-.tarj.nota-d{grid-column:1/-1}
-.tarj.nota-d .t{color:var(--crema);font-size:14px;font-style:italic}
-
-/* propuestas de hoy */
-.prop{margin-bottom:44px}
-.cab{display:flex;align-items:flex-end;gap:16px;padding-bottom:12px;
-  border-bottom:1px solid var(--linea);margin-bottom:18px;flex-wrap:wrap}
-.cab h3{margin:0;font-size:25px;font-weight:400;line-height:1.15}
-.kick{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--oro);
-  display:block;margin-bottom:6px}
-.acciones{margin-left:auto;display:flex;gap:7px;flex-wrap:wrap}
-.tira{display:grid;grid-template-columns:repeat(auto-fill,minmax(198px,1fr));gap:16px}
-figure{margin:0;border-radius:7px;overflow:hidden;background:var(--papel);
-  border:1px solid var(--linea);transition:border-color .13s,box-shadow .13s}
-figure.si{border-color:var(--si);box-shadow:0 0 0 1px var(--si)}
-figure.no{border-color:#4a2a26}
-.lienzo{position:relative;background:#0d0d11;cursor:zoom-in}
-figure img{display:block;width:100%;aspect-ratio:4/5;object-fit:contain;
-  transition:opacity .13s,filter .13s}
-figure.no img{opacity:.3;filter:grayscale(1)}
-.num{position:absolute;top:8px;left:9px;font-size:10px;letter-spacing:1.8px;
-  color:var(--crema);background:rgba(0,0,0,.62);padding:3px 7px;border-radius:4px}
-.mando{display:flex;gap:1px;background:var(--linea);border-top:1px solid var(--linea)}
-.mando button{flex:1;border:0;border-radius:0;padding:0;min-height:46px;font-size:17px;
-  background:var(--papel);color:var(--gris)}
-.mando button:hover{background:#191921;color:var(--crema)}
-.mando button.on-si{background:var(--si);color:#fff}
-.mando button.on-no{background:var(--no);color:#fff}
-textarea.nota{width:100%;margin-top:14px;background:var(--papel);color:var(--crema);
-  border:1px solid var(--linea);border-radius:8px;padding:12px 14px;font:inherit;
-  font-size:15px;resize:vertical;min-height:56px;display:block}
-textarea.nota:focus{outline:0;border-color:var(--oro)}
+.destruye{color:#c98c83}
+.destruye:hover{border-color:var(--no);background:rgba(163,69,58,.14)}
+.dorado{background:var(--oro);color:#17130c;border-color:var(--oro);font-weight:600}
+.dorado:hover{background:var(--oro-cl);border-color:var(--oro-cl)}
+.kick{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--oro)}
 ::placeholder{color:var(--guia)}
-.eti{font-size:11px;letter-spacing:2.6px;text-transform:uppercase;color:var(--oro);
-  display:block;margin:16px 0 8px}
-video{width:100%;max-width:340px;border-radius:7px;border:1px solid var(--linea);
-  display:block;background:#000}
 
-/* producción */
-table{width:100%;border-collapse:collapse;font-size:14px}
-th{font-size:11px;letter-spacing:2.4px;text-transform:uppercase;color:var(--guia);
-  text-align:left;font-weight:500;padding:8px 12px;border-bottom:1px solid var(--linea)}
-td{padding:11px 12px;border-bottom:1px solid var(--linea);vertical-align:top}
-.estado{display:inline-block;border-radius:999px;padding:3px 12px;font-size:12px;
-  border:1px solid var(--linea2);color:var(--gris);white-space:nowrap}
-.estado.aprobada{border-color:var(--oro);color:var(--oro-cl)}
-.estado.animando{border-color:#7d6a3f;color:#d9c08a}
-.estado.video{border-color:var(--si);color:var(--si-cl)}
-.estado.publicada{background:var(--teal);border-color:var(--teal);color:#e8efe9}
-.estado.rehacer{border-color:var(--no);color:#e0968b}
+/* ── EL UMBRAL ── */
+header{padding:22px 22px 6px;max-width:900px;margin:0 auto}
+.linea1{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+h1{margin:0;font-size:24px;font-weight:400}
+h1 em{color:var(--oro-cl);font-style:italic}
+select{font:inherit;font-size:11px;letter-spacing:2px;text-transform:uppercase;
+  background:transparent;color:var(--gris);border:0;padding:4px;cursor:pointer;margin-left:auto}
+.avance{font-size:13px;color:var(--gris);border:1px solid var(--linea);border-radius:999px;
+  padding:4px 13px;white-space:nowrap}
+.avance b{color:var(--oro-cl)}
+.umbral{max-width:900px;margin:0 auto;padding:10px 22px 26px}
+.retroTarj{background:var(--papel);border:1px solid var(--linea);border-radius:11px;
+  padding:15px 17px;cursor:pointer;margin-bottom:16px}
+.retroTarj .r1{font-size:15px}
+.retroTarj .r2{font-size:13px;color:var(--guia);margin-top:3px}
+.retroTarj .det{display:none;margin-top:12px;border-top:1px solid var(--linea);padding-top:12px;
+  font-size:14px;color:var(--gris);line-height:1.7}
+.retroTarj.abierta .det{display:block}
+.botonon{width:100%;padding:20px;font-size:19px;border-radius:12px}
+.subboton{text-align:center;font-size:13px;color:var(--guia);margin-top:10px}
 
-/* bitácora */
+/* ── LA MESA ── */
+main{max-width:900px;margin:0 auto;padding:6px 22px 90px}
+.franja{margin:34px 0 0}
+.ftit{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid var(--linea);
+  padding-bottom:9px;margin-bottom:15px}
+.ftit h2{margin:0;font-size:21px;font-weight:400}
+.ftit .mini{font-size:12px;color:var(--guia);margin-left:auto}
+.control{background:var(--papel);border:1px solid var(--linea);border-radius:11px;
+  padding:16px 18px;display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.control h4{margin:2px 0;font-size:19px;font-weight:400}
+.control .desde{font-size:12.5px;color:var(--guia);line-height:1.5}
+.semana{margin-bottom:14px}
+.semtit{font-size:11px;letter-spacing:2.4px;color:var(--guia);margin:0 0 8px}
+.tiraSem{display:flex;gap:9px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch}
+.celda{flex:0 0 150px;background:var(--papel);border:1px solid var(--linea);border-radius:9px;
+  padding:10px 12px;min-height:92px;display:flex;flex-direction:column;gap:5px}
+.celda.vacia{border-style:dashed;opacity:.55}
+.celda.parada{border-color:#4a2a26;cursor:pointer}
+.celda .dia{font-size:10px;letter-spacing:1.8px;text-transform:uppercase;color:var(--guia)}
+.celda .pieza{font-size:13px;line-height:1.3}
+.camino{display:flex;gap:5px;margin-top:auto;align-items:center}
+.paso{width:7px;height:7px;border-radius:50%;border:1px solid var(--linea2)}
+.paso.on{background:var(--oro);border-color:var(--oro)}
+.celda .estado{font-size:11px;color:var(--gris)}
+.celda .estado.rojo{color:#e0968b}
+.tarjes{display:flex;flex-direction:column;gap:10px}
+.tarj{background:var(--papel);border:1px solid var(--linea);border-radius:10px;
+  padding:13px 15px;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap}
+.chip{border-radius:999px;padding:3px 12px;font-size:12px;border:1px solid var(--linea2);
+  color:var(--gris);white-space:nowrap}
+.chip.video{border-color:var(--si);color:var(--si-cl)}
+.chip.publicada{background:var(--teal);border-color:var(--teal);color:#e8efe9}
+.chip.rehacer{border-color:var(--no);color:#e0968b}
+.chip.aprobada{border-color:var(--oro);color:var(--oro-cl)}
+.tarj .det{font-size:13.5px;color:var(--gris);flex:1 1 100%}
 .bit{list-style:none;margin:0;padding:0;font-size:14px}
-.bit li{display:flex;gap:14px;padding:9px 0;border-bottom:1px solid var(--linea)}
-.bit .h{color:var(--guia);white-space:nowrap;font-variant-numeric:tabular-nums}
+.bit li{display:flex;gap:13px;padding:8px 0;border-bottom:1px solid var(--linea)}
+.bit .h{color:var(--guia);font-variant-numeric:tabular-nums;white-space:nowrap}
+.conexion{font-size:12.5px;color:var(--guia);padding:12px 0;cursor:pointer}
 
-.pie{position:fixed;left:0;right:0;bottom:0;background:rgba(10,10,12,.97);
-  backdrop-filter:blur(14px);border-top:1px solid var(--linea);z-index:30;
-  padding:14px 30px calc(14px + env(safe-area-inset-bottom))}
-.pie .barra{padding:0;gap:14px;flex-wrap:nowrap}
-.pie input{flex:1;min-width:0;background:var(--papel);color:var(--crema);
-  border:1px solid var(--linea);border-radius:8px;padding:11px 14px;font:inherit;font-size:15px}
-.pie input:focus{outline:0;border-color:var(--oro)}
-.enviar{background:var(--oro);color:#17130c;border-color:var(--oro);font-weight:600;
-  white-space:nowrap}
-.enviar:hover{background:var(--oro-cl);border-color:var(--oro-cl)}
-.enviar[disabled]{opacity:.45;cursor:default}
-.aviso{font-size:13px;color:var(--gris);white-space:nowrap}
-.aviso.mal{color:#e08a7e}
-.aviso.bien{color:var(--si-cl)}
-.vacio{text-align:center;padding:70px 20px;color:var(--gris)}
-.vacio p{font-size:18px;margin:0 0 6px}
+/* ── EL TURNO ── */
+.turno{position:fixed;inset:0;background:var(--tinta);z-index:60;display:flex;
+  flex-direction:column}
+.turno .arriba{display:flex;align-items:center;gap:12px;padding:14px 18px}
+.turno .cuentaT{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--gris);
+  cursor:pointer;padding:6px 4px}
+.turno .salir{margin-left:auto}
+.turno .escena{flex:1;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;padding:0 18px;min-height:0;overflow-y:auto}
+.turno .escena img{max-width:min(92vw,480px);max-height:100%;object-fit:contain;
+  border-radius:8px;border:1px solid var(--linea)}
+.turno .titProp{font-size:13px;color:var(--guia);margin:8px 0 0;text-align:center}
+.turno .mandoT{display:flex;gap:1px;background:var(--linea);border-top:1px solid var(--linea)}
+.turno .mandoT button{flex:1;border:0;border-radius:0;min-height:64px;font-size:22px;
+  background:var(--papel);color:var(--gris);padding-bottom:env(safe-area-inset-bottom)}
+.turno .mandoT .tsi.on{background:var(--si);color:#fff}
+.turno .mandoT .tno.on{background:var(--no);color:#fff}
+.boleta{width:100%;max-width:560px;display:flex;flex-direction:column;gap:13px;padding:10px 0}
+.boleta .intro{font-size:14px;color:var(--gris);text-align:center;margin:0 0 4px}
+.opcion{border:1px solid var(--linea);border-radius:10px;background:var(--papel);
+  padding:16px 18px;transition:.13s}
+.opcion.si{border-color:var(--si);box-shadow:0 0 0 1px var(--si)}
+.opcion.apagada{opacity:.4}
+.opcion h4{margin:6px 0 8px;font-size:19px;font-weight:400}
+.opcion p{margin:0 0 12px;font-size:14px;color:var(--gris);line-height:1.55}
+.notaEsc{width:100%;max-width:560px;display:flex;flex-direction:column;gap:12px}
+textarea{width:100%;background:var(--papel);color:var(--crema);border:1px solid var(--linea);
+  border-radius:9px;padding:13px 15px;font:inherit;font-size:16px;resize:vertical;min-height:80px}
+textarea:focus{outline:0;border-color:var(--oro)}
+.mapa{position:absolute;inset:0;background:rgba(6,6,8,.97);z-index:5;overflow-y:auto;
+  padding:20px}
+.mapa .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;
+  max-width:700px;margin:0 auto}
+.mapa img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:5px;border:2px solid var(--linea)}
+.mapa .m-si img{border-color:var(--si)}
+.mapa .m-no img{border-color:var(--no);opacity:.4}
+video{width:100%;max-width:min(88vw,400px);border-radius:8px;border:1px solid var(--linea);background:#000}
 
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--pie) + 18px);
+/* ── hojas, cierre, toast ── */
+.hoja{position:fixed;left:0;right:0;bottom:0;z-index:80;background:#141419;
+  border-top:1px solid var(--linea2);border-radius:16px 16px 0 0;
+  padding:22px 22px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -14px 40px rgba(0,0,0,.6)}
+.hoja p{margin:0 0 16px;font-size:15px;line-height:1.6}
+.hoja .fila{display:flex;gap:10px;flex-wrap:wrap}
+.hoja .fila button{flex:1}
+.velo{position:fixed;inset:0;background:rgba(6,6,8,.6);z-index:75}
+.cierre{position:fixed;inset:0;z-index:90;background:var(--tinta);display:flex;
+  flex-direction:column;align-items:center;justify-content:center;text-align:center;
+  padding:30px;gap:8px}
+.cierre .tasa{font-size:64px;font-family:Georgia,serif;color:var(--oro-cl);line-height:1}
+.cierre .quees{font-size:13px;letter-spacing:2.6px;text-transform:uppercase;color:var(--gris)}
+.cierre .marcador{font-size:15px;color:var(--gris);margin-top:10px}
+.puntos{display:flex;gap:9px;margin:14px 0}
+.punto{width:11px;height:11px;border-radius:50%;border:1px solid var(--linea2)}
+.punto.on{background:var(--oro);border-color:var(--oro)}
+.cierre .reparto{font-size:15px;line-height:1.8;margin-top:6px}
+.cierre .puente{font-size:14px;color:var(--guia);margin-top:14px;font-style:italic}
+.cierre .sello{font-size:12.5px;color:var(--guia);margin-top:18px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(90px + env(safe-area-inset-bottom));
   background:#17171d;border:1px solid var(--linea2);border-radius:10px;padding:11px 15px;
-  display:flex;gap:14px;align-items:center;z-index:40;font-size:14px;
+  display:flex;gap:14px;align-items:center;z-index:95;font-size:14px;
   box-shadow:0 10px 34px rgba(0,0,0,.55)}
-.toast button{padding:6px 12px;min-height:34px;font-size:14px;border-color:var(--oro);
-  color:var(--oro-cl)}
-.visor{position:fixed;inset:0;background:rgba(6,6,8,.96);z-index:50;display:flex;
-  align-items:center;justify-content:center;flex-direction:column;gap:14px;padding:24px}
-.visor img{max-width:min(94vw,760px);max-height:76vh;object-fit:contain;border-radius:6px}
-.visor .fila{display:flex;gap:9px;align-items:center}
-.visor .cerrar{position:absolute;top:16px;right:20px}
-
+.toast button{padding:6px 12px;min-height:34px;font-size:14px;border-color:var(--oro);color:var(--oro-cl)}
+.pieCola{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:50}
 dialog{background:var(--papel);color:var(--crema);border:1px solid var(--linea2);
-  border-radius:12px;padding:26px;max-width:440px;width:92vw}
+  border-radius:12px;padding:24px;max-width:430px;width:92vw}
 dialog::backdrop{background:rgba(6,6,8,.8)}
 dialog input{width:100%;background:var(--tinta);color:var(--crema);border:1px solid var(--linea);
-  border-radius:8px;padding:11px 13px;font:inherit;font-size:14px;margin:8px 0 14px}
-
+  border-radius:8px;padding:11px 13px;font:inherit;font-size:15px;margin:7px 0 13px}
+.vacio{text-align:center;padding:56px 18px;color:var(--gris)}
 @media(max-width:700px){
-  .barra{padding:13px 16px;gap:12px}
-  main{padding:20px 16px calc(var(--pie) + 30px)}
-  h1{font-size:21px} .guia{display:none}
-  .cab h3{font-size:21px} .ftit h2{font-size:20px}
-  .tira{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:11px}
-  .acciones{width:100%;margin-left:0}
-  .acciones button{flex:1;font-size:14px;padding:9px 6px}
-  .pie{padding-left:16px;padding-right:16px}
-  .pie .barra{flex-wrap:wrap;gap:9px}
-  .pie input{font-size:16px;flex:1 0 100%;order:1}
-  .aviso{order:2;margin-right:auto}
-  .enviar{order:3}
-  .marcador{width:100%}
-  td,th{padding:8px 7px}
+  header{padding:16px 16px 4px} .umbral{padding:8px 16px 20px} main{padding:4px 16px 90px}
+  h1{font-size:21px}
 }
 </style>
 
 <header>
-  <div class="barra">
-    <div>
-      <h1 class="serif">Sala de <em>Edición</em></h1>
-      <p class="guia">Palomea lo que sirve, tacha lo que no, y escribe lo que quieres distinto.</p>
-    </div>
+  <div class="linea1">
+    <h1 class="serif">Sala de <em>Edición</em></h1>
     <select id="sel" aria-label="Ver otro día"></select>
-    <div class="marcador">
-      <span class="pastilla">aprobadas <b id="ns">0</b></span>
-      <span class="pastilla">tiradas <b id="nn">0</b></span>
-      <span class="pastilla" id="pp">sin marcar <b id="np">0</b></span>
-      <span class="pastilla" id="colchon" title="Piezas listas sin publicar — la meta son 2">colchón <b>0/2</b></span>
-      <span class="pastilla" id="andon" title="Piezas con más de 2 días detenidas en el mismo estado" style="display:none">detenidas <b>0</b></span>
-      <span class="pastilla lig" id="con" title="Conexión con el Sheet">⚙︎</span>
-    </div>
+    <span class="avance" id="avance"><b>0</b> de 0</span>
   </div>
 </header>
 
-<main id="m"><div class="vacio"><p>Abriendo la sala…</p></div></main>
-
-<div class="pie"><div class="barra">
-  <input id="general" placeholder="Nota para todo el día (opcional)…" aria-label="Nota para todo el día">
-  <span class="aviso" id="aviso"></span>
-  <button class="enviar" id="ok">Enviar mi revisión</button>
-</div></div>
+<section class="umbral" id="umbral"></section>
+<main id="mesa"></main>
+<div id="capas"></div>
 
 <dialog id="dlg">
   <span class="kick">Conexión</span>
-  <h3 class="serif" style="margin:4px 0 10px;font-weight:400">El Sheet de la Sala</h3>
-  <p style="font-size:14px;color:var(--gris);margin:0 0 4px">Liga del Apps Script (termina en <code>/exec</code>):</p>
+  <h3 class="serif" style="margin:6px 0 10px;font-weight:400">El Sheet de la Sala</h3>
+  <p style="font-size:13.5px;color:var(--gris);margin:0 0 4px">Liga del conector (termina en /exec):</p>
   <input id="gasUrl" placeholder="https://script.google.com/macros/s/…/exec">
-  <p style="font-size:14px;color:var(--gris);margin:0 0 4px">Clave de la sala:</p>
-  <input id="gasClave" placeholder="la clave que quedó en la pestaña CONFIG">
+  <p style="font-size:13.5px;color:var(--gris);margin:0 0 4px">Tu clave:</p>
+  <input id="gasClave">
   <div style="display:flex;gap:9px;justify-content:flex-end">
     <button class="menor" id="dlgNo">Cancelar</button>
-    <button class="enviar" id="dlgSi">Conectar</button>
+    <button class="dorado" id="dlgSi">Conectar</button>
   </div>
 </dialog>
 
 <script>
 'use strict';
+/* ════ Sala v3 — implementación de la espec consensuada ════
+   Reglas de la mesa que este código honra:
+   - jerga técnica CERO en pantalla (los códigos G0-G3 viven solo en el Sheet)
+   - una decisión por pantalla en el Turno; auto-avance al marcar
+   - un solo POST consolidado por envío, idempotente por envio_id, con cola offline
+   - todo lo visible sale de datos; todo gesto produce un dato que el agente lee */
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-let D={propuestas:[]}, dec={propuestas:{}}, fecha=null, sucio=false, deshacer=null;
+const uuid=()=>(crypto.randomUUID?crypto.randomUUID():Date.now()+'-'+Math.random().toString(36).slice(2));
+let D={propuestas:[]}, dec={propuestas:{}}, fecha=null, deshacer=null;
 
-/* ---- fuente de datos: el GAS (Sheet) manda; sin GAS, el manifiesto del repo ----
-   El portal vive en GitHub Pages y no tiene servidor propio: los datos viajan por
-   un Apps Script pegado al Sheet (el patrón de la casa). Mientras el GAS no esté
-   conectado, lee datos/manifiesto.json del repo y guarda las decisiones en el
-   navegador — modo demo: todo funciona, nada se pierde, y al conectar se envían. */
+/* la liga del correo trae la sesión en el fragmento #gas=…&clave=…&rol=… :
+   no viaja al servidor, se siembra una vez y se limpia de la barra */
+(function(){
+  if(!location.hash) return;
+  const h=new URLSearchParams(location.hash.slice(1));
+  if(h.get('gas')) localStorage.setItem('sala_gas',h.get('gas'));
+  if(h.get('clave')) localStorage.setItem('sala_clave',h.get('clave'));
+  if(h.get('rol')) localStorage.setItem('sala_rol',h.get('rol'));
+  history.replaceState(null,'',location.pathname+location.search);
+})();
 const GAS=()=>localStorage.getItem('sala_gas')||'';
 const CLAVE=()=>localStorage.getItem('sala_clave')||'';
-const arch=u=>u;                                   // las láminas ya son URLs del repo
+const ROL=()=>localStorage.getItem('sala_rol')||'editor';
 const dia=f=>{try{return new Date(f+'T12:00:00').toLocaleDateString('es-MX',
   {weekday:'long',day:'numeric',month:'long'})}catch(e){return f}};
 
 function ficha(pid){
-  const p = dec.propuestas[pid] ||= {laminas:[],nota:''};
+  const p=dec.propuestas[pid] ||= {laminas:[],nota:''};
   if(!Array.isArray(p.laminas)) p.laminas=[];
   return p;
 }
 const prop=pid=>(D.propuestas||[]).find(x=>x.id===pid);
-const estado=(pid,i)=>ficha(pid).laminas[i]||null;
-// una propuesta trae laminas (imagenes) u opciones (texto: ejes y guiones);
-// las marcas usan el mismo arreglo por indice en los dos casos
 const items=p=>p.laminas&&p.laminas.length?p.laminas:(p.opciones||[]);
-
+const estado=(pid,i)=>ficha(pid).laminas[i]||null;
 function guardarLocal(){
-  sucio=true; pintarPie();
   try{ localStorage.setItem('sala-'+fecha, JSON.stringify({...dec,tocado:Date.now()})) }catch(e){}
 }
-
-function refrescar(pid,i){
-  const f=document.querySelector(`section.prop[data-p="${CSS.escape(pid)}"] figure[data-i="${i}"]`);
-  if(!f) return;
-  const e=estado(pid,i);
-  f.classList.toggle('si',e==='si');       // toggle y no className=: las opciones
-  f.classList.toggle('no',e==='no');       // de texto llevan su propia clase base
-  f.querySelector('.b-si').classList.toggle('on-si',e==='si');
-  f.querySelector('.b-no').classList.toggle('on-no',e==='no');
-}
-function refrescarProp(pid){
-  const p=prop(pid); if(!p) return;
-  items(p).forEach((_,i)=>refrescar(pid,i));
-  const sec=document.querySelector(`section.prop[data-p="${CSS.escape(pid)}"]`);
-  const c=sec&&sec.querySelector('.cuenta');
-  if(c){ const n=items(p).length, d=items(p).filter((_,i)=>estado(pid,i)).length;
-    c.innerHTML=`<b>${d}</b> de ${n} decididas`;
-    c.classList.toggle('viva', d===n); }
-}
-function marcar(pid,i,v){
-  const p=ficha(pid), pr=prop(pid);
-  p.laminas[i]=p.laminas[i]===v?null:v;
-  // un EJE se escoge, no se colecciona: palomear una opcion des-palomea las demas
-  if(pr&&pr.tipo==='eje'&&v==='si'&&p.laminas[i]==='si')
-    items(pr).forEach((_,j)=>{ if(j!==i&&p.laminas[j]==='si') p.laminas[j]=null });
-  refrescarProp(pid); cuenta(); guardarLocal();
-}
-function todas(pid,v){
-  const p=prop(pid); if(!p) return;
-  const antes=[...ficha(pid).laminas];
-  ficha(pid).laminas=items(p).map(()=>v);
-  refrescarProp(pid); cuenta(); guardarLocal();
-  mostrarDeshacer(v===null?'Marcas quitadas':(v==='si'?'Propuesta aprobada':'Propuesta tirada'),
-    ()=>{ ficha(pid).laminas=antes; refrescarProp(pid); cuenta(); guardarLocal() });
-}
-function mostrarDeshacer(txt,fn){
-  if(deshacer) deshacer.remove();
-  const t=document.createElement('div'); t.className='toast';
-  t.innerHTML=`<span>${esc(txt)}</span>`;
-  const b=document.createElement('button'); b.textContent='Deshacer';
-  b.onclick=()=>{ fn(); t.remove(); deshacer=null };
-  t.appendChild(b); document.body.appendChild(t); deshacer=t;
-  setTimeout(()=>{ if(deshacer===t){ t.remove(); deshacer=null } },7000);
-}
-function cuenta(){
+function totales(){
   let s=0,n=0,t=0;
   for(const p of D.propuestas||[]) items(p).forEach((_,i)=>{
     t++; const e=estado(p.id,i); if(e==='si')s++; else if(e==='no')n++;
   });
-  $('#ns').textContent=s; $('#nn').textContent=n; $('#np').textContent=t-s-n;
-  $('#pp').classList.toggle('viva', t>0 && t-s-n===0);
-  document.title=(t-s-n)>0?`Sala de Edición · ${t-s-n} sin marcar`:`Sala de Edición · ${dia(fecha)}`;
-  // colchon: piezas con video listo sin publicar · andon: >2 dias detenidas
-  const pr=D.produccion||[], hoyMs=new Date((fecha||'')+'T12:00:00').getTime();
-  const col=pr.filter(x=>x.estado==='video').length;
-  const det=pr.filter(x=>x.estado!=='publicada'&&x.estado!=='medida'&&x.fecha&&
-    (hoyMs-new Date(x.fecha+'T12:00:00').getTime())/864e5>=2).length;
-  $('#colchon').innerHTML=`colchón <b>${col}/2</b>`;
-  $('#colchon').classList.toggle('viva',col>=2);
-  $('#andon').style.display=det?'':'none';
-  if(det){ $('#andon').innerHTML=`detenidas <b>${det}</b>`; $('#andon').style.borderColor='var(--no)';
-    $('#andon').style.color='#e0968b' }
-  pintarPie();
-}
-function pintarPie(){
-  const falta=+$('#np').textContent;
-  $('#ok').textContent=falta>0?`Enviar (faltan ${falta})`:'Enviar mi revisión';
-  if(sucio && !$('#aviso').classList.contains('mal')) $('#aviso').textContent='sin enviar';
+  return {s,n,t,falta:t-s-n};
 }
 
-/* ---- pintado por franjas: AYER · HOY · PRODUCCIÓN · BITÁCORA ---- */
-function pintar(){
-  const m=$('#m'); let h='';
+function marcar(pid,i,v,silencio){
+  const p=ficha(pid), pr=prop(pid);
+  p.laminas[i]=p.laminas[i]===v?null:v;
+  if(pr&&pr.tipo==='eje'&&v==='si'&&p.laminas[i]==='si')
+    items(pr).forEach((_,j)=>{ if(j!==i&&p.laminas[j]==='si') p.laminas[j]=null });
+  guardarLocal(); pintarAvance();
+  if(!silencio && turnoVivo) avanzarTurno();
+}
+function toast(txt,fn){
+  if(deshacer) deshacer.remove();
+  const t=document.createElement('div'); t.className='toast';
+  t.innerHTML=`<span>${esc(txt)}</span>`;
+  if(fn){ const b=document.createElement('button'); b.textContent='Deshacer';
+    b.onclick=()=>{ fn(); t.remove(); deshacer=null }; t.appendChild(b); }
+  document.body.appendChild(t); deshacer=t;
+  setTimeout(()=>{ if(deshacer===t){ t.remove(); deshacer=null } },7000);
+}
+function pintarAvance(){
+  const {s,n,t,falta}=totales();
+  $('#avance').innerHTML=`<b>${s+n}</b> de ${t}`;
+  document.title=falta>0?`Sala de Edición · ${falta} sin marcar`:`Sala de Edición · ${dia(fecha)}`;
+  const b=$('#irTurno');
+  if(b) b.textContent = falta>0?`Revisar hoy (${falta})`:'Revisión completa — ver mi turno';
+}
 
-  // AYER — la retro: qué decidió y en qué acabó
-  const r=D.retro;
-  if(r && (r.aprobadas+r.tiradas+r.producidas>0 || r.nota)){
-    h+=`<section class="franja"><div class="ftit"><span class="kick">Ayer</span>
-      <h2 class="serif">Lo que decidiste, y en qué acabó</h2>
-      <span class="mini">${esc(dia(r.fecha||''))}</span></div>
-      <div class="retro">
-        <div class="tarj"><div class="n">${r.aprobadas||0}</div><div class="t">aprobadas por ti</div></div>
-        <div class="tarj"><div class="n">${r.tiradas||0}</div><div class="t">tiradas</div></div>
-        <div class="tarj"><div class="n">${r.producidas||0}</div><div class="t">ya son video</div></div>
-        <div class="tarj"><div class="n">${r.rehechas||0}</div><div class="t">rehechas con tu nota — vuelven hoy</div></div>
-        ${r.nota?`<div class="tarj nota-d"><div class="t">«${esc(r.nota)}» — tu nota de ayer, aplicada.</div></div>`:''}
-      </div></section>`;
+/* ═══ EL UMBRAL ═══ */
+function pintarUmbral(){
+  const u=$('#umbral'), r=D.retro||{}, {t,falta}=totales();
+  const horas=D.ultima_revision?(Date.now()-Date.parse(D.ultima_revision))/36e5:0;
+  const ausente=horas>=48;
+  let retroHtml='';
+  if(ausente && (D.mientras||[]).length){
+    retroHtml=`<div class="retroTarj"><div class="r1">Mientras no estabas</div>
+      <div class="det" style="display:block">${(D.mientras||[]).slice(0,3).map(esc).join('<br>')}</div></div>`;
+  }else if(r.fecha){
+    retroHtml=`<div class="retroTarj" id="retroT">
+      <div class="r1">Ayer: ${r.aprobadas||0}✓ ${r.tiradas||0}✕ · ${r.producidas?`${r.producidas} ya son video`:'sin producción'} →</div>
+      <div class="r2">${r.nota?`tu nota ya se aplicó: «${esc(r.nota.slice(0,60))}${r.nota.length>60?'…':''}»`:'toca para el detalle'}</div>
+      <div class="det">${r.aprobadas||0} aprobadas por ti · ${r.tiradas||0} tiradas · ${r.producidas||0} producidas · ${r.rehechas||0} rehechas con tu nota (vuelven hoy)${r.nota?`<br>«${esc(r.nota)}»`:''}</div>
+    </div>`;
   }
+  u.innerHTML=`${retroHtml}
+    ${t>0?`<button class="dorado botonon" id="irTurno">Revisar hoy (${falta})</button>
+    <div class="subboton">${(D.propuestas||[]).length} propuesta(s) · ~5 minutos · todo reversible</div>`
+    :`<div class="vacio"><p>Hoy no hay nada que revisar.</p>
+      <p style="font-size:14px">Cuando haya propuestas nuevas, llegan por el correo de las 7:00.</p></div>`}`;
+  const rt=$('#retroT'); if(rt) rt.onclick=()=>rt.classList.toggle('abierta');
+  const b=$('#irTurno'); if(b) b.onclick=()=>abrirTurno(0);
+  pintarAvance();
+}
 
-  // PARRILLA — el mes en una pared: cada hueco con su pieza y su compuerta
-  const GN={g0:'G0 · eje',g1:'G1 · guion',g2:'G2 · láminas',g3:'G3 · video',
-            pub:'publicada',med:'medida',rehacer:'en rehechura'};
+/* ═══ EL TURNO — una decisión por pantalla ═══ */
+let turnoVivo=null, pasoIdx=0, pasos=[];
+function construirPasos(){
+  pasos=[];
+  for(const p of D.propuestas||[]){
+    if(p.tipo==='eje') pasos.push({tipo:'boleta',pid:p.id});
+    else items(p).forEach((_,i)=>pasos.push({tipo:'lamina',pid:p.id,i}));
+    pasos.push({tipo:'nota',pid:p.id});
+  }
+  pasos.push({tipo:'firma'});
+}
+function abrirTurno(desde){
+  construirPasos();
+  pasoIdx=Math.max(0,Math.min(desde??0,pasos.length-1));
+  turnoVivo=document.createElement('div'); turnoVivo.className='turno';
+  document.body.appendChild(turnoVivo); document.body.style.overflow='hidden';
+  pintarPaso();
+}
+function cerrarTurno(){
+  if(!turnoVivo) return;
+  turnoVivo.remove(); turnoVivo=null; document.body.style.overflow='';
+  pintarUmbral();
+}
+function avanzarTurno(){ setTimeout(()=>{ if(!turnoVivo) return;
+  if(pasoIdx<pasos.length-1){ pasoIdx++; pintarPaso() } },160) }
+function saltarAPendiente(){
+  const j=pasos.findIndex(x=>x.tipo==='lamina'&&!estado(x.pid,x.i));
+  if(j>=0){ pasoIdx=j; pintarPaso() }
+}
+function pintarPaso(){
+  const x=pasos[pasoIdx], laminasTot=pasos.filter(p=>p.tipo==='lamina'||p.tipo==='boleta').length;
+  const idxDec=pasos.slice(0,pasoIdx+1).filter(p=>p.tipo==='lamina'||p.tipo==='boleta').length;
+  const arriba=`<div class="arriba">
+    <span class="cuentaT" id="verMapa">${x.tipo==='firma'?'para terminar':`${idxDec} de ${laminasTot} · toca para ver la tira`}</span>
+    <button class="menor salir" id="salirT">Guardar y salir</button></div>`;
+
+  if(x.tipo==='lamina'){
+    const p=prop(x.pid), e=estado(x.pid,x.i);
+    turnoVivo.innerHTML=`${arriba}
+      <div class="escena" id="esc">
+        <img src="${esc(p.laminas[x.i])}" alt="Lámina ${x.i+1}">
+        <p class="titProp">${esc(p.titulo)} · lámina ${x.i+1} de ${p.laminas.length}${p.origen?` · <span style="color:var(--oro-cl)">rehecha con tu nota</span>`:''}</p>
+      </div>
+      <div class="mandoT">
+        <button class="tno ${e==='no'?'on':''}" data-v="no" aria-label="Tirar">✕ Tirar</button>
+        <button class="tsi ${e==='si'?'on':''}" data-v="si" aria-label="Aprobar">✓ Aprobar</button>
+      </div>`;
+    turnoVivo.querySelectorAll('.mandoT button').forEach(b=>
+      b.onclick=()=>marcar(x.pid,x.i,b.dataset.v));
+    gestos($('#esc'),x);
+  }
+  if(x.tipo==='boleta'){
+    const p=prop(x.pid);
+    turnoVivo.innerHTML=`${arriba}
+      <div class="escena"><div class="boleta">
+        <span class="kick" style="text-align:center">${esc(p.titulo)}</span>
+        <p class="intro">Escoge la idea de la semana — todo lo demás nace de aquí.</p>
+        ${p.opciones.map((o,i)=>{const e=estado(x.pid,i);
+          const alguna=items(p).some((_,j)=>estado(x.pid,j)==='si');
+          return `<div class="opcion ${e==='si'?'si':(alguna?'apagada':'')}">
+            <span class="kick">Opción ${String.fromCharCode(65+i)}</span>
+            <h4 class="serif">${esc(o.titulo)}</h4><p>${esc(o.texto)}</p>
+            <button class="${e==='si'?'dorado':''}" data-i="${i}">${e==='si'?'✓ Ésta — cambiar':'Ésta'}</button>
+          </div>`}).join('')}
+        <button class="menor" id="ninguna">Ninguna sirve — que propongan otras</button>
+      </div></div>`;
+    turnoVivo.querySelectorAll('.opcion button').forEach(b=>
+      b.onclick=()=>{ marcar(x.pid,+b.dataset.i,'si',true); pintarPaso();
+        if(estado(x.pid,+b.dataset.i)==='si') avanzarTurno(); });
+    $('#ninguna').onclick=()=>{ items(prop(x.pid)).forEach((_,j)=>ficha(x.pid).laminas[j]='no');
+      guardarLocal(); pintarAvance();
+      toast('Las tres descartadas — dime en la nota qué buscas',null); avanzarTurno(); };
+  }
+  if(x.tipo==='nota'){
+    const p=prop(x.pid), f=ficha(x.pid);
+    const dn=items(p).filter((_,i)=>estado(x.pid,i)).length;
+    turnoVivo.innerHTML=`${arriba}
+      <div class="escena"><div class="notaEsc">
+        <span class="kick">${esc(p.titulo)} · ${dn} de ${items(p).length} decididas</span>
+        ${p.video?`<video src="${esc(p.video)}" controls preload="metadata" playsinline></video>`:''}
+        <textarea id="notaP" placeholder="¿Algo que cambiar en esta propuesta? Escríbelo como se lo dirías a alguien.">${esc(f.nota||'')}</textarea>
+        <button class="dorado" id="sigueN">Continuar</button>
+      </div></div>`;
+    $('#notaP').oninput=e=>{ ficha(x.pid).nota=e.target.value; guardarLocal() };
+    $('#sigueN').onclick=avanzarTurno;
+  }
+  if(x.tipo==='firma'){
+    turnoVivo.innerHTML=`${arriba}
+      <div class="escena"><div class="notaEsc">
+        <span class="kick">Para cerrar el día</span>
+        <textarea id="notaG" placeholder="¿Algo más para todo el día? (opcional)">${esc(dec.nota_general||'')}</textarea>
+        <button class="menor" id="rumbo">Cambiar el rumbo…</button>
+        <div id="rumboCampo" style="display:${dec.nota_estrategia?'block':'none'}">
+          <p style="font-size:13px;color:var(--guia);margin:4px 0 6px">Esto no corrige una lámina: corrige la estrategia.</p>
+          <textarea id="notaE" placeholder="Qué estamos vendiendo mal, qué eje hay que girar…">${esc(dec.nota_estrategia||'')}</textarea>
+        </div>
+        <button class="dorado botonon" id="enviarT">Enviar mi revisión</button>
+        <span class="subboton" id="avisoT"></span>
+      </div></div>`;
+    $('#notaG').oninput=e=>{ dec.nota_general=e.target.value; guardarLocal() };
+    $('#rumbo').onclick=()=>{ $('#rumboCampo').style.display='block'; $('#notaE').focus() };
+    $('#notaE').oninput=e=>{ dec.nota_estrategia=e.target.value; guardarLocal() };
+    $('#enviarT').onclick=intentarEnviar;
+  }
+  $('#salirT').onclick=()=>{ toast('Tu avance quedó guardado aquí',null); cerrarTurno() };
+  const vm=$('#verMapa');
+  if(vm && x.tipo!=='firma') vm.onclick=()=>mapaTira(x.pid);
+}
+function gestos(el,x){
+  if(!el) return; let x0=null;
+  el.addEventListener('touchstart',e=>{x0=e.touches[0].clientX},{passive:true});
+  el.addEventListener('touchend',e=>{
+    if(x0===null) return; const dx=e.changedTouches[0].clientX-x0; x0=null;
+    if(dx>64) marcar(x.pid,x.i,'si');
+    else if(dx<-64) marcar(x.pid,x.i,'no');
+  },{passive:true});
+}
+function mapaTira(pid){
+  const p=prop(pid); if(!p||!p.laminas||!p.laminas.length) return;
+  const m=document.createElement('div'); m.className='mapa';
+  m.innerHTML=`<div style="text-align:center;margin-bottom:14px">
+      <span class="kick">${esc(p.titulo)} — la historia completa</span></div>
+    <div class="grid">${p.laminas.map((l,i)=>{const e=estado(pid,i);
+      return `<div class="${e?'m-'+e:''}" data-i="${i}"><img src="${esc(l)}" alt="${i+1}"></div>`}).join('')}
+    </div>
+    <div style="text-align:center;margin-top:16px"><button class="menor">Volver a decidir</button></div>`;
+  m.onclick=ev=>{
+    const c=ev.target.closest('[data-i]');
+    if(c){ const j=pasos.findIndex(y=>y.tipo==='lamina'&&y.pid===pid&&y.i===+c.dataset.i);
+      if(j>=0){ pasoIdx=j; m.remove(); pintarPaso(); return } }
+    if(ev.target.closest('button')||ev.target===m) m.remove();
+  };
+  turnoVivo.appendChild(m);
+}
+
+/* ═══ ENVÍO — un POST consolidado, idempotente, con cola sin conexión ═══ */
+function intentarEnviar(){
+  const {falta}=totales();
+  if(falta>0){
+    const velo=document.createElement('div'); velo.className='velo';
+    const h=document.createElement('div'); h.className='hoja';
+    const {s,n}=totales();
+    h.innerHTML=`<p>Vas a enviar <b>${s+n} decididas</b>. Las <b>${falta} sin marcar</b> vuelven mañana UNA vez y luego mueren.</p>
+      <div class="fila"><button class="menor" id="verlas">Verlas ahora</button>
+      <button class="dorado" id="asi">Enviarlas así</button></div>`;
+    document.body.append(velo,h);
+    const fuera=()=>{velo.remove();h.remove()};
+    velo.onclick=fuera;
+    h.querySelector('#verlas').onclick=()=>{fuera();saltarAPendiente()};
+    h.querySelector('#asi').onclick=()=>{fuera();enviar()};
+    return;
+  }
+  enviar();
+}
+async function enviar(){
+  // el consolidado: TODO el estado del día, pendientes explícitos, autoría y envio_id
+  const envio={accion:'decidir',clave:CLAVE(),fecha,envio_id:uuid(),quien:ROL(),
+    nota_general:dec.nota_general||'',nota_estrategia:dec.nota_estrategia||'',propuestas:{}};
+  for(const p of D.propuestas||[]){
+    const f=ficha(p.id);
+    envio.propuestas[p.id]={nota:f.nota||'',
+      laminas:items(p).map((_,i)=>f.laminas[i]||'pendiente')};
+  }
+  dec.guardado=new Date().toISOString(); guardarLocal();
+  if(!GAS()){ registrarHist(); mostrarCierre('guardada aquí — falta conectar el Sheet'); return }
+  const aviso=$('#avisoT'); if(aviso) aviso.textContent='guardando…';
+  try{
+    const r=await fetch(GAS(),{method:'POST',headers:{'Content-Type':'text/plain'},
+      body:JSON.stringify(envio)});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok||j.error) throw new Error(j.error||('el Sheet contestó '+r.status));
+    registrarHist(); mostrarCierre('enviada '+new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'}));
+  }catch(e){
+    encolar(envio);
+    registrarHist();
+    mostrarCierre('sin señal — quedó en cola y se sube sola',true);
+  }
+}
+function encolar(envio){
+  const q=JSON.parse(localStorage.getItem('sala_cola')||'[]');
+  if(!q.some(x=>x.envio_id===envio.envio_id)) q.push(envio);
+  localStorage.setItem('sala_cola',JSON.stringify(q)); pintarCola();
+}
+async function subirCola(){
+  const q=JSON.parse(localStorage.getItem('sala_cola')||'[]');
+  if(!q.length||!GAS()) return;
+  const resto=[];
+  for(const envio of q){
+    try{
+      const r=await fetch(GAS(),{method:'POST',headers:{'Content-Type':'text/plain'},
+        body:JSON.stringify(envio)});
+      const j=await r.json().catch(()=>({}));
+      if(!r.ok||j.error) throw 0;
+    }catch(e){ resto.push(envio) }
+  }
+  localStorage.setItem('sala_cola',JSON.stringify(resto)); pintarCola();
+  if(!resto.length) toast('Lo pendiente ya subió al Sheet',null);
+}
+function pintarCola(){
+  const q=JSON.parse(localStorage.getItem('sala_cola')||'[]');
+  let b=$('#colaBtn');
+  if(!q.length){ if(b)b.remove(); return }
+  if(!b){ b=document.createElement('button'); b.id='colaBtn'; b.className='pieCola';
+    b.onclick=subirCola; document.body.appendChild(b) }
+  b.textContent=`subir lo pendiente (${q.length})`;
+}
+window.addEventListener('online',subirCola);
+
+/* el marcador del editor: historial local de tasas (se deriva, no se inventa) */
+function registrarHist(){
+  const {s,n,t}=totales();
+  const h=JSON.parse(localStorage.getItem('sala_hist')||'{}');
+  h[fecha]={tasa:t?Math.round(s/t*100):0,enviado:true};
+  localStorage.setItem('sala_hist',JSON.stringify(h));
+}
+function mostrarCierre(sello,enCola){
+  if(turnoVivo) cerrarTurno();
+  const {s,n,t,falta}=totales();
+  const tasa=t?Math.round(s/t*100):0;
+  const h=JSON.parse(localStorage.getItem('sala_hist')||'{}');
+  const hoyD=new Date(fecha+'T12:00:00');
+  const puntos=[...Array(7)].map((_,i)=>{
+    const d=new Date(hoyD); d.setDate(d.getDate()-6+i);
+    return h[d.toISOString().slice(0,10)]?.enviado;
+  });
+  const rehacen=Object.values(dec.propuestas).filter(p=>p.nota&&p.laminas.some(m=>m==='no')).length;
+  const c=document.createElement('div'); c.className='cierre';
+  c.innerHTML=`
+    <span class="quees">A la primera, hoy</span>
+    <div class="tasa serif">${tasa}%</div>
+    <div class="puntos">${puntos.map(p=>`<span class="punto ${p?'on':''}"></span>`).join('')}</div>
+    <div class="reparto">${s} se animan hoy · ${rehacen?`${rehacen} vuelven con tu nota · `:''}${falta?`${falta} vuelven una vez más · `:''}${n} se ${n===1?'tiró':'tiraron'}</div>
+    <p class="puente">Mañana a las 7:00: lo que firmaste, hecho láminas.</p>
+    <span class="sello">✓ ${esc(sello)}</span>
+    <button class="dorado" style="margin-top:22px" id="cerrarC">La sala queda trabajando</button>`;
+  document.body.appendChild(c);
+  $('#cerrarC').onclick=()=>{ c.remove(); pintarUmbral(); pintarMesa() };
+}
+
+/* ═══ LA MESA ═══ */
+const CAMINO=['idea','guion','láminas','video','publicada'];
+const PASO_DE={g0:1,g1:2,g2:3,g3:4,pub:5,med:5,rehacer:3};
+function pintarMesa(){
+  const m=$('#mesa'); let h='';
+  const c=D.control||{};
+  h+=`<section class="franja"><div class="ftit"><span class="kick">El control</span>
+    <h2 class="serif">La pieza a vencer</h2></div>
+    <div class="control"><div>
+      ${c.pieza?`<h4 class="serif">${esc(c.pieza)}</h4><div class="desde">campeona desde ${esc(c.desde||'')}</div>`
+      :`<h4 class="serif" style="color:var(--gris);font-style:italic">Provisional — sin lead medido</h4>
+        <div class="desde">${esc(c.nota||'La primera pieza que traiga un lead con liga etiquetada se corona; toda pieza nueva tendrá que vencerla con números.')}</div>`}
+    </div></div></section>`;
+
   const pa=D.parrilla||[];
   if(pa.length){
     const hoyMs=new Date((D.fecha||'')+'T12:00:00').getTime();
+    const semanas={};
+    pa.forEach(x=>{
+      const d=new Date(x.fecha+'T12:00:00'); const lun=new Date(d); lun.setDate(d.getDate()-((d.getDay()+6)%7));
+      const k=lun.toISOString().slice(0,10); (semanas[k] ||= []).push(x);
+    });
     h+=`<section class="franja"><div class="ftit"><span class="kick">Parrilla</span>
-      <h2 class="serif">Las próximas semanas, de un vistazo</h2>
-      <span class="mini">${pa.filter(x=>!x.pieza).length} hueco(s) por llenar</span></div>
-      <div class="parrilla">${pa.map(c=>{
-        const det=c.pieza&&c.gate!=='pub'&&c.gate!=='med'&&c.desde&&
-          (hoyMs-new Date(c.desde+'T12:00:00').getTime())/864e5>=2;
-        return `<div class="celda ${c.pieza?'':'vacia'} ${det?'detenida':''}">
-          <span class="dia">${esc(new Date(c.fecha+'T12:00:00').toLocaleDateString('es-MX',{weekday:'short',day:'numeric',month:'short'}))}</span>
-          <span class="pieza">${esc(c.pieza||'hueco — se llena con un formato probado')}</span>
-          ${c.pieza?`<span class="gate ${esc(c.gate)} ${det?'roja':''}">${GN[c.gate]||esc(c.gate)}${det?' · detenida':''}</span>`:''}
-        </div>`}).join('')}
-      </div></section>`;
+      <h2 class="serif">Las próximas semanas</h2>
+      <span class="mini">${pa.filter(x=>!x.pieza).length} hueco(s)</span></div>`;
+    for(const k of Object.keys(semanas).sort()){
+      const lun=new Date(k+'T12:00:00'), dom=new Date(lun); dom.setDate(lun.getDate()+6);
+      const ft=d=>d.toLocaleDateString('es-MX',{day:'numeric',month:'short'}).replace('.','');
+      h+=`<div class="semana"><p class="semtit">SEM ${ft(lun).toUpperCase()} – ${ft(dom).toUpperCase()}</p>
+        <div class="tiraSem">${semanas[k].map(x=>{
+          const dias=x.desde?Math.floor((hoyMs-new Date(x.desde+'T12:00:00').getTime())/864e5):0;
+          const parada=x.pieza&&x.gate!=='pub'&&x.gate!=='med'&&dias>=2;
+          const nivel=PASO_DE[x.gate]||0;
+          const palabra=({g0:'en idea',g1:'en guion',g2:'en láminas',g3:'video listo',
+            pub:'publicada',med:'medida',rehacer:parada?`parada ${dias} días`:'en rehechura'})[x.gate]||'';
+          return `<div class="celda ${x.pieza?'':'vacia'} ${parada?'parada':''}" ${parada?`data-dia="${x.fecha}" data-pieza="${esc(x.pieza)}"`:''}>
+            <span class="dia">${esc(new Date(x.fecha+'T12:00:00').toLocaleDateString('es-MX',{weekday:'short',day:'numeric'}))}</span>
+            <span class="pieza">${esc(x.pieza||'hueco — se llena con un formato probado')}</span>
+            ${x.pieza?`<div class="camino">${CAMINO.map((_,i)=>`<span class="paso ${i<nivel?'on':''}"></span>`).join('')}</div>
+            <span class="estado ${parada?'rojo':''}">${palabra}</span>`:''}
+          </div>`}).join('')}
+        </div></div>`;
+    }
+    h+='</section>';
   }
 
-  // HOY — lo que se revisa
-  h+=`<section class="franja"><div class="ftit"><span class="kick">Hoy</span>
-    <h2 class="serif">Para tu revisión</h2>
-    <span class="mini">${(D.propuestas||[]).length} propuesta(s)</span></div>`;
-  if(!(D.propuestas||[]).length){
-    h+=`<div class="vacio"><p>Hoy no hay nada que revisar.</p>
-      <p style="font-size:14px">Cuando haya propuestas nuevas aparecen aquí.</p></div>`;
-  }else{
-    const tot=D.propuestas.length;
-    h+=D.propuestas.map((p,k)=>{
-      const its=items(p), dn=its.filter((_,i)=>estado(p.id,i)).length;
-      const esTexto=!!(p.opciones&&p.opciones.length);
-      const GDES={eje:'Compuerta G0 · escoge UN eje — tres líneas hoy ahorran catorce láminas mañana',
-                  guion:'Compuerta G1 · el guion: apruébalo antes de gastar una sola imagen'};
-      return `
-      <section class="prop" data-p="${esc(p.id)}">
-        <div class="cab">
-          <div>
-            <span class="kick">${esTexto?(GDES[p.tipo]||'Propuesta de texto'):`Propuesta ${k+1} de ${tot} · ${its.length} láminas · ${p.video?'con video':'sin video todavía'}`}</span>
-            <h3 class="serif">${esc((p.titulo||'').replace(/^Pub\s*\d+\s*[-–]\s*/i,''))}</h3>
-          </div>
-          <span class="pastilla cuenta ${dn===its.length?'viva':''}"><b>${dn}</b> de ${its.length} decididas</span>
-          <div class="acciones">
-            ${p.tipo==='eje'?'':'<button data-todas="si">Aprobar todas</button>'}
-            <button class="menor" data-todas="null">Quitar marcas</button>
-            <button class="destruye" data-todas="no">Tirar todas</button>
-          </div>
-        </div>
-        ${esTexto?`<div class="opciones">${p.opciones.map((o,i)=>{
-          const e=estado(p.id,i);
-          return `<figure class="opcion ${e||''}" data-i="${i}">
-            <div class="cuerpo">
-              <span class="letra">Opción ${String.fromCharCode(65+i)}</span>
-              <h4 class="serif">${esc(o.titulo)}</h4>
-              <p>${esc(o.texto)}</p>
-            </div>
-            <div class="mando">
-              <button class="b-si${e==='si'?' on-si':''}" data-v="si" aria-label="Escoger opción ${String.fromCharCode(65+i)}">✓</button>
-              <button class="b-no${e==='no'?' on-no':''}" data-v="no" aria-label="Descartar opción ${String.fromCharCode(65+i)}">✕</button>
-            </div></figure>`}).join('')}
-        </div>`
-        :`<div class="tira">${p.laminas.map((l,i)=>{
-          const e=estado(p.id,i);
-          return `<figure class="${e||''}" data-i="${i}">
-            <div class="lienzo" title="Ver en grande">
-              <span class="num">${String(i+1).padStart(2,'0')}</span>
-              <img src="${esc(l)}" alt="Lámina ${i+1}">
-            </div>
-            <div class="mando">
-              <button class="b-si${e==='si'?' on-si':''}" data-v="si"
-                title="Aprobar — pícale otra vez para quitar la marca" aria-label="Aprobar lámina ${i+1}">✓</button>
-              <button class="b-no${e==='no'?' on-no':''}" data-v="no"
-                title="Tirar — pícale otra vez para quitar la marca" aria-label="Tirar lámina ${i+1}">✕</button>
-            </div></figure>`}).join('')}
-        </div>`}
-        ${p.video?`<span class="eti">El video</span>
-          <video src="${esc(p.video)}" controls preload="metadata" playsinline></video>`:''}
-        <span class="eti">Qué cambio en esta propuesta</span>
-        <textarea class="nota" rows="2"
-          placeholder="Escríbelo como se lo dirías a alguien: «la 4 está muy vacía, ponle gente trabajando»"
-          >${esc(ficha(p.id).nota||'')}</textarea>
-      </section>`}).join('');
-  }
-  h+='</section>';
-
-  // PRODUCCIÓN — el registro de lo que salió y lo que va en camino
   const pr=D.produccion||[];
   h+=`<section class="franja"><div class="ftit"><span class="kick">Producción</span>
-    <h2 class="serif">Lo que va en camino y lo que ya salió</h2>
-    <span class="mini">${pr.length} pieza(s)</span></div>`;
+    <h2 class="serif">En camino y publicado</h2><span class="mini">${pr.length} pieza(s)</span></div>
+    <div class="tarjes">${pr.map(x=>`<div class="tarj">
+      <span style="flex:1;min-width:150px">${esc(x.pieza)}</span>
+      <span class="chip ${esc(x.estado)}">${({video:'video listo',publicada:'publicada',rehacer:'en rehechura',aprobada:'aprobada',animando:'animándose'})[x.estado]||esc(x.estado)}</span>
+      <span style="color:var(--guia);font-size:12.5px">${esc(x.fecha||'')}</span>
+      <span class="det">${esc(x.detalle||'')}</span>
+    </div>`).join('')||'<div class="vacio" style="padding:20px">Nada en camino todavía.</div>'}</div></section>`;
 
-  // EL CONTROL — la pieza campeona; toda pieza nueva es un retador que debe vencerla
-  const c=D.control;
-  h+= c&&c.pieza
-    ? `<div class="control"><div class="quien">
-        <span class="corona">El control vigente</span>
-        <h4 class="serif">${esc(c.pieza)}</h4>
-        <span class="desde">campeona desde ${esc(c.desde||'')} · ${esc(c.formula||'')}</span>
-      </div><div class="cifras">
-        <div class="cifra"><div class="n">${esc(String(c.alcance??'—'))}</div><div class="t">alcance</div></div>
-        <div class="cifra"><div class="n">${esc(String(c.clics??'—'))}</div><div class="t">clics a la liga</div></div>
-        <div class="cifra"><div class="n">${esc(String(c.leads??'—'))}</div><div class="t">leads</div></div>
-      </div></div>`
-    : `<div class="control vacante"><div class="quien">
-        <span class="corona">El control · vacante</span>
-        <h4 class="serif">Todavía nadie se corona</h4>
-        <span class="desde">${esc((c&&c.nota)||'La primera pieza que traiga leads medidos se vuelve el control, y toda pieza nueva tendrá que vencerla con números.')}</span>
-      </div></div>`;
-  h+= pr.length ? `<table><thead><tr><th>Pieza</th><th>Estado</th><th>Última novedad</th><th>Fecha</th></tr></thead>
-    <tbody>${pr.map(x=>`<tr>
-      <td>${esc(x.pieza)}</td>
-      <td><span class="estado ${esc(x.estado)}">${({aprobada:'aprobada',animando:'animándose',video:'video listo',publicada:'publicada',rehacer:'en rehechura'})[x.estado]||esc(x.estado)}</span></td>
-      <td>${esc(x.detalle||'')}${x.enlace?` · <a href="${esc(x.enlace)}" target="_blank" rel="noopener">ver</a>`:''}</td>
-      <td style="color:var(--guia);white-space:nowrap">${esc(x.fecha||'')}</td>
-    </tr>`).join('')}</tbody></table>`
-    : `<div class="vacio"><p style="font-size:15px">Todavía no hay piezas en camino.</p></div>`;
-  h+='</section>';
-
-  // BITÁCORA — todo lo del día, con hora
   const bt=D.bitacora||[];
-  if(bt.length){
-    h+=`<section class="franja"><div class="ftit"><span class="kick">Bitácora</span>
-      <h2 class="serif">El registro del día</h2></div>
-      <ul class="bit">${bt.map(b=>`<li><span class="h">${esc(b.hora||'')}</span><span>${esc(b.evento||'')}</span></li>`).join('')}</ul>
-      </section>`;
-  }
-  m.innerHTML=h; cuenta();
+  h+=`<section class="franja"><div class="ftit"><span class="kick">Bitácora</span>
+    <h2 class="serif">El registro del día</h2></div>
+    <ul class="bit">${bt.map(b=>`<li><span class="h">${esc(b.hora||'')}</span><span>${esc(b.evento||'')}</span></li>`).join('')}</ul>
+    <div class="conexion" id="con">conexión: ${GAS()?'Sheet ✓':'sin Sheet — toca para conectar'}</div>
+  </section>`;
+  m.innerHTML=h;
+
+  m.querySelectorAll('.celda.parada').forEach(cel=>cel.onclick=()=>andon(cel.dataset.dia,cel.dataset.pieza));
+  $('#con').onclick=()=>{ $('#gasUrl').value=GAS(); $('#gasClave').value=CLAVE(); $('#dlg').showModal() };
 }
-
-/* delegado único (sobrevive repintados; sin onclick interpolado) */
-$('#m').addEventListener('click', ev=>{
-  const sec=ev.target.closest('section.prop'); if(!sec) return;
-  const pid=sec.dataset.p, b=ev.target.closest('button');
-  if(b && b.dataset.todas!==undefined)
-    return todas(pid, b.dataset.todas==='null'?null:b.dataset.todas);
-  const fig=ev.target.closest('figure'); if(!fig) return;
-  const i=+fig.dataset.i;
-  if(b && b.dataset.v) return marcar(pid,i,b.dataset.v);
-  if(ev.target.closest('.lienzo')) abrirVisor(pid,i);
-});
-$('#m').addEventListener('input', ev=>{
-  const sec=ev.target.closest('section.prop');
-  if(sec && ev.target.classList.contains('nota')){
-    ficha(sec.dataset.p).nota=ev.target.value; guardarLocal();
-  }
-});
-
-/* visor con teclado: ← → navegan, A aprueba, X tira, Esc cierra */
-let visorEn=null;
-function abrirVisor(pid,i){
-  cerrarVisor();
-  const p=prop(pid); if(!p||!p.laminas[i]) return;
-  visorEn={pid,i};
-  const v=document.createElement('div'); v.className='visor';
-  v.innerHTML=`<button class="cerrar menor">Cerrar ✕</button>
-    <img src="${esc(p.laminas[i])}" alt="Lámina ${i+1}">
-    <div class="fila">
-      <button data-n="-1">←</button>
-      <button data-v="si">✓ Aprobar</button>
-      <button class="destruye" data-v="no">✕ Tirar</button>
-      <button data-n="1">→</button>
-    </div>
-    <span class="aviso">${esc(p.titulo)} · lámina ${i+1} de ${p.laminas.length} · teclas: ← → · A · X</span>`;
-  v.addEventListener('click',ev=>{
-    const b=ev.target.closest('button');
-    if(!b){ if(ev.target===v) cerrarVisor(); return }
-    if(b.classList.contains('cerrar')) return cerrarVisor();
-    if(b.dataset.n){ const j=visorEn.i+ +b.dataset.n;
-      if(j>=0&&j<p.laminas.length) abrirVisor(pid,j); return }
-    if(b.dataset.v){ marcar(pid,visorEn.i,b.dataset.v); cerrarVisor() }
+function andon(diaP,pieza){
+  const velo=document.createElement('div'); velo.className='velo';
+  const h=document.createElement('div'); h.className='hoja';
+  h.innerHTML=`<p><b>${esc(pieza)}</b> lleva días detenida. ¿Qué hacemos?</p>
+    <div class="fila"><button class="destruye" data-d="matar">Mátala — libera el hueco</button>
+    <button class="dorado" data-d="empujar">Empújala — va primero</button></div>`;
+  document.body.append(velo,h);
+  const fuera=()=>{velo.remove();h.remove()};
+  velo.onclick=fuera;
+  h.querySelectorAll('button').forEach(b=>b.onclick=async()=>{
+    const cuerpo={accion:'parrilla_decision',clave:CLAVE(),dia:diaP,pieza,
+      decision:b.dataset.d,envio_id:uuid(),quien:ROL()};
+    fuera();
+    if(!GAS()){ encolar(cuerpo); toast('Decisión guardada — sube al conectar el Sheet',null); return }
+    try{
+      const r=await fetch(GAS(),{method:'POST',headers:{'Content-Type':'text/plain'},
+        body:JSON.stringify(cuerpo)});
+      const j=await r.json().catch(()=>({}));
+      if(!r.ok||j.error) throw 0;
+      toast(b.dataset.d==='matar'?'Hueco liberado — se llena con un formato probado':'La pieza va primero en producción',null);
+    }catch(e){ encolar(cuerpo); toast('Sin señal — quedó en cola',null) }
   });
-  document.body.appendChild(v);
 }
-function cerrarVisor(){ const v=document.querySelector('.visor'); if(v)v.remove(); visorEn=null }
-document.addEventListener('keydown',ev=>{
-  if(ev.key==='Escape') return cerrarVisor();
-  if(!visorEn) return;
-  const p=prop(visorEn.pid); if(!p) return;
-  if(ev.key==='ArrowLeft'  && visorEn.i>0) abrirVisor(visorEn.pid,visorEn.i-1);
-  if(ev.key==='ArrowRight' && visorEn.i<p.laminas.length-1) abrirVisor(visorEn.pid,visorEn.i+1);
-  if(ev.key==='a'||ev.key==='A'){ marcar(visorEn.pid,visorEn.i,'si'); cerrarVisor() }
-  if(ev.key==='x'||ev.key==='X'){ marcar(visorEn.pid,visorEn.i,'no'); cerrarVisor() }
-});
-window.addEventListener('beforeunload',ev=>{ if(sucio){ ev.preventDefault(); ev.returnValue='' } });
 
-/* ---- carga ---- */
+/* ═══ carga ═══ */
 async function traer(f){
   if(GAS()){
     const u=GAS()+'?recurso=dia&clave='+encodeURIComponent(CLAVE())+(f?'&f='+encodeURIComponent(f):'');
     const r=await fetch(u);
     if(!r.ok) throw new Error('el Sheet contestó '+r.status);
-    const j=await r.json();
-    if(j.error) throw new Error(j.error);
+    const j=await r.json(); if(j.error) throw new Error(j.error);
     return j;
   }
   const r=await fetch('datos/manifiesto.json?v='+Date.now());
@@ -575,12 +638,10 @@ async function traer(f){
 async function cargar(f){
   try{ D=await traer(f) }
   catch(e){
-    $('#m').innerHTML=`<div class="vacio"><p>No pude abrir la sala.</p>
-      <p style="font-size:14px">${esc(e.message)}</p>
-      <p style="font-size:14px">Vuelve a cargar. Si sigue igual, dímelo y lo reviso.</p></div>`;
-    $('#ok').disabled=true; return;
+    $('#umbral').innerHTML=`<div class="vacio"><p>No pude abrir la sala.</p>
+      <p style="font-size:14px">${esc(e.message)} — vuelve a cargar; si sigue, dímelo y lo reviso.</p></div>`;
+    return;
   }
-  $('#ok').disabled=false;
   fecha=D.fecha;
   const srv=D.decisiones&&Object.keys(D.decisiones).length?D.decisiones:null;
   let loc=null; try{ loc=JSON.parse(localStorage.getItem('sala-'+fecha)||'null') }catch(e){}
@@ -588,64 +649,30 @@ async function cargar(f){
   const tLoc=loc&&loc.tocado?loc.tocado:0;
   dec=(tLoc>tSrv&&loc)?loc:(srv||loc||{propuestas:{}});
   dec.propuestas ||= {};
-  const vigentes=new Set((D.propuestas||[]).map(p=>p.id));
-  for(const k of Object.keys(dec.propuestas)) if(!vigentes.has(k)) delete dec.propuestas[k];
-  sucio=tLoc>tSrv;
-  $('#general').value=dec.nota_general||'';
+  const vig=new Set((D.propuestas||[]).map(p=>p.id));
+  for(const k of Object.keys(dec.propuestas)) if(!vig.has(k)) delete dec.propuestas[k];
   $('#sel').innerHTML=(D.dias||[fecha]).slice().reverse()
     .map(d=>`<option value="${d}" ${d===fecha?'selected':''}>${dia(d)}</option>`).join('');
-  $('#aviso').className='aviso';
-  $('#aviso').textContent=srv&&srv.guardado
-    ?'enviada '+new Date(srv.guardado).toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'}):'';
-  $('#con').textContent=GAS()?'⚙︎ Sheet conectado':'⚙︎ conectar Sheet';
-  $('#con').classList.toggle('viva',!!GAS());
-  pintar();
+  pintarUmbral(); pintarMesa(); pintarCola();
 }
-$('#sel').onchange=e=>{
-  if(sucio && !confirm('Tienes marcas sin enviar. ¿Cambiar de día de todos modos?')){
-    e.target.value=fecha; return }
-  sucio=false; cargar(e.target.value);
-};
-$('#general').oninput=e=>{ dec.nota_general=e.target.value; guardarLocal() };
-
-/* enviar: al Sheet si está conectado; si no, queda firmada aquí y se sube al conectar */
-$('#ok').onclick=async()=>{
-  if(!fecha){ $('#aviso').className='aviso mal'; $('#aviso').textContent='no se pudo: la sala no cargó'; return }
-  dec.fecha=fecha; dec.nota_general=$('#general').value;
-  if(!GAS()){
-    dec.guardado=new Date().toISOString(); guardarLocal(); sucio=false;
-    $('#aviso').className='aviso bien';
-    $('#aviso').textContent='✓ guardada aquí · conéctame el Sheet y la subo';
-    return;
-  }
-  $('#ok').disabled=true; $('#aviso').className='aviso'; $('#aviso').textContent='guardando…';
-  try{
-    // text/plain para no despertar el preflight CORS, que Apps Script no contesta
-    const r=await fetch(GAS(),{method:'POST',headers:{'Content-Type':'text/plain'},
-      body:JSON.stringify({accion:'decidir',clave:CLAVE(),...dec})});
-    const j=await r.json().catch(()=>({}));
-    if(!r.ok||j.error) throw new Error(j.error||('el Sheet contestó '+r.status));
-    sucio=false;
-    $('#aviso').className='aviso bien';
-    $('#aviso').textContent='✓ enviada '+new Date(j.guardado||Date.now())
-      .toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'});
-  }catch(e){
-    $('#aviso').className='aviso mal';
-    $('#aviso').textContent='no se guardó · '+e.message;
-  }
-  $('#ok').disabled=false;
-};
-
-/* conexión al Sheet */
-$('#con').onclick=()=>{ $('#gasUrl').value=GAS(); $('#gasClave').value=CLAVE(); $('#dlg').showModal() };
+$('#sel').onchange=e=>cargar(e.target.value);
 $('#dlgNo').onclick=()=>$('#dlg').close();
 $('#dlgSi').onclick=()=>{
   const u=$('#gasUrl').value.trim();
   if(u && !/^https:\/\/script\.google(usercontent)?\.com\/.+\/exec$/.test(u)){
-    alert('Esa liga no parece de Apps Script (debe terminar en /exec).'); return }
+    toast('Esa liga no parece del conector (debe terminar en /exec)',null); return }
   localStorage.setItem('sala_gas',u);
   localStorage.setItem('sala_clave',$('#gasClave').value.trim());
-  $('#dlg').close(); cargar(fecha);
+  $('#dlg').close(); cargar(fecha); subirCola();
 };
+document.addEventListener('keydown',ev=>{
+  if(!turnoVivo) return;
+  const x=pasos[pasoIdx]; if(!x||x.tipo!=='lamina') return;
+  if(ev.key==='a'||ev.key==='A') marcar(x.pid,x.i,'si');
+  if(ev.key==='x'||ev.key==='X') marcar(x.pid,x.i,'no');
+  if(ev.key==='ArrowLeft'&&pasoIdx>0){ pasoIdx--; pintarPaso() }
+  if(ev.key==='ArrowRight'&&pasoIdx<pasos.length-1){ pasoIdx++; pintarPaso() }
+  if(ev.key==='Escape') cerrarTurno();
+});
 cargar();
 </script>
