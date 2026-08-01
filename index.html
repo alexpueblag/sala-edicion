@@ -233,9 +233,21 @@ function guardarLocal(){
 }
 function totales(){
   let s=0,n=0,t=0;
-  for(const p of D.propuestas||[]) items(p).forEach((_,i)=>{
-    t++; const e=estado(p.id,i); if(e==='si')s++; else if(e==='no')n++;
-  });
+  for(const p of D.propuestas||[]){
+    if(p.tipo==='eje'){
+      // la boleta es UNA decision, no tres: escoger una opcion la deja decidida,
+      // y «ninguna sirve» (todas en no) tambien. Sin esto, las dos opciones no
+      // elegidas contaban como pendientes y el envio pedia confirmacion siempre.
+      t++;
+      const ms=items(p).map((_,i)=>estado(p.id,i));
+      if(ms.some(e=>e==='si')) s++;
+      else if(ms.length&&ms.every(e=>e==='no')) n++;
+      continue;
+    }
+    items(p).forEach((_,i)=>{
+      t++; const e=estado(p.id,i); if(e==='si')s++; else if(e==='no')n++;
+    });
+  }
   return {s,n,t,falta:t-s-n};
 }
 
