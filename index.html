@@ -1,0 +1,535 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Sala de Edición · Yo Desarrollo</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>
+:root{
+  --tinta:#0a0a0c; --papel:#101014; --linea:#22222a; --linea2:#2e2e38;
+  --oro:#c2a06b; --oro-cl:#debc7e; --crema:#f4f1ec; --gris:#8a867e; --guia:#78736b;
+  --si:#3f7d62; --si-cl:#57a582; --no:#a3453a; --teal:#15514c;
+  --pie:calc(78px + env(safe-area-inset-bottom));
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--tinta);color:var(--crema);
+  font:16px/1.55 -apple-system,BlinkMacSystemFont,"Helvetica Neue",sans-serif;
+  -webkit-font-smoothing:antialiased}
+.serif{font-family:"Playfair Display","Iowan Old Style",Georgia,serif}
+a{color:var(--oro-cl)}
+
+header{position:sticky;top:0;z-index:30;background:rgba(10,10,12,.95);
+  backdrop-filter:blur(14px);border-bottom:1px solid var(--linea)}
+.barra{max-width:1560px;margin:0 auto;padding:16px 30px;display:flex;
+  align-items:center;gap:18px;flex-wrap:wrap}
+h1{margin:0;font-size:25px;font-weight:400;line-height:1.15}
+h1 em{color:var(--oro-cl);font-style:italic}
+.guia{font-size:13px;color:var(--guia);margin:3px 0 0}
+select{font:inherit;font-size:11px;letter-spacing:2.2px;text-transform:uppercase;
+  background:transparent;color:var(--gris);border:0;padding:5px 4px;cursor:pointer}
+select:focus{outline:1px solid var(--linea2);border-radius:6px}
+.marcador{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pastilla{border:1px solid var(--linea);border-radius:999px;padding:5px 13px;
+  color:var(--gris);font-size:13px;white-space:nowrap}
+.pastilla b{color:var(--crema);font-weight:600}
+.pastilla.viva{border-color:var(--oro);color:var(--oro-cl)}
+.pastilla.lig{border-style:dashed;cursor:pointer}
+
+button{font:inherit;cursor:pointer;border:1px solid var(--linea2);
+  background:transparent;color:var(--crema);border-radius:8px;padding:9px 16px;
+  transition:.13s;min-height:40px}
+button:hover{border-color:var(--oro)}
+button:focus-visible{outline:2px solid var(--oro);outline-offset:2px}
+.destruye{color:#c98c83}
+.destruye:hover{border-color:var(--no);background:rgba(163,69,58,.14)}
+.menor{color:var(--gris);border-color:transparent}
+.menor:hover{color:var(--crema);border-color:var(--linea2)}
+
+main{max-width:1560px;margin:0 auto;padding:28px 30px calc(var(--pie) + 40px)}
+
+/* ---- franjas ---- */
+.franja{margin:0 0 46px}
+.ftit{display:flex;align-items:baseline;gap:14px;border-bottom:1px solid var(--linea);
+  padding-bottom:10px;margin-bottom:18px}
+.ftit .kick{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--oro)}
+.ftit h2{margin:0;font-size:24px;font-weight:400}
+.ftit .mini{font-size:13px;color:var(--guia);margin-left:auto}
+
+/* retro de ayer */
+.retro{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.tarj{background:var(--papel);border:1px solid var(--linea);border-radius:9px;padding:15px 17px}
+.tarj .n{font-size:26px;font-family:Georgia,serif;color:var(--oro-cl);line-height:1.1}
+.tarj .t{font-size:13px;color:var(--gris);margin-top:3px}
+.tarj.nota-d{grid-column:1/-1}
+.tarj.nota-d .t{color:var(--crema);font-size:14px;font-style:italic}
+
+/* propuestas de hoy */
+.prop{margin-bottom:44px}
+.cab{display:flex;align-items:flex-end;gap:16px;padding-bottom:12px;
+  border-bottom:1px solid var(--linea);margin-bottom:18px;flex-wrap:wrap}
+.cab h3{margin:0;font-size:25px;font-weight:400;line-height:1.15}
+.kick{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--oro);
+  display:block;margin-bottom:6px}
+.acciones{margin-left:auto;display:flex;gap:7px;flex-wrap:wrap}
+.tira{display:grid;grid-template-columns:repeat(auto-fill,minmax(198px,1fr));gap:16px}
+figure{margin:0;border-radius:7px;overflow:hidden;background:var(--papel);
+  border:1px solid var(--linea);transition:border-color .13s,box-shadow .13s}
+figure.si{border-color:var(--si);box-shadow:0 0 0 1px var(--si)}
+figure.no{border-color:#4a2a26}
+.lienzo{position:relative;background:#0d0d11;cursor:zoom-in}
+figure img{display:block;width:100%;aspect-ratio:4/5;object-fit:contain;
+  transition:opacity .13s,filter .13s}
+figure.no img{opacity:.3;filter:grayscale(1)}
+.num{position:absolute;top:8px;left:9px;font-size:10px;letter-spacing:1.8px;
+  color:var(--crema);background:rgba(0,0,0,.62);padding:3px 7px;border-radius:4px}
+.mando{display:flex;gap:1px;background:var(--linea);border-top:1px solid var(--linea)}
+.mando button{flex:1;border:0;border-radius:0;padding:0;min-height:46px;font-size:17px;
+  background:var(--papel);color:var(--gris)}
+.mando button:hover{background:#191921;color:var(--crema)}
+.mando button.on-si{background:var(--si);color:#fff}
+.mando button.on-no{background:var(--no);color:#fff}
+textarea.nota{width:100%;margin-top:14px;background:var(--papel);color:var(--crema);
+  border:1px solid var(--linea);border-radius:8px;padding:12px 14px;font:inherit;
+  font-size:15px;resize:vertical;min-height:56px;display:block}
+textarea.nota:focus{outline:0;border-color:var(--oro)}
+::placeholder{color:var(--guia)}
+.eti{font-size:11px;letter-spacing:2.6px;text-transform:uppercase;color:var(--oro);
+  display:block;margin:16px 0 8px}
+video{width:100%;max-width:340px;border-radius:7px;border:1px solid var(--linea);
+  display:block;background:#000}
+
+/* producción */
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{font-size:11px;letter-spacing:2.4px;text-transform:uppercase;color:var(--guia);
+  text-align:left;font-weight:500;padding:8px 12px;border-bottom:1px solid var(--linea)}
+td{padding:11px 12px;border-bottom:1px solid var(--linea);vertical-align:top}
+.estado{display:inline-block;border-radius:999px;padding:3px 12px;font-size:12px;
+  border:1px solid var(--linea2);color:var(--gris);white-space:nowrap}
+.estado.aprobada{border-color:var(--oro);color:var(--oro-cl)}
+.estado.animando{border-color:#7d6a3f;color:#d9c08a}
+.estado.video{border-color:var(--si);color:var(--si-cl)}
+.estado.publicada{background:var(--teal);border-color:var(--teal);color:#e8efe9}
+.estado.rehacer{border-color:var(--no);color:#e0968b}
+
+/* bitácora */
+.bit{list-style:none;margin:0;padding:0;font-size:14px}
+.bit li{display:flex;gap:14px;padding:9px 0;border-bottom:1px solid var(--linea)}
+.bit .h{color:var(--guia);white-space:nowrap;font-variant-numeric:tabular-nums}
+
+.pie{position:fixed;left:0;right:0;bottom:0;background:rgba(10,10,12,.97);
+  backdrop-filter:blur(14px);border-top:1px solid var(--linea);z-index:30;
+  padding:14px 30px calc(14px + env(safe-area-inset-bottom))}
+.pie .barra{padding:0;gap:14px;flex-wrap:nowrap}
+.pie input{flex:1;min-width:0;background:var(--papel);color:var(--crema);
+  border:1px solid var(--linea);border-radius:8px;padding:11px 14px;font:inherit;font-size:15px}
+.pie input:focus{outline:0;border-color:var(--oro)}
+.enviar{background:var(--oro);color:#17130c;border-color:var(--oro);font-weight:600;
+  white-space:nowrap}
+.enviar:hover{background:var(--oro-cl);border-color:var(--oro-cl)}
+.enviar[disabled]{opacity:.45;cursor:default}
+.aviso{font-size:13px;color:var(--gris);white-space:nowrap}
+.aviso.mal{color:#e08a7e}
+.aviso.bien{color:var(--si-cl)}
+.vacio{text-align:center;padding:70px 20px;color:var(--gris)}
+.vacio p{font-size:18px;margin:0 0 6px}
+
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--pie) + 18px);
+  background:#17171d;border:1px solid var(--linea2);border-radius:10px;padding:11px 15px;
+  display:flex;gap:14px;align-items:center;z-index:40;font-size:14px;
+  box-shadow:0 10px 34px rgba(0,0,0,.55)}
+.toast button{padding:6px 12px;min-height:34px;font-size:14px;border-color:var(--oro);
+  color:var(--oro-cl)}
+.visor{position:fixed;inset:0;background:rgba(6,6,8,.96);z-index:50;display:flex;
+  align-items:center;justify-content:center;flex-direction:column;gap:14px;padding:24px}
+.visor img{max-width:min(94vw,760px);max-height:76vh;object-fit:contain;border-radius:6px}
+.visor .fila{display:flex;gap:9px;align-items:center}
+.visor .cerrar{position:absolute;top:16px;right:20px}
+
+dialog{background:var(--papel);color:var(--crema);border:1px solid var(--linea2);
+  border-radius:12px;padding:26px;max-width:440px;width:92vw}
+dialog::backdrop{background:rgba(6,6,8,.8)}
+dialog input{width:100%;background:var(--tinta);color:var(--crema);border:1px solid var(--linea);
+  border-radius:8px;padding:11px 13px;font:inherit;font-size:14px;margin:8px 0 14px}
+
+@media(max-width:700px){
+  .barra{padding:13px 16px;gap:12px}
+  main{padding:20px 16px calc(var(--pie) + 30px)}
+  h1{font-size:21px} .guia{display:none}
+  .cab h3{font-size:21px} .ftit h2{font-size:20px}
+  .tira{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:11px}
+  .acciones{width:100%;margin-left:0}
+  .acciones button{flex:1;font-size:14px;padding:9px 6px}
+  .pie{padding-left:16px;padding-right:16px}
+  .pie .barra{flex-wrap:wrap;gap:9px}
+  .pie input{font-size:16px;flex:1 0 100%;order:1}
+  .aviso{order:2;margin-right:auto}
+  .enviar{order:3}
+  .marcador{width:100%}
+  td,th{padding:8px 7px}
+}
+</style>
+
+<header>
+  <div class="barra">
+    <div>
+      <h1 class="serif">Sala de <em>Edición</em></h1>
+      <p class="guia">Palomea lo que sirve, tacha lo que no, y escribe lo que quieres distinto.</p>
+    </div>
+    <select id="sel" aria-label="Ver otro día"></select>
+    <div class="marcador">
+      <span class="pastilla">aprobadas <b id="ns">0</b></span>
+      <span class="pastilla">tiradas <b id="nn">0</b></span>
+      <span class="pastilla" id="pp">sin marcar <b id="np">0</b></span>
+      <span class="pastilla lig" id="con" title="Conexión con el Sheet">⚙︎</span>
+    </div>
+  </div>
+</header>
+
+<main id="m"><div class="vacio"><p>Abriendo la sala…</p></div></main>
+
+<div class="pie"><div class="barra">
+  <input id="general" placeholder="Nota para todo el día (opcional)…" aria-label="Nota para todo el día">
+  <span class="aviso" id="aviso"></span>
+  <button class="enviar" id="ok">Enviar mi revisión</button>
+</div></div>
+
+<dialog id="dlg">
+  <span class="kick">Conexión</span>
+  <h3 class="serif" style="margin:4px 0 10px;font-weight:400">El Sheet de la Sala</h3>
+  <p style="font-size:14px;color:var(--gris);margin:0 0 4px">Liga del Apps Script (termina en <code>/exec</code>):</p>
+  <input id="gasUrl" placeholder="https://script.google.com/macros/s/…/exec">
+  <p style="font-size:14px;color:var(--gris);margin:0 0 4px">Clave de la sala:</p>
+  <input id="gasClave" placeholder="la clave que quedó en la pestaña CONFIG">
+  <div style="display:flex;gap:9px;justify-content:flex-end">
+    <button class="menor" id="dlgNo">Cancelar</button>
+    <button class="enviar" id="dlgSi">Conectar</button>
+  </div>
+</dialog>
+
+<script>
+'use strict';
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let D={propuestas:[]}, dec={propuestas:{}}, fecha=null, sucio=false, deshacer=null;
+
+/* ---- fuente de datos: el GAS (Sheet) manda; sin GAS, el manifiesto del repo ----
+   El portal vive en GitHub Pages y no tiene servidor propio: los datos viajan por
+   un Apps Script pegado al Sheet (el patrón de la casa). Mientras el GAS no esté
+   conectado, lee datos/manifiesto.json del repo y guarda las decisiones en el
+   navegador — modo demo: todo funciona, nada se pierde, y al conectar se envían. */
+const GAS=()=>localStorage.getItem('sala_gas')||'';
+const CLAVE=()=>localStorage.getItem('sala_clave')||'';
+const arch=u=>u;                                   // las láminas ya son URLs del repo
+const dia=f=>{try{return new Date(f+'T12:00:00').toLocaleDateString('es-MX',
+  {weekday:'long',day:'numeric',month:'long'})}catch(e){return f}};
+
+function ficha(pid){
+  const p = dec.propuestas[pid] ||= {laminas:[],nota:''};
+  if(!Array.isArray(p.laminas)) p.laminas=[];
+  return p;
+}
+const prop=pid=>(D.propuestas||[]).find(x=>x.id===pid);
+const estado=(pid,i)=>ficha(pid).laminas[i]||null;
+
+function guardarLocal(){
+  sucio=true; pintarPie();
+  try{ localStorage.setItem('sala-'+fecha, JSON.stringify({...dec,tocado:Date.now()})) }catch(e){}
+}
+
+function refrescar(pid,i){
+  const f=document.querySelector(`section.prop[data-p="${CSS.escape(pid)}"] figure[data-i="${i}"]`);
+  if(!f) return;
+  const e=estado(pid,i);
+  f.className=e||'';
+  f.querySelector('.b-si').className='b-si'+(e==='si'?' on-si':'');
+  f.querySelector('.b-no').className='b-no'+(e==='no'?' on-no':'');
+}
+function refrescarProp(pid){
+  const p=prop(pid); if(!p) return;
+  p.laminas.forEach((_,i)=>refrescar(pid,i));
+  const sec=document.querySelector(`section.prop[data-p="${CSS.escape(pid)}"]`);
+  const c=sec&&sec.querySelector('.cuenta');
+  if(c){ const d=p.laminas.filter((_,i)=>estado(pid,i)).length;
+    c.innerHTML=`<b>${d}</b> de ${p.laminas.length} decididas`;
+    c.classList.toggle('viva', d===p.laminas.length); }
+}
+function marcar(pid,i,v){
+  const p=ficha(pid);
+  p.laminas[i]=p.laminas[i]===v?null:v;
+  refrescar(pid,i); refrescarProp(pid); cuenta(); guardarLocal();
+}
+function todas(pid,v){
+  const p=prop(pid); if(!p) return;
+  const antes=[...ficha(pid).laminas];
+  ficha(pid).laminas=p.laminas.map(()=>v);
+  refrescarProp(pid); cuenta(); guardarLocal();
+  mostrarDeshacer(v===null?'Marcas quitadas':(v==='si'?'Propuesta aprobada':'Propuesta tirada'),
+    ()=>{ ficha(pid).laminas=antes; refrescarProp(pid); cuenta(); guardarLocal() });
+}
+function mostrarDeshacer(txt,fn){
+  if(deshacer) deshacer.remove();
+  const t=document.createElement('div'); t.className='toast';
+  t.innerHTML=`<span>${esc(txt)}</span>`;
+  const b=document.createElement('button'); b.textContent='Deshacer';
+  b.onclick=()=>{ fn(); t.remove(); deshacer=null };
+  t.appendChild(b); document.body.appendChild(t); deshacer=t;
+  setTimeout(()=>{ if(deshacer===t){ t.remove(); deshacer=null } },7000);
+}
+function cuenta(){
+  let s=0,n=0,t=0;
+  for(const p of D.propuestas||[]) p.laminas.forEach((_,i)=>{
+    t++; const e=estado(p.id,i); if(e==='si')s++; else if(e==='no')n++;
+  });
+  $('#ns').textContent=s; $('#nn').textContent=n; $('#np').textContent=t-s-n;
+  $('#pp').classList.toggle('viva', t>0 && t-s-n===0);
+  document.title=(t-s-n)>0?`Sala de Edición · ${t-s-n} sin marcar`:`Sala de Edición · ${dia(fecha)}`;
+  pintarPie();
+}
+function pintarPie(){
+  const falta=+$('#np').textContent;
+  $('#ok').textContent=falta>0?`Enviar (faltan ${falta})`:'Enviar mi revisión';
+  if(sucio && !$('#aviso').classList.contains('mal')) $('#aviso').textContent='sin enviar';
+}
+
+/* ---- pintado por franjas: AYER · HOY · PRODUCCIÓN · BITÁCORA ---- */
+function pintar(){
+  const m=$('#m'); let h='';
+
+  // AYER — la retro: qué decidió y en qué acabó
+  const r=D.retro;
+  if(r && (r.aprobadas+r.tiradas+r.producidas>0 || r.nota)){
+    h+=`<section class="franja"><div class="ftit"><span class="kick">Ayer</span>
+      <h2 class="serif">Lo que decidiste, y en qué acabó</h2>
+      <span class="mini">${esc(dia(r.fecha||''))}</span></div>
+      <div class="retro">
+        <div class="tarj"><div class="n">${r.aprobadas||0}</div><div class="t">aprobadas por ti</div></div>
+        <div class="tarj"><div class="n">${r.tiradas||0}</div><div class="t">tiradas</div></div>
+        <div class="tarj"><div class="n">${r.producidas||0}</div><div class="t">ya son video</div></div>
+        <div class="tarj"><div class="n">${r.rehechas||0}</div><div class="t">rehechas con tu nota — vuelven hoy</div></div>
+        ${r.nota?`<div class="tarj nota-d"><div class="t">«${esc(r.nota)}» — tu nota de ayer, aplicada.</div></div>`:''}
+      </div></section>`;
+  }
+
+  // HOY — lo que se revisa
+  h+=`<section class="franja"><div class="ftit"><span class="kick">Hoy</span>
+    <h2 class="serif">Para tu revisión</h2>
+    <span class="mini">${(D.propuestas||[]).length} propuesta(s)</span></div>`;
+  if(!(D.propuestas||[]).length){
+    h+=`<div class="vacio"><p>Hoy no hay nada que revisar.</p>
+      <p style="font-size:14px">Cuando haya propuestas nuevas aparecen aquí.</p></div>`;
+  }else{
+    const tot=D.propuestas.length;
+    h+=D.propuestas.map((p,k)=>{
+      const dn=p.laminas.filter((_,i)=>estado(p.id,i)).length;
+      return `
+      <section class="prop" data-p="${esc(p.id)}">
+        <div class="cab">
+          <div>
+            <span class="kick">Propuesta ${k+1} de ${tot} · ${p.laminas.length} láminas · ${p.video?'con video':'sin video todavía'}</span>
+            <h3 class="serif">${esc((p.titulo||'').replace(/^Pub\s*\d+\s*[-–]\s*/i,''))}</h3>
+          </div>
+          <span class="pastilla cuenta ${dn===p.laminas.length?'viva':''}"><b>${dn}</b> de ${p.laminas.length} decididas</span>
+          <div class="acciones">
+            <button data-todas="si">Aprobar todas</button>
+            <button class="menor" data-todas="null">Quitar marcas</button>
+            <button class="destruye" data-todas="no">Tirar todas</button>
+          </div>
+        </div>
+        <div class="tira">${p.laminas.map((l,i)=>{
+          const e=estado(p.id,i);
+          return `<figure class="${e||''}" data-i="${i}">
+            <div class="lienzo" title="Ver en grande">
+              <span class="num">${String(i+1).padStart(2,'0')}</span>
+              <img src="${esc(l)}" alt="Lámina ${i+1}">
+            </div>
+            <div class="mando">
+              <button class="b-si${e==='si'?' on-si':''}" data-v="si"
+                title="Aprobar — pícale otra vez para quitar la marca" aria-label="Aprobar lámina ${i+1}">✓</button>
+              <button class="b-no${e==='no'?' on-no':''}" data-v="no"
+                title="Tirar — pícale otra vez para quitar la marca" aria-label="Tirar lámina ${i+1}">✕</button>
+            </div></figure>`}).join('')}
+        </div>
+        ${p.video?`<span class="eti">El video</span>
+          <video src="${esc(p.video)}" controls preload="metadata" playsinline></video>`:''}
+        <span class="eti">Qué cambio en esta propuesta</span>
+        <textarea class="nota" rows="2"
+          placeholder="Escríbelo como se lo dirías a alguien: «la 4 está muy vacía, ponle gente trabajando»"
+          >${esc(ficha(p.id).nota||'')}</textarea>
+      </section>`}).join('');
+  }
+  h+='</section>';
+
+  // PRODUCCIÓN — el registro de lo que salió y lo que va en camino
+  const pr=D.produccion||[];
+  h+=`<section class="franja"><div class="ftit"><span class="kick">Producción</span>
+    <h2 class="serif">Lo que va en camino y lo que ya salió</h2>
+    <span class="mini">${pr.length} pieza(s)</span></div>`;
+  h+= pr.length ? `<table><thead><tr><th>Pieza</th><th>Estado</th><th>Última novedad</th><th>Fecha</th></tr></thead>
+    <tbody>${pr.map(x=>`<tr>
+      <td>${esc(x.pieza)}</td>
+      <td><span class="estado ${esc(x.estado)}">${({aprobada:'aprobada',animando:'animándose',video:'video listo',publicada:'publicada',rehacer:'en rehechura'})[x.estado]||esc(x.estado)}</span></td>
+      <td>${esc(x.detalle||'')}${x.enlace?` · <a href="${esc(x.enlace)}" target="_blank" rel="noopener">ver</a>`:''}</td>
+      <td style="color:var(--guia);white-space:nowrap">${esc(x.fecha||'')}</td>
+    </tr>`).join('')}</tbody></table>`
+    : `<div class="vacio"><p style="font-size:15px">Todavía no hay piezas en camino.</p></div>`;
+  h+='</section>';
+
+  // BITÁCORA — todo lo del día, con hora
+  const bt=D.bitacora||[];
+  if(bt.length){
+    h+=`<section class="franja"><div class="ftit"><span class="kick">Bitácora</span>
+      <h2 class="serif">El registro del día</h2></div>
+      <ul class="bit">${bt.map(b=>`<li><span class="h">${esc(b.hora||'')}</span><span>${esc(b.evento||'')}</span></li>`).join('')}</ul>
+      </section>`;
+  }
+  m.innerHTML=h; cuenta();
+}
+
+/* delegado único (sobrevive repintados; sin onclick interpolado) */
+$('#m').addEventListener('click', ev=>{
+  const sec=ev.target.closest('section.prop'); if(!sec) return;
+  const pid=sec.dataset.p, b=ev.target.closest('button');
+  if(b && b.dataset.todas!==undefined)
+    return todas(pid, b.dataset.todas==='null'?null:b.dataset.todas);
+  const fig=ev.target.closest('figure'); if(!fig) return;
+  const i=+fig.dataset.i;
+  if(b && b.dataset.v) return marcar(pid,i,b.dataset.v);
+  if(ev.target.closest('.lienzo')) abrirVisor(pid,i);
+});
+$('#m').addEventListener('input', ev=>{
+  const sec=ev.target.closest('section.prop');
+  if(sec && ev.target.classList.contains('nota')){
+    ficha(sec.dataset.p).nota=ev.target.value; guardarLocal();
+  }
+});
+
+/* visor con teclado: ← → navegan, A aprueba, X tira, Esc cierra */
+let visorEn=null;
+function abrirVisor(pid,i){
+  cerrarVisor();
+  const p=prop(pid); if(!p||!p.laminas[i]) return;
+  visorEn={pid,i};
+  const v=document.createElement('div'); v.className='visor';
+  v.innerHTML=`<button class="cerrar menor">Cerrar ✕</button>
+    <img src="${esc(p.laminas[i])}" alt="Lámina ${i+1}">
+    <div class="fila">
+      <button data-n="-1">←</button>
+      <button data-v="si">✓ Aprobar</button>
+      <button class="destruye" data-v="no">✕ Tirar</button>
+      <button data-n="1">→</button>
+    </div>
+    <span class="aviso">${esc(p.titulo)} · lámina ${i+1} de ${p.laminas.length} · teclas: ← → · A · X</span>`;
+  v.addEventListener('click',ev=>{
+    const b=ev.target.closest('button');
+    if(!b){ if(ev.target===v) cerrarVisor(); return }
+    if(b.classList.contains('cerrar')) return cerrarVisor();
+    if(b.dataset.n){ const j=visorEn.i+ +b.dataset.n;
+      if(j>=0&&j<p.laminas.length) abrirVisor(pid,j); return }
+    if(b.dataset.v){ marcar(pid,visorEn.i,b.dataset.v); cerrarVisor() }
+  });
+  document.body.appendChild(v);
+}
+function cerrarVisor(){ const v=document.querySelector('.visor'); if(v)v.remove(); visorEn=null }
+document.addEventListener('keydown',ev=>{
+  if(ev.key==='Escape') return cerrarVisor();
+  if(!visorEn) return;
+  const p=prop(visorEn.pid); if(!p) return;
+  if(ev.key==='ArrowLeft'  && visorEn.i>0) abrirVisor(visorEn.pid,visorEn.i-1);
+  if(ev.key==='ArrowRight' && visorEn.i<p.laminas.length-1) abrirVisor(visorEn.pid,visorEn.i+1);
+  if(ev.key==='a'||ev.key==='A'){ marcar(visorEn.pid,visorEn.i,'si'); cerrarVisor() }
+  if(ev.key==='x'||ev.key==='X'){ marcar(visorEn.pid,visorEn.i,'no'); cerrarVisor() }
+});
+window.addEventListener('beforeunload',ev=>{ if(sucio){ ev.preventDefault(); ev.returnValue='' } });
+
+/* ---- carga ---- */
+async function traer(f){
+  if(GAS()){
+    const u=GAS()+'?recurso=dia&clave='+encodeURIComponent(CLAVE())+(f?'&f='+encodeURIComponent(f):'');
+    const r=await fetch(u);
+    if(!r.ok) throw new Error('el Sheet contestó '+r.status);
+    const j=await r.json();
+    if(j.error) throw new Error(j.error);
+    return j;
+  }
+  const r=await fetch('datos/manifiesto.json?v='+Date.now());
+  if(!r.ok) throw new Error('no encontré el manifiesto del repo');
+  const j=await r.json();
+  if(f && j.fecha!==f && (j.historial||{})[f]) return {...j,...(j.historial[f]),fecha:f};
+  return j;
+}
+async function cargar(f){
+  try{ D=await traer(f) }
+  catch(e){
+    $('#m').innerHTML=`<div class="vacio"><p>No pude abrir la sala.</p>
+      <p style="font-size:14px">${esc(e.message)}</p>
+      <p style="font-size:14px">Vuelve a cargar. Si sigue igual, dímelo y lo reviso.</p></div>`;
+    $('#ok').disabled=true; return;
+  }
+  $('#ok').disabled=false;
+  fecha=D.fecha;
+  const srv=D.decisiones&&Object.keys(D.decisiones).length?D.decisiones:null;
+  let loc=null; try{ loc=JSON.parse(localStorage.getItem('sala-'+fecha)||'null') }catch(e){}
+  const tSrv=srv&&srv.guardado?Date.parse(srv.guardado):0;
+  const tLoc=loc&&loc.tocado?loc.tocado:0;
+  dec=(tLoc>tSrv&&loc)?loc:(srv||loc||{propuestas:{}});
+  dec.propuestas ||= {};
+  const vigentes=new Set((D.propuestas||[]).map(p=>p.id));
+  for(const k of Object.keys(dec.propuestas)) if(!vigentes.has(k)) delete dec.propuestas[k];
+  sucio=tLoc>tSrv;
+  $('#general').value=dec.nota_general||'';
+  $('#sel').innerHTML=(D.dias||[fecha]).slice().reverse()
+    .map(d=>`<option value="${d}" ${d===fecha?'selected':''}>${dia(d)}</option>`).join('');
+  $('#aviso').className='aviso';
+  $('#aviso').textContent=srv&&srv.guardado
+    ?'enviada '+new Date(srv.guardado).toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'}):'';
+  $('#con').textContent=GAS()?'⚙︎ Sheet conectado':'⚙︎ conectar Sheet';
+  $('#con').classList.toggle('viva',!!GAS());
+  pintar();
+}
+$('#sel').onchange=e=>{
+  if(sucio && !confirm('Tienes marcas sin enviar. ¿Cambiar de día de todos modos?')){
+    e.target.value=fecha; return }
+  sucio=false; cargar(e.target.value);
+};
+$('#general').oninput=e=>{ dec.nota_general=e.target.value; guardarLocal() };
+
+/* enviar: al Sheet si está conectado; si no, queda firmada aquí y se sube al conectar */
+$('#ok').onclick=async()=>{
+  if(!fecha){ $('#aviso').className='aviso mal'; $('#aviso').textContent='no se pudo: la sala no cargó'; return }
+  dec.fecha=fecha; dec.nota_general=$('#general').value;
+  if(!GAS()){
+    dec.guardado=new Date().toISOString(); guardarLocal(); sucio=false;
+    $('#aviso').className='aviso bien';
+    $('#aviso').textContent='✓ guardada aquí · conéctame el Sheet y la subo';
+    return;
+  }
+  $('#ok').disabled=true; $('#aviso').className='aviso'; $('#aviso').textContent='guardando…';
+  try{
+    // text/plain para no despertar el preflight CORS, que Apps Script no contesta
+    const r=await fetch(GAS(),{method:'POST',headers:{'Content-Type':'text/plain'},
+      body:JSON.stringify({accion:'decidir',clave:CLAVE(),...dec})});
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok||j.error) throw new Error(j.error||('el Sheet contestó '+r.status));
+    sucio=false;
+    $('#aviso').className='aviso bien';
+    $('#aviso').textContent='✓ enviada '+new Date(j.guardado||Date.now())
+      .toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'});
+  }catch(e){
+    $('#aviso').className='aviso mal';
+    $('#aviso').textContent='no se guardó · '+e.message;
+  }
+  $('#ok').disabled=false;
+};
+
+/* conexión al Sheet */
+$('#con').onclick=()=>{ $('#gasUrl').value=GAS(); $('#gasClave').value=CLAVE(); $('#dlg').showModal() };
+$('#dlgNo').onclick=()=>$('#dlg').close();
+$('#dlgSi').onclick=()=>{
+  const u=$('#gasUrl').value.trim();
+  if(u && !/^https:\/\/script\.google(usercontent)?\.com\/.+\/exec$/.test(u)){
+    alert('Esa liga no parece de Apps Script (debe terminar en /exec).'); return }
+  localStorage.setItem('sala_gas',u);
+  localStorage.setItem('sala_clave',$('#gasClave').value.trim());
+  $('#dlg').close(); cargar(fecha);
+};
+cargar();
+</script>

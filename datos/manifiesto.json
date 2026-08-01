@@ -1,0 +1,41 @@
+{
+ "_que_es": "Manifiesto de respaldo: el portal lo lee cuando el Sheet aún no está conectado. Cuando el GAS ya está en línea, esta copia queda de plan B.",
+ "fecha": "2026-08-01",
+ "dias": ["2026-08-01"],
+ "propuestas": [
+  {
+   "id": "pub1-terreno-si",
+   "titulo": "El terreno que dijo que sí",
+   "laminas": [
+    "laminas/pub1/L1.png",
+    "laminas/pub1/L2.png",
+    "laminas/pub1/L3.png",
+    "laminas/pub1/L4.png",
+    "laminas/pub1/L5.png",
+    "laminas/pub1/L6.png",
+    "laminas/pub1/L7.png"
+   ],
+   "video": "video/pub1/PUBLICACION.mp4"
+  }
+ ],
+ "retro": {
+  "fecha": "2026-07-31",
+  "aprobadas": 7,
+  "tiradas": 2,
+  "producidas": 7,
+  "rehechas": 1,
+  "nota": "quien se debe de mover es la maquinaria, los viejos estáticos"
+ },
+ "produccion": [
+  {"pieza": "El terreno que dijo que sí · video 41s", "estado": "video", "detalle": "7 escenas con voz, listo para tu OK", "fecha": "2026-08-01"},
+  {"pieza": "El terreno que dijo que sí · carrusel", "estado": "publicada", "detalle": "FB + IG, liga medible activa", "fecha": "2026-07-27"},
+  {"pieza": "La Servilleta · láminas", "estado": "rehacer", "detalle": "quitar «EDICIÓN POR AURUM ARQUITECTOS»", "fecha": "2026-08-01"}
+ ],
+ "bitacora": [
+  {"hora": "07:00", "evento": "Propuestas del día montadas en la Sala"},
+  {"hora": "09:24", "evento": "Escenas R4–R7 generadas (672×832, encuadre vertical)"},
+  {"hora": "10:15", "evento": "Video de 41 s editado: kicker, diálogo, palabra dorada y voces"},
+  {"hora": "11:10", "evento": "Portal auditado por 29 agentes: 21 defectos cerrados"}
+ ],
+ "decisiones": {}
+}
