@@ -164,6 +164,10 @@ dialog input{width:100%;background:var(--tinta);color:var(--crema);border:1px so
   header{padding:16px 16px 4px} .umbral{padding:8px 16px 20px} main{padding:4px 16px 90px}
   h1{font-size:21px}
 }
+.aviso-edicion{margin-top:8px;font-size:13px;padding:7px 12px;border-radius:7px;
+  background:rgba(120,110,90,.10);color:#5a5346;border:1px solid rgba(120,110,90,.22);}
+.aviso-edicion[data-viejo="1"]{background:rgba(160,90,30,.10);color:#8a5f18;
+  border-color:rgba(160,90,30,.34);font-weight:600;}
 </style>
 
 <header>
@@ -172,6 +176,7 @@ dialog input{width:100%;background:var(--tinta);color:var(--crema);border:1px so
     <select id="sel" aria-label="Ver otro día"></select>
     <span class="avance" id="avance"><b>0</b> de 0</span>
   </div>
+  <div class="aviso-edicion" id="avisoEdicion" hidden></div>
 </header>
 
 <section class="umbral" id="umbral"></section>
@@ -644,9 +649,26 @@ async function traer(f){
   const r=await fetch('datos/manifiesto.json?v='+Date.now());
   if(!r.ok) throw new Error('no encontré el manifiesto del repo');
   const j=await r.json();
-  if(f && j.fecha!==f && (j.historial||{})[f]) return {...j,...(j.historial[f]),fecha:f};
+  // Viene del respaldo del repo, no del Sheet: se marca para poder avisarlo en pantalla.
+  j._respaldo = true;
+  if(f && j.fecha!==f && (j.historial||{})[f]) return {...j,...(j.historial[f]),fecha:f,_respaldo:true};
   return j;
 }
+// Avisa cuando lo que está en pantalla NO es la edición de hoy: sin esto, la sala
+// dice "Revisar hoy" y "Ayer: …" sobre una edición vieja y nadie lo nota.
+function pintarAvisoEdicion(){
+  const el=document.getElementById('avisoEdicion'); if(!el) return;
+  const f=(D&&D.fecha)||''; if(!f){ el.hidden=true; return; }
+  const hoyISO=new Date().toLocaleDateString('sv-SE');
+  if(f===hoyISO && !(D&&D._respaldo)){ el.hidden=true; return; }
+  const dias=Math.round((new Date(hoyISO+'T12:00:00')-new Date(f+'T12:00:00'))/86400000);
+  const bonito=new Date(f+'T12:00:00').toLocaleDateString('es-MX',{day:'numeric',month:'long'});
+  let txt = f===hoyISO ? 'Edición de hoy' : ('Estás viendo la edición del '+bonito+(dias>0?' · hace '+dias+(dias===1?' día':' días'):''));
+  if(D&&D._respaldo) txt += ' · respaldo local, el Sheet no respondió';
+  el.textContent=txt; el.hidden=false;
+  el.dataset.viejo = (dias>=2 || (D&&D._respaldo)) ? '1' : '';
+}
+
 async function cargar(f){
   try{ D=await traer(f) }
   catch(e){
@@ -655,6 +677,7 @@ async function cargar(f){
     return;
   }
   fecha=D.fecha;
+  pintarAvisoEdicion();
   const srv=D.decisiones&&Object.keys(D.decisiones).length?D.decisiones:null;
   let loc=null; try{ loc=JSON.parse(localStorage.getItem('sala-'+fecha)||'null') }catch(e){}
   const tSrv=srv&&srv.guardado?Date.parse(srv.guardado):0;
