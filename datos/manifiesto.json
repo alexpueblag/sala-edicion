@@ -7,41 +7,6 @@
  ],
  "propuestas": [
   {
-   "id": "guion-servilleta-4ago",
-   "titulo": "La Servilleta · el guion (nace de tu eje)",
-   "tipo": "guion",
-   "opciones": [
-    {
-     "titulo": "Latido 1 · Todos opinan",
-     "texto": "—Mi compadre dice que ahí van locales. —¿Y él cuándo ha construido algo? · Foto: el terreno urbano, bardas, la esquina viva."
-    },
-    {
-     "titulo": "Latido 2 · La servilleta",
-     "texto": "El cuñado lo dibujó en una servilleta: seis locales y un segundo piso. · Foto: la servilleta garabateada sobre la mesa, café."
-    },
-    {
-     "titulo": "Latido 3 · Cada quien su versión",
-     "texto": "—El de la inmobiliaria dice que puro departamento. —Ayer dijo bodegas. · Foto: el dueño oyendo, medio cansado."
-    },
-    {
-     "titulo": "Latido 4 · La verdad incómoda",
-     "texto": "Cada opinión mide lo que el que opina te quiere vender. · Cartel: frase sola sobre el terreno al atardecer."
-    },
-    {
-     "titulo": "Latido 5 · El giro",
-     "texto": "—¿Y si mejor lo calculamos? · Palabra dorada: calculamos. La primera voz que no opina: pregunta."
-    },
-    {
-     "titulo": "Latido 6 · El expediente",
-     "texto": "El suelo dijo su número: lo que permite el uso, lo que aguantan los servicios, lo que sostiene la calle. · Foto: el expediente abierto JUNTO a la servilleta."
-    },
-    {
-     "titulo": "Latido 7 · Cierre",
-     "texto": "La opinión no aguanta un plano. · Plan de Potencial · la primera videollamada no cuesta."
-    }
-   ]
-  },
-  {
    "id": "servilleta-g2-48820d",
    "titulo": "La Servilleta · las 7 láminas (de tus latidos)",
    "laminas": [
@@ -66,7 +31,7 @@
   {
    "fecha": "2026-08-04",
    "pieza": "La Servilleta",
-   "gate": "g1",
+   "gate": "g2",
    "desde": "2026-08-04"
   },
   {
@@ -170,6 +135,10 @@
   {
    "hora": "14:35",
    "evento": "Propuesta montada: La Servilleta · las 7 láminas (de tus latidos) (7 láminas)"
+  },
+  {
+   "hora": "14:37",
+   "evento": "Corriente conectada: las 7 láminas de La Servilleta generadas y montadas — esperan tu palomeo"
   }
  ],
  "decisiones": {},
