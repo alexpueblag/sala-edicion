@@ -43,7 +43,7 @@
   },
   {
    "id": "servilleta-g2-48820d",
-   "titulo": "La Servilleta · las láminas (de tus latidos)",
+   "titulo": "La Servilleta · L1 rehecha con tu nota (las otras 6 salen al conectar el cargador)",
    "laminas": [
     "laminas/servilleta-g2/L1.png"
    ],
@@ -156,6 +156,10 @@
   {
    "hora": "11:30",
    "evento": "Propuesta montada: La Servilleta · las láminas (de tus latidos) (1 láminas)"
+  },
+  {
+   "hora": "12:20",
+   "evento": "La Mac se quedó al 3% de pila: salió la L1 (tu escena de familia); las otras 6 esperan corriente"
   }
  ],
  "decisiones": {},
