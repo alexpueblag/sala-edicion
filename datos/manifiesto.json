@@ -1,43 +1,45 @@
 {
  "_que_es": "Manifiesto de respaldo: el portal lo lee cuando el Sheet aún no está conectado. Cuando el GAS ya está en línea, esta copia queda de plan B.",
- "fecha": "2026-08-01",
+ "fecha": "2026-08-04",
  "dias": [
-  "2026-08-01"
+  "2026-08-01",
+  "2026-08-04"
  ],
  "propuestas": [
   {
-   "id": "eje-semana-4ago",
-   "titulo": "El eje de la semana (4–9 de agosto)",
-   "tipo": "eje",
+   "id": "guion-servilleta-4ago",
+   "titulo": "La Servilleta · el guion (nace de tu eje)",
+   "tipo": "guion",
    "opciones": [
     {
-     "titulo": "La opinión no aguanta un plano",
-     "texto": "Todos opinan sobre tu terreno: el compadre, el vecino, el cuñado. Ninguna opinión sobrevive a un análisis. La Servilleta como pieza ancla: la servilleta garabateada contra el expediente. Palanca: certeza (dato vs opinión)."
+     "titulo": "Latido 1 · Todos opinan",
+     "texto": "—Mi compadre dice que ahí van locales. —¿Y él cuándo ha construido algo? · Foto: el terreno urbano, bardas, la esquina viva."
     },
     {
-     "titulo": "Nadie decide con menos información que el comprador",
-     "texto": "Continuar el eje que ya publicaste en Pub 1: el que ofrece por tu terreno llega con su análisis hecho; el Plan de Potencial es esa misma tarea del lado del dueño. Profundizar lo que ya funciona en vez de estrenar."
+     "titulo": "Latido 2 · La servilleta",
+     "texto": "El cuñado lo dibujó en una servilleta: seis locales y un segundo piso. · Foto: la servilleta garabateada sobre la mesa, café."
     },
     {
-     "titulo": "El terreno no urge. Tú sí.",
-     "texto": "El terreno aguanta décadas igual; el dueño no: los planes personales sí tienen fecha. La palanca del corazón (costo personal de la pausa), sin cifras y sin prometer plazos. La Obra que No Empezó como pieza ancla."
+     "titulo": "Latido 3 · Cada quien su versión",
+     "texto": "—El de la inmobiliaria dice que puro departamento. —Ayer dijo bodegas. · Foto: el dueño oyendo, medio cansado."
+    },
+    {
+     "titulo": "Latido 4 · La verdad incómoda",
+     "texto": "Cada opinión mide lo que el que opina te quiere vender. · Cartel: frase sola sobre el terreno al atardecer."
+    },
+    {
+     "titulo": "Latido 5 · El giro",
+     "texto": "—¿Y si mejor lo calculamos? · Palabra dorada: calculamos. La primera voz que no opina: pregunta."
+    },
+    {
+     "titulo": "Latido 6 · El expediente",
+     "texto": "El suelo dijo su número: lo que permite el uso, lo que aguantan los servicios, lo que sostiene la calle. · Foto: el expediente abierto JUNTO a la servilleta."
+    },
+    {
+     "titulo": "Latido 7 · Cierre",
+     "texto": "La opinión no aguanta un plano. · Plan de Potencial · la primera videollamada no cuesta."
     }
    ]
-  },
-  {
-   "id": "pub1-terreno-si",
-   "titulo": "El terreno que dijo que sí · el video",
-   "tipo": "laminas",
-   "laminas": [
-    "laminas/pub1/L1.png",
-    "laminas/pub1/L2.png",
-    "laminas/pub1/L3.png",
-    "laminas/pub1/L4.png",
-    "laminas/pub1/L5.png",
-    "laminas/pub1/L6.png",
-    "laminas/pub1/L7.png"
-   ],
-   "video": "video/pub1/PUBLICACION.mp4"
   }
  ],
  "parrilla": [
@@ -50,8 +52,8 @@
   {
    "fecha": "2026-08-04",
    "pieza": "La Servilleta",
-   "gate": "rehacer",
-   "desde": "2026-07-29"
+   "gate": "g1",
+   "desde": "2026-08-04"
   },
   {
    "fecha": "2026-08-06",
@@ -103,12 +105,12 @@
   "nota": "Aún no hay leads medidos (leads_utm_activo sigue apagado: los 5 históricos llegaron directo). La primera pieza que traiga un lead con liga etiquetada se corona control; mientras, la líder provisional por interacciones es Pub 1 en IG."
  },
  "retro": {
-  "fecha": "2026-07-31",
-  "aprobadas": 7,
-  "tiradas": 2,
-  "producidas": 7,
-  "rehechas": 1,
-  "nota": "quien se debe de mover es la maquinaria, los viejos estáticos"
+  "fecha": "2026-08-01",
+  "aprobadas": 3,
+  "tiradas": 0,
+  "producidas": 1,
+  "rehechas": 0,
+  "nota": "elegiste el eje «La opinión no aguanta un plano» y empujaste La Servilleta"
  },
  "produccion": [
   {
@@ -132,25 +134,99 @@
  ],
  "bitacora": [
   {
-   "hora": "07:00",
-   "evento": "Propuestas del día montadas en la Sala"
+   "hora": "11:03",
+   "evento": "Tu revisión del viernes RESCATADA del navegador (el Sheet sigue sin conectar): eje A elegido, L6-L7 aprobadas, Servilleta empujada"
   },
   {
-   "hora": "10:15",
-   "evento": "Video de Pub 1 editado: 41 s con voces y palabra dorada"
+   "hora": "11:03",
+   "evento": "Producido de tu eje: el guion de La Servilleta en 7 latidos — te espera arriba para palomear"
   },
   {
-   "hora": "12:30",
-   "evento": "Sala v2: parrilla, compuertas G0–G4, el control, colchón y andón"
-  },
-  {
-   "hora": "13:05",
-   "evento": "Video de Pub 1 montado para publicar: liga medible, G4 limpia, botón entregado al editor"
-  },
-  {
-   "hora": "07:27",
-   "evento": "El cuento amaneció armado: voces actuadas (pareja dirigida), escenas re-montadas a su respiración"
+   "hora": "11:03",
+   "evento": "La Servilleta pasó a «en guion» y va primero, como ordenaste con el andón"
   }
  ],
- "decisiones": {}
+ "decisiones": {},
+ "historial": {
+  "2026-08-01": {
+   "propuestas": [
+    {
+     "id": "eje-semana-4ago",
+     "titulo": "El eje de la semana (4–9 de agosto)",
+     "tipo": "eje",
+     "opciones": [
+      {
+       "titulo": "La opinión no aguanta un plano",
+       "texto": "Todos opinan sobre tu terreno: el compadre, el vecino, el cuñado. Ninguna opinión sobrevive a un análisis. La Servilleta como pieza ancla: la servilleta garabateada contra el expediente. Palanca: certeza (dato vs opinión)."
+      },
+      {
+       "titulo": "Nadie decide con menos información que el comprador",
+       "texto": "Continuar el eje que ya publicaste en Pub 1: el que ofrece por tu terreno llega con su análisis hecho; el Plan de Potencial es esa misma tarea del lado del dueño. Profundizar lo que ya funciona en vez de estrenar."
+      },
+      {
+       "titulo": "El terreno no urge. Tú sí.",
+       "texto": "El terreno aguanta décadas igual; el dueño no: los planes personales sí tienen fecha. La palanca del corazón (costo personal de la pausa), sin cifras y sin prometer plazos. La Obra que No Empezó como pieza ancla."
+      }
+     ]
+    },
+    {
+     "id": "pub1-terreno-si",
+     "titulo": "El terreno que dijo que sí · el video",
+     "tipo": "laminas",
+     "laminas": [
+      "laminas/pub1/L1.png",
+      "laminas/pub1/L2.png",
+      "laminas/pub1/L3.png",
+      "laminas/pub1/L4.png",
+      "laminas/pub1/L5.png",
+      "laminas/pub1/L6.png",
+      "laminas/pub1/L7.png"
+     ],
+     "video": "video/pub1/PUBLICACION.mp4"
+    }
+   ],
+   "produccion": [
+    {
+     "pieza": "El terreno que dijo que sí · el cuento (47 s)",
+     "estado": "video",
+     "detalle": "7 escenas actuadas, ritmo +10%, listo para tu doble clic",
+     "fecha": "2026-08-01"
+    },
+    {
+     "pieza": "El terreno que dijo que sí · carrusel",
+     "estado": "publicada",
+     "detalle": "FB + IG · liga medible activa · 4 interacciones IG al 30-jul",
+     "fecha": "2026-07-27"
+    },
+    {
+     "pieza": "La Servilleta · láminas",
+     "estado": "rehacer",
+     "detalle": "quitar «EDICIÓN POR AURUM ARQUITECTOS»",
+     "fecha": "2026-07-29"
+    }
+   ],
+   "bitacora": [
+    {
+     "hora": "07:00",
+     "evento": "Propuestas del día montadas en la Sala"
+    },
+    {
+     "hora": "10:15",
+     "evento": "Video de Pub 1 editado: 41 s con voces y palabra dorada"
+    },
+    {
+     "hora": "12:30",
+     "evento": "Sala v2: parrilla, compuertas G0–G4, el control, colchón y andón"
+    },
+    {
+     "hora": "13:05",
+     "evento": "Video de Pub 1 montado para publicar: liga medible, G4 limpia, botón entregado al editor"
+    },
+    {
+     "hora": "07:27",
+     "evento": "El cuento amaneció armado: voces actuadas (pareja dirigida), escenas re-montadas a su respiración"
+    }
+   ]
+  }
+ }
 }
