@@ -313,6 +313,11 @@ function construirPasos(){
   pasos=[];
   for(const p of D.propuestas||[]){
     if(p.tipo==='eje') pasos.push({tipo:'boleta',pid:p.id});
+    else if(p.opciones&&p.opciones.length)
+      // propuestas de TEXTO (guiones, latidos): una tarjeta por pantalla con ✓/✕.
+      // Antes caian al camino de laminas, p.laminas venia vacio y el Turno se
+      // abria en negro — el bug de «se queda en negro cuando le pico revisar».
+      p.opciones.forEach((_,i)=>pasos.push({tipo:'texto',pid:p.id,i}));
     else items(p).forEach((_,i)=>pasos.push({tipo:'lamina',pid:p.id,i}));
     pasos.push({tipo:'nota',pid:p.id});
   }
@@ -337,10 +342,10 @@ function saltarAPendiente(){
   if(j>=0){ pasoIdx=j; pintarPaso() }
 }
 function pintarPaso(){
-  const x=pasos[pasoIdx], laminasTot=pasos.filter(p=>p.tipo==='lamina'||p.tipo==='boleta').length;
-  const idxDec=pasos.slice(0,pasoIdx+1).filter(p=>p.tipo==='lamina'||p.tipo==='boleta').length;
+  const x=pasos[pasoIdx], laminasTot=pasos.filter(p=>['lamina','boleta','texto'].includes(p.tipo)).length;
+  const idxDec=pasos.slice(0,pasoIdx+1).filter(p=>['lamina','boleta','texto'].includes(p.tipo)).length;
   const arriba=`<div class="arriba">
-    <span class="cuentaT" id="verMapa">${x.tipo==='firma'?'para terminar':`${idxDec} de ${laminasTot} · toca para ver la tira`}</span>
+    <span class="cuentaT" id="verMapa">${x.tipo==='firma'?'para terminar':`${idxDec} de ${laminasTot}${x.tipo==='lamina'?' · toca para ver la tira':''}`}</span>
     <button class="menor salir" id="salirT">Guardar y salir</button></div>`;
 
   if(x.tipo==='lamina'){
@@ -353,6 +358,25 @@ function pintarPaso(){
       <div class="mandoT">
         <button class="tno ${e==='no'?'on':''}" data-v="no" aria-label="Tirar">✕ Tirar</button>
         <button class="tsi ${e==='si'?'on':''}" data-v="si" aria-label="Aprobar">✓ Aprobar</button>
+      </div>`;
+    turnoVivo.querySelectorAll('.mandoT button').forEach(b=>
+      b.onclick=()=>marcar(x.pid,x.i,b.dataset.v));
+    gestos($('#esc'),x);
+  }
+  if(x.tipo==='texto'){
+    const p=prop(x.pid), o=p.opciones[x.i], e=estado(x.pid,x.i);
+    turnoVivo.innerHTML=`${arriba}
+      <div class="escena" id="esc"><div class="boleta" style="max-width:520px">
+        <span class="kick" style="text-align:center">${esc(p.titulo)}</span>
+        <div class="opcion ${e==='si'?'si':''}" style="${e==='no'?'opacity:.55':''}">
+          <span class="kick">${esc(o.titulo)}</span>
+          <h4 class="serif" style="font-size:22px;line-height:1.4">${esc(o.texto)}</h4>
+        </div>
+        <p class="intro">Palomea el latido si va; táchalo y dime en la nota qué cambio.</p>
+      </div></div>
+      <div class="mandoT">
+        <button class="tno ${e==='no'?'on':''}" data-v="no" aria-label="Tirar">✕ Cambiar</button>
+        <button class="tsi ${e==='si'?'on':''}" data-v="si" aria-label="Aprobar">✓ Va</button>
       </div>`;
     turnoVivo.querySelectorAll('.mandoT button').forEach(b=>
       b.onclick=()=>marcar(x.pid,x.i,b.dataset.v));
@@ -702,7 +726,7 @@ $('#dlgSi').onclick=()=>{
 };
 document.addEventListener('keydown',ev=>{
   if(!turnoVivo) return;
-  const x=pasos[pasoIdx]; if(!x||x.tipo!=='lamina') return;
+  const x=pasos[pasoIdx]; if(!x||(x.tipo!=='lamina'&&x.tipo!=='texto')) return;
   if(ev.key==='a'||ev.key==='A') marcar(x.pid,x.i,'si');
   if(ev.key==='x'||ev.key==='X') marcar(x.pid,x.i,'no');
   if(ev.key==='ArrowLeft'&&pasoIdx>0){ pasoIdx--; pintarPaso() }
