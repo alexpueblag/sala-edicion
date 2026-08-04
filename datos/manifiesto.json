@@ -25,7 +25,7 @@
   {
    "fecha": "2026-08-01",
    "pieza": "El terreno que dijo que sí · video",
-   "gate": "g3",
+   "gate": "pub",
    "desde": "2026-08-01"
   },
   {
@@ -81,7 +81,7 @@
  ],
  "control": {
   "pieza": "",
-  "nota": "Aún no hay leads medidos (leads_utm_activo sigue apagado: los 5 históricos llegaron directo). La primera pieza que traiga un lead con liga etiquetada se corona control; mientras, la líder provisional por interacciones es Pub 1 en IG."
+  "nota": "El cuento ya está en la cancha (publicado 4-ago). La primera pieza que traiga un lead con liga etiquetada se corona control."
  },
  "retro": {
   "fecha": "2026-08-01",
@@ -94,9 +94,10 @@
  "produccion": [
   {
    "pieza": "El terreno que dijo que sí · el cuento (47 s)",
-   "estado": "video",
-   "detalle": "7 escenas actuadas, ritmo +10%, listo para tu doble clic",
-   "fecha": "2026-08-01"
+   "estado": "publicada",
+   "detalle": "FB + IG (reel) · copy «los dos bandos» · liga única fb/ig-2026-08-04 · primer comentario puesto",
+   "fecha": "2026-08-04",
+   "enlace": "https://www.instagram.com/reel/DboskQogVy1/"
   },
   {
    "pieza": "El terreno que dijo que sí · carrusel",
@@ -139,6 +140,10 @@
   {
    "hora": "14:37",
    "evento": "Corriente conectada: las 7 láminas de La Servilleta generadas y montadas — esperan tu palomeo"
+  },
+  {
+   "hora": "16:03",
+   "evento": "EL CUENTO PUBLICADO: FB video + IG reel por API, comentario con liga incluido. El retador está en la cancha — a medir."
   }
  ],
  "decisiones": {},
