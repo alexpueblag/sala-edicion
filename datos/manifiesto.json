@@ -40,6 +40,14 @@
      "texto": "La opinión no aguanta un plano. · Plan de Potencial · la primera videollamada no cuesta."
     }
    ]
+  },
+  {
+   "id": "servilleta-g2-48820d",
+   "titulo": "La Servilleta · las láminas (de tus latidos)",
+   "laminas": [
+    "laminas/servilleta-g2/L1.png"
+   ],
+   "video": null
   }
  ],
  "parrilla": [
@@ -144,6 +152,10 @@
   {
    "hora": "11:03",
    "evento": "La Servilleta pasó a «en guion» y va primero, como ordenaste con el andón"
+  },
+  {
+   "hora": "11:30",
+   "evento": "Propuesta montada: La Servilleta · las láminas (de tus latidos) (1 láminas)"
   }
  ],
  "decisiones": {},
