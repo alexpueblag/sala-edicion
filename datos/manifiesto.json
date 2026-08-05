@@ -340,6 +340,16 @@
    "fecha": "2026-08-04",
    "estado": "cumplida",
    "evidencia": "Publicado en el copy «los dos bandos»: «el primer interesado en esa tierra somos nosotros…»"
+  },
+  {
+   "pedido": "que la revisión no se quede en el caché local: conectar la Sala al Sheets",
+   "estado": "cumplida",
+   "evidencia": "Sheet «Sala de Edición · YOD» (Gmail personal) conectado 4-ago 22:07; revisiones del 4 y 5 ya en DECISIONES; portal verificado hablando con el GAS"
   }
- ]
+ ],
+ "conexion": {
+  "estado": "conectada",
+  "donde": "Sheet privado en el Gmail personal",
+  "desde": "2026-08-04"
+ }
 }
