@@ -262,7 +262,34 @@ function marcar(pid,i,v,silencio){
   if(pr&&pr.tipo==='eje'&&v==='si'&&p.laminas[i]==='si')
     items(pr).forEach((_,j)=>{ if(j!==i&&p.laminas[j]==='si') p.laminas[j]=null });
   guardarLocal(); pintarAvance();
+  // LA PETICION DEL EDITOR (4-ago): al tachar, 3 mejoras precargadas de ESA foto
+  // + casilla de que espera. Solo asi el rehacer deja de ser adivinanza.
+  if(v==='no'&&p.laminas[i]==='no'&&pr&&pr.tipo!=='eje'){ hojaTache(pid,i); return }
   if(!silencio && turnoVivo) avanzarTurno();
+}
+function hojaTache(pid,i){
+  const pr=prop(pid), f=ficha(pid);
+  f.notas ||= []; f.mejoras ||= [];
+  const sug=(pr.sugerencias&&pr.sugerencias[i])||[];
+  const eleg=new Set(f.mejoras[i]||[]);
+  const velo=document.createElement('div'); velo.className='velo';
+  const h=document.createElement('div'); h.className='hoja';
+  h.innerHTML=`<p style="margin-bottom:10px"><b>La tachaste.</b> ¿Qué le cambio? Palomea o escribe:</p>
+    ${sug.map((t,j)=>`<label style="display:flex;gap:10px;align-items:flex-start;padding:8px 0;cursor:pointer;font-size:15px">
+      <input type="checkbox" data-j="${j}" ${eleg.has(j)?'checked':''} style="margin-top:4px;width:18px;height:18px;accent-color:var(--oro)">
+      <span>${esc(t)}</span></label>`).join('')}
+    <textarea id="notaLam" rows="2" style="margin-top:8px"
+      placeholder="¿Qué esperas de esta lámina? (con tus palabras)">${esc(f.notas[i]||'')}</textarea>
+    <div class="fila" style="margin-top:12px"><button class="dorado" id="okTache">Así la rehago</button></div>`;
+  document.body.append(velo,h);
+  const cerrar=()=>{ velo.remove(); h.remove(); if(turnoVivo) avanzarTurno() };
+  velo.onclick=cerrar;
+  h.querySelectorAll('input[type=checkbox]').forEach(c=>c.onchange=()=>{
+    const j=+c.dataset.j; c.checked?eleg.add(j):eleg.delete(j);
+    f.mejoras[i]=[...eleg]; guardarLocal();
+  });
+  h.querySelector('#notaLam').oninput=e=>{ f.notas[i]=e.target.value; guardarLocal() };
+  h.querySelector('#okTache').onclick=cerrar;
 }
 function toast(txt,fn){
   if(deshacer) deshacer.remove();
@@ -492,7 +519,9 @@ async function enviar(){
   for(const p of D.propuestas||[]){
     const f=ficha(p.id);
     envio.propuestas[p.id]={nota:f.nota||'',
-      laminas:items(p).map((_,i)=>f.laminas[i]||'pendiente')};
+      laminas:items(p).map((_,i)=>f.laminas[i]||'pendiente'),
+      notas:items(p).map((_,i)=>(f.notas&&f.notas[i])||''),
+      mejoras:items(p).map((_,i)=>(f.mejoras&&f.mejoras[i])||[])};
   }
   dec.guardado=new Date().toISOString(); guardarLocal();
   if(!GAS()){ registrarHist(); mostrarCierre('guardada aquí — falta conectar el Sheet'); return }
@@ -625,6 +654,17 @@ function pintarMesa(){
       <span style="color:var(--guia);font-size:12.5px">${esc(x.fecha||'')}</span>
       <span class="det">${esc(x.detalle||'')}</span>
     </div>`).join('')||'<div class="vacio" style="padding:20px">Nada en camino todavía.</div>'}</div></section>`;
+
+  const pet=D.peticiones||[];
+  if(pet.length){
+    h+=`<section class="franja"><div class="ftit"><span class="kick">Tus peticiones</span>
+      <h2 class="serif">Lo que pediste, y en qué va</h2></div>
+      <div class="tarjes">${pet.map(x=>`<div class="tarj">
+        <span style="flex:1;min-width:200px">${esc(x.pedido)}</span>
+        <span class="chip ${x.estado==='cumplida'?'publicada':(x.estado==='en curso'?'aprobada':'rehacer')}">${esc(x.estado)}</span>
+        <span class="det">${esc(x.evidencia||'')}</span>
+      </div>`).join('')}</div></section>`;
+  }
 
   const bt=D.bitacora||[];
   h+=`<section class="franja"><div class="ftit"><span class="kick">Bitácora</span>

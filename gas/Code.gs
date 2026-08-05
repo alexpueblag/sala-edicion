@@ -199,7 +199,12 @@ function doPost(e) {
     Object.keys(d.propuestas).forEach(function (pid) {
       var p = d.propuestas[pid] || {};
       (p.laminas || []).forEach(function (m, i2) {
-        fs.push([d.envio_id, rol, sello, d.fecha, pid, i2, m || 'pendiente', '', '', '']);
+        // la nota POR LAMINA y las mejoras palomeadas viajan en la misma fila de
+        // la marca: el agente lee exactamente que le cambio a cada foto tachada
+        var notaLam = (p.notas && p.notas[i2]) || '';
+        var mej = (p.mejoras && p.mejoras[i2] && p.mejoras[i2].length)
+                  ? ' [mejoras elegidas: ' + p.mejoras[i2].join(',') + ']' : '';
+        fs.push([d.envio_id, rol, sello, d.fecha, pid, i2, m || 'pendiente', notaLam + mej, '', '']);
       });
       fs.push([d.envio_id, rol, sello, d.fecha, pid, '', '', p.nota || '', '', '']);
     });

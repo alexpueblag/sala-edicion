@@ -21,7 +21,44 @@
     "laminas/servilleta-g2/L7.png"
    ],
    "video": null,
-   "origen": "rehecha-de:servilleta-g2"
+   "origen": "rehecha-de:servilleta-g2",
+   "sugerencias": [
+    [
+     "Acercar más a la familia (que llene el cuadro)",
+     "Más luz cálida de lámpara",
+     "Que la foto del predio se vea más grande sobre la mesa"
+    ],
+    [
+     "Que la servilleta tenga el garabato más marcado",
+     "Añadir la mano dibujando",
+     "Café y sobremesa más presentes"
+    ],
+    [
+     "Más tensión en la mirada de ella",
+     "Que se vea el celular claramente",
+     "Acercar la escena (menos cocina, más pareja)"
+    ],
+    [
+     "Quitar al vendedor y dejar sólo a la pareja",
+     "Vendedor más caricaturesco (traje brillante)",
+     "Atardecer más dorado y aspiracional"
+    ],
+    [
+     "Cambiar la escena: ella tomando la mano de él sobre la mesa",
+     "Que la foto del predio esté en el centro",
+     "Más calidez, menos formalidad"
+    ],
+    [
+     "El expediente más protagonista (abierto a doble página)",
+     "La servilleta más arrugada al lado (el contraste)",
+     "Luz de mañana más luminosa"
+    ],
+    [
+     "El plano más visible bajo el brazo",
+     "Ciudad al fondo más presente",
+     "Amanecer más dorado (menos frío)"
+    ]
+   ]
   }
  ],
  "parrilla": [
@@ -284,5 +321,25 @@
     }
    ]
   }
- }
+ },
+ "peticiones": [
+  {
+   "pedido": "Al tachar una lámina: 3 mejoras precargadas del análisis de esa foto + casilla «qué espero de ésta»",
+   "fecha": "2026-08-04",
+   "estado": "cumplida",
+   "evidencia": "Desde hoy: tacha cualquier lámina en el Turno y aparece la hoja"
+  },
+  {
+   "pedido": "El texto nunca debe comerse la lámina (revisar prompts/compositor)",
+   "fecha": "2026-08-04",
+   "estado": "cumplida",
+   "evidencia": "El compositor ahora parte la línea en dos cuando no cabe; L3/L4 v2 ya salieron con líneas cortas"
+  },
+  {
+   "pedido": "Insinuar la puerta de aportación/co-desarrollo en el copy sin palabras técnicas",
+   "fecha": "2026-08-04",
+   "estado": "cumplida",
+   "evidencia": "Publicado en el copy «los dos bandos»: «el primer interesado en esa tierra somos nosotros…»"
+  }
+ ]
 }
