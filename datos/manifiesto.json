@@ -1,14 +1,16 @@
 {
  "_que_es": "Manifiesto de respaldo: el portal lo lee cuando el Sheet aún no está conectado. Cuando el GAS ya está en línea, esta copia queda de plan B.",
- "fecha": "2026-08-04",
+ "fecha": "2026-08-05",
  "dias": [
   "2026-08-01",
-  "2026-08-04"
+  "2026-08-04",
+  "2026-08-05"
  ],
  "propuestas": [
   {
    "id": "servilleta-g2-48820d",
-   "titulo": "La Servilleta · las 7 láminas (de tus latidos)",
+   "titulo": "La Servilleta · v2 — L3 y L4 rehechas; las 5 sin marcar vuelven (única vez)",
+   "tipo": "laminas",
    "laminas": [
     "laminas/servilleta-g2/L1.png",
     "laminas/servilleta-g2/L2.png",
@@ -18,7 +20,8 @@
     "laminas/servilleta-g2/L6.png",
     "laminas/servilleta-g2/L7.png"
    ],
-   "video": null
+   "video": null,
+   "origen": "rehecha-de:servilleta-g2"
   }
  ],
  "parrilla": [
@@ -84,12 +87,12 @@
   "nota": "El cuento ya está en la cancha (publicado 4-ago). La primera pieza que traiga un lead con liga etiquetada se corona control."
  },
  "retro": {
-  "fecha": "2026-08-01",
-  "aprobadas": 3,
-  "tiradas": 0,
+  "fecha": "2026-08-04",
+  "aprobadas": 0,
+  "tiradas": 2,
   "producidas": 1,
-  "rehechas": 0,
-  "nota": "elegiste el eje «La opinión no aguanta un plano» y empujaste La Servilleta"
+  "rehechas": 2,
+  "nota": "tachaste L3 y L4 de La Servilleta; el cuento de Pub 1 salió publicado a FB+IG"
  },
  "produccion": [
   {
@@ -114,36 +117,16 @@
  ],
  "bitacora": [
   {
-   "hora": "11:03",
-   "evento": "Tu revisión del viernes RESCATADA del navegador (el Sheet sigue sin conectar): eje A elegido, L6-L7 aprobadas, Servilleta empujada"
+   "hora": "17:13",
+   "evento": "Tu revisión de anoche recogida: L3 y L4 tachadas — rehechas con más gente y líneas cortas (tu nota del texto)"
   },
   {
-   "hora": "11:03",
-   "evento": "Producido de tu eje: el guion de La Servilleta en 7 latidos — te espera arriba para palomear"
+   "hora": "17:13",
+   "evento": "L1, L2, L5, L6, L7 sin marcar: vuelven HOY una única vez; lo que no se marque hoy, muere"
   },
   {
-   "hora": "11:03",
-   "evento": "La Servilleta pasó a «en guion» y va primero, como ordenaste con el andón"
-  },
-  {
-   "hora": "11:30",
-   "evento": "Propuesta montada: La Servilleta · las láminas (de tus latidos) (1 láminas)"
-  },
-  {
-   "hora": "12:20",
-   "evento": "La Mac se quedó al 3% de pila: salió la L1 (tu escena de familia); las otras 6 esperan corriente"
-  },
-  {
-   "hora": "14:35",
-   "evento": "Propuesta montada: La Servilleta · las 7 láminas (de tus latidos) (7 láminas)"
-  },
-  {
-   "hora": "14:37",
-   "evento": "Corriente conectada: las 7 láminas de La Servilleta generadas y montadas — esperan tu palomeo"
-  },
-  {
-   "hora": "16:03",
-   "evento": "EL CUENTO PUBLICADO: FB video + IG reel por API, comentario con liga incluido. El retador está en la cancha — a medir."
+   "hora": "17:13",
+   "evento": "El cuento de Pub 1 sigue en la cancha (FB+IG): primer día de medición orgánica"
   }
  ],
  "decisiones": {},
@@ -225,6 +208,79 @@
     {
      "hora": "07:27",
      "evento": "El cuento amaneció armado: voces actuadas (pareja dirigida), escenas re-montadas a su respiración"
+    }
+   ]
+  },
+  "2026-08-04": {
+   "propuestas": [
+    {
+     "id": "servilleta-g2-48820d",
+     "titulo": "La Servilleta · las 7 láminas (de tus latidos)",
+     "laminas": [
+      "laminas/servilleta-g2/L1.png",
+      "laminas/servilleta-g2/L2.png",
+      "laminas/servilleta-g2/L3.png",
+      "laminas/servilleta-g2/L4.png",
+      "laminas/servilleta-g2/L5.png",
+      "laminas/servilleta-g2/L6.png",
+      "laminas/servilleta-g2/L7.png"
+     ],
+     "video": null
+    }
+   ],
+   "produccion": [
+    {
+     "pieza": "El terreno que dijo que sí · el cuento (47 s)",
+     "estado": "publicada",
+     "detalle": "FB + IG (reel) · copy «los dos bandos» · liga única fb/ig-2026-08-04 · primer comentario puesto",
+     "fecha": "2026-08-04",
+     "enlace": "https://www.instagram.com/reel/DboskQogVy1/"
+    },
+    {
+     "pieza": "El terreno que dijo que sí · carrusel",
+     "estado": "publicada",
+     "detalle": "FB + IG · liga medible activa · 4 interacciones IG al 30-jul",
+     "fecha": "2026-07-27"
+    },
+    {
+     "pieza": "La Servilleta · láminas",
+     "estado": "rehacer",
+     "detalle": "quitar «EDICIÓN POR AURUM ARQUITECTOS»",
+     "fecha": "2026-07-29"
+    }
+   ],
+   "bitacora": [
+    {
+     "hora": "11:03",
+     "evento": "Tu revisión del viernes RESCATADA del navegador (el Sheet sigue sin conectar): eje A elegido, L6-L7 aprobadas, Servilleta empujada"
+    },
+    {
+     "hora": "11:03",
+     "evento": "Producido de tu eje: el guion de La Servilleta en 7 latidos — te espera arriba para palomear"
+    },
+    {
+     "hora": "11:03",
+     "evento": "La Servilleta pasó a «en guion» y va primero, como ordenaste con el andón"
+    },
+    {
+     "hora": "11:30",
+     "evento": "Propuesta montada: La Servilleta · las láminas (de tus latidos) (1 láminas)"
+    },
+    {
+     "hora": "12:20",
+     "evento": "La Mac se quedó al 3% de pila: salió la L1 (tu escena de familia); las otras 6 esperan corriente"
+    },
+    {
+     "hora": "14:35",
+     "evento": "Propuesta montada: La Servilleta · las 7 láminas (de tus latidos) (7 láminas)"
+    },
+    {
+     "hora": "14:37",
+     "evento": "Corriente conectada: las 7 láminas de La Servilleta generadas y montadas — esperan tu palomeo"
+    },
+    {
+     "hora": "16:03",
+     "evento": "EL CUENTO PUBLICADO: FB video + IG reel por API, comentario con liga incluido. El retador está en la cancha — a medir."
     }
    ]
   }
