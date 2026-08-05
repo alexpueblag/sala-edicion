@@ -286,8 +286,15 @@ function hojaTache(pid,i){
       placeholder="¿Qué esperas de esta lámina? (con tus palabras)">${esc(f.notas[i]||'')}</textarea>
     <div class="fila" style="margin-top:12px"><button class="dorado" id="okTache">Así la rehago</button></div>`;
   document.body.append(velo,h);
-  const quitar=()=>{ velo.remove(); h.remove() };
-  velo.onclick=quitar;                       // cerrar sin avanzar: no te mueve el piso
+  // con el teclado del telefono abierto, la hoja se limita al viewport VISIBLE
+  // para que el boton dorado nunca quede escondido detras del teclado
+  const ajustar=()=>{ if(window.visualViewport) h.style.maxHeight=Math.round(window.visualViewport.height*0.86)+'px' };
+  ajustar(); if(window.visualViewport) window.visualViewport.addEventListener('resize',ajustar);
+  const quitar=()=>{ if(window.visualViewport) window.visualViewport.removeEventListener('resize',ajustar);
+    velo.remove(); h.remove() };
+  // tocar fuera con el teclado abierto = bajar el teclado (gesto natural), NO cerrar
+  velo.onclick=()=>{ const a=document.activeElement;
+    if(a&&(a.tagName==='TEXTAREA'||a.tagName==='INPUT')){ a.blur(); return } quitar() };
   velo.addEventListener('touchmove',e=>e.preventDefault(),{passive:false});
   h.querySelectorAll('input[type=checkbox]').forEach(c=>c.onchange=()=>{
     const j=+c.dataset.j; c.checked?eleg.add(j):eleg.delete(j);
@@ -519,7 +526,7 @@ function intentarEnviar(){
 }
 async function enviar(){
   // el consolidado: TODO el estado del día, pendientes explícitos, autoría y envio_id
-  const envio={accion:'decidir',clave:CLAVE(),fecha,envio_id:uuid(),quien:ROL(),
+  const envio={accion:'decidir',clave:CLAVE(),fecha,envio_id:uuid(),ts:Date.now(),quien:ROL(),
     nota_general:dec.nota_general||'',nota_estrategia:dec.nota_estrategia||'',propuestas:{}};
   for(const p of D.propuestas||[]){
     const f=ficha(p.id);
@@ -529,27 +536,31 @@ async function enviar(){
       mejoras:items(p).map((_,i)=>(f.mejoras&&f.mejoras[i])||[])};
   }
   dec.guardado=new Date().toISOString(); guardarLocal();
-  if(!GAS()){ registrarHist(); mostrarCierre('guardada aquí — falta conectar el Sheet'); return }
+  if(!GAS()){ registrarHist(true); mostrarCierre('guardada aquí — falta conectar el Sheet'); return }
   const aviso=$('#avisoT'); if(aviso) aviso.textContent='guardando…';
   try{
     const r=await fetch(GAS(),{method:'POST',headers:{'Content-Type':'text/plain'},
       body:JSON.stringify(envio)});
     const j=await r.json().catch(()=>({}));
     if(!r.ok||j.error) throw new Error(j.error||('el Sheet contestó '+r.status));
-    registrarHist(); mostrarCierre('enviada '+new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'}));
+    // un envio directo que SI llego deja obsoletos los encolados de esa fecha:
+    // sin esta purga, la cola vieja podia pisar despues la revision mas nueva
+    localStorage.setItem('sala_cola',JSON.stringify(leerLS('sala_cola',[]).filter(x=>x.fecha!==fecha)));
+    pintarCola();
+    registrarHist(true); mostrarCierre('enviada '+new Date().toLocaleTimeString('es-MX',{hour:'2-digit',minute:'2-digit'}));
   }catch(e){
     encolar(envio);
-    registrarHist();
+    registrarHist(false);
     mostrarCierre('sin señal — quedó en cola y se sube sola',true);
   }
 }
 function encolar(envio){
-  const q=JSON.parse(localStorage.getItem('sala_cola')||'[]');
+  const q=leerLS('sala_cola',[]);
   if(!q.some(x=>x.envio_id===envio.envio_id)) q.push(envio);
   localStorage.setItem('sala_cola',JSON.stringify(q)); pintarCola();
 }
 async function subirCola(){
-  const q=JSON.parse(localStorage.getItem('sala_cola')||'[]');
+  const q=leerLS('sala_cola',[]);
   if(!q.length||!GAS()) return;
   const resto=[];
   for(const envio of q){
@@ -561,10 +572,15 @@ async function subirCola(){
     }catch(e){ resto.push(envio) }
   }
   localStorage.setItem('sala_cola',JSON.stringify(resto)); pintarCola();
-  if(!resto.length) toast('Lo pendiente ya subió al Sheet',null);
+  if(!resto.length){
+    const h=leerLS('sala_hist',{});
+    for(const k of Object.keys(h)) if(h[k].encolado){ h[k].enviado=true; h[k].encolado=false }
+    localStorage.setItem('sala_hist',JSON.stringify(h));
+    toast('Lo pendiente ya subió al Sheet',null);
+  }
 }
 function pintarCola(){
-  const q=JSON.parse(localStorage.getItem('sala_cola')||'[]');
+  const q=leerLS('sala_cola',[]);
   let b=$('#colaBtn');
   if(!q.length){ if(b)b.remove(); return }
   if(!b){ b=document.createElement('button'); b.id='colaBtn'; b.className='pieCola';
@@ -574,17 +590,17 @@ function pintarCola(){
 window.addEventListener('online',subirCola);
 
 /* el marcador del editor: historial local de tasas (se deriva, no se inventa) */
-function registrarHist(){
+function registrarHist(llego){
   const {s,n,t}=totales();
-  const h=JSON.parse(localStorage.getItem('sala_hist')||'{}');
-  h[fecha]={tasa:t?Math.round(s/t*100):0,enviado:true};
+  const h=leerLS('sala_hist',{});
+  h[fecha]={tasa:t?Math.round(s/t*100):0,enviado:!!llego,encolado:!llego};
   localStorage.setItem('sala_hist',JSON.stringify(h));
 }
 function mostrarCierre(sello,enCola){
   if(turnoVivo) cerrarTurno();
   const {s,n,t,falta}=totales();
   const tasa=t?Math.round(s/t*100):0;
-  const h=JSON.parse(localStorage.getItem('sala_hist')||'{}');
+  const h=leerLS('sala_hist',{});
   const hoyD=new Date(fecha+'T12:00:00');
   const puntos=[...Array(7)].map((_,i)=>{
     const d=new Date(hoyD); d.setDate(d.getDate()-6+i);
@@ -776,6 +792,8 @@ document.addEventListener('keydown',ev=>{
   const t=ev.target;
   if(t&&(t.tagName==='TEXTAREA'||t.tagName==='INPUT'||t.isContentEditable)) return;
   if(document.querySelector('.hoja')) return;
+  const _mapa=document.querySelector('.mapa');
+  if(_mapa){ if(ev.key==='Escape') _mapa.remove(); return }   // el mapa tampoco deja pasar teclas
   if(!turnoVivo) return;
   const x=pasos[pasoIdx]; if(!x||(x.tipo!=='lamina'&&x.tipo!=='texto')) return;
   if(ev.key==='a'||ev.key==='A') marcar(x.pid,x.i,'si');
