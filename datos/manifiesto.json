@@ -1,6 +1,6 @@
 {
  "_que_es": "Manifiesto de respaldo: el portal lo lee cuando el Sheet aún no está conectado. Cuando el GAS ya está en línea, esta copia queda de plan B.",
- "fecha": "2026-08-05",
+ "fecha": "2026-08-06",
  "dias": [
   "2026-08-01",
   "2026-08-04",
@@ -8,57 +8,20 @@
  ],
  "propuestas": [
   {
-   "id": "servilleta-g2-48820d",
-   "titulo": "La Servilleta · v2 — L3 y L4 rehechas; las 5 sin marcar vuelven (única vez)",
+   "id": "servilleta-g3-d17990",
+   "titulo": "La Servilleta · correcciones aplicadas (L4, L6, L7 con tus notas)",
    "tipo": "laminas",
    "laminas": [
-    "laminas/servilleta-g2/L1.png",
-    "laminas/servilleta-g2/L2.png",
-    "laminas/servilleta-g2/L3.png",
-    "laminas/servilleta-g2/L4.png",
-    "laminas/servilleta-g2/L5.png",
-    "laminas/servilleta-g2/L6.png",
-    "laminas/servilleta-g2/L7.png"
+    "laminas/servilleta-g3/L1.png",
+    "laminas/servilleta-g3/L2.png",
+    "laminas/servilleta-g3/L3.png",
+    "laminas/servilleta-g3/L4.png",
+    "laminas/servilleta-g3/L5.png",
+    "laminas/servilleta-g3/L6.png",
+    "laminas/servilleta-g3/L7.png"
    ],
    "video": null,
-   "origen": "rehecha-de:servilleta-g2",
-   "sugerencias": [
-    [
-     "Acercar más a la familia (que llene el cuadro)",
-     "Más luz cálida de lámpara",
-     "Que la foto del predio se vea más grande sobre la mesa"
-    ],
-    [
-     "Que la servilleta tenga el garabato más marcado",
-     "Añadir la mano dibujando",
-     "Café y sobremesa más presentes"
-    ],
-    [
-     "Más tensión en la mirada de ella",
-     "Que se vea el celular claramente",
-     "Acercar la escena (menos cocina, más pareja)"
-    ],
-    [
-     "Quitar al vendedor y dejar sólo a la pareja",
-     "Vendedor más caricaturesco (traje brillante)",
-     "Atardecer más dorado y aspiracional"
-    ],
-    [
-     "Cambiar la escena: ella tomando la mano de él sobre la mesa",
-     "Que la foto del predio esté en el centro",
-     "Más calidez, menos formalidad"
-    ],
-    [
-     "El expediente más protagonista (abierto a doble página)",
-     "La servilleta más arrugada al lado (el contraste)",
-     "Luz de mañana más luminosa"
-    ],
-    [
-     "El plano más visible bajo el brazo",
-     "Ciudad al fondo más presente",
-     "Amanecer más dorado (menos frío)"
-    ]
-   ]
+   "origen": "rehecha-de servilleta-g2-48820d con tus notas del 5-ago"
   }
  ],
  "parrilla": [
@@ -124,12 +87,12 @@
   "nota": "El cuento ya está en la cancha (publicado 4-ago). La primera pieza que traiga un lead con liga etiquetada se corona control."
  },
  "retro": {
-  "fecha": "2026-08-04",
-  "aprobadas": 0,
-  "tiradas": 2,
-  "producidas": 1,
-  "rehechas": 2,
-  "nota": "tachaste L3 y L4 de La Servilleta; el cuento de Pub 1 salió publicado a FB+IG"
+  "fecha": "2026-08-05",
+  "aprobadas": 4,
+  "tiradas": 3,
+  "producidas": 3,
+  "rehechas": 3,
+  "nota": "Tus 3 tachadas del 5-ago se rehicieron el mismo día con tus notas. El corte del edificio quedó de 7 niveles (el modelo no sabe contar; el mejor de 4 intentos) — si lo quieres de 6 exactos, táchala y elige la sugerencia precargada."
  },
  "produccion": [
   {
@@ -345,11 +308,53 @@
    "pedido": "que la revisión no se quede en el caché local: conectar la Sala al Sheets",
    "estado": "cumplida",
    "evidencia": "Sheet «Sala de Edición · YOD» (Gmail personal) conectado 4-ago 22:07; revisiones del 4 y 5 ya en DECISIONES; portal verificado hablando con el GAS"
+  },
+  {
+   "pedido": "que las correcciones pedidas SÍ se corran: nada de día nuevo sin rehacer lo tachado",
+   "estado": "cumplida",
+   "evidencia": "5-ago: L4/L6/L7 rehechas con las notas textuales del editor y montadas el mismo día (servilleta-g3)"
   }
  ],
  "conexion": {
   "estado": "conectada",
   "donde": "Sheet privado en el Gmail personal",
   "desde": "2026-08-04"
- }
+ },
+ "sugerencias": [
+  [
+   "Más contraste entre la pareja y los vendedores",
+   "Un vendedor menos (solo dos)",
+   "Luz más dorada"
+  ],
+  [
+   "Garabato más torpe en la servilleta",
+   "Servilleta más arrugada",
+   "Más luz de mañana"
+  ],
+  [
+   "Diálogo más corto",
+   "Otro par de opiniones contradictorias",
+   "Tonos más cálidos"
+  ],
+  [
+   "Vendedores más caricaturescos",
+   "Quitar los papeles de las manos",
+   "Atardecer más intenso"
+  ],
+  [
+   "Texto más grande",
+   "Otra pareja de perfil",
+   "Cocina en vez de sala"
+  ],
+  [
+   "Quitarle un piso al edificio del corte (que queden 6 justos)",
+   "Números más visibles (sin ser legibles)",
+   "Quitar la servilleta del lado"
+  ],
+  [
+   "Titular alterno: «La servilleta se queda de recuerdo»",
+   "CTA más directo",
+   "Skyline más presente"
+  ]
+ ]
 }
