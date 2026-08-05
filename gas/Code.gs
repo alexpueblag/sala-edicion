@@ -82,7 +82,10 @@ function json(o) {
   return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON);
 }
 function fechaDe(v) {
-  return (v instanceof Date) ? Utilities.formatDate(v, TZ, 'yyyy-MM-dd') : String(v).slice(0, 10);
+  // a prueba de zonas: medianoche de CUALQUIER zona +12 h cae en la fecha correcta en UTC
+  return (v instanceof Date)
+    ? Utilities.formatDate(new Date(v.getTime() + 43200000), 'Etc/UTC', 'yyyy-MM-dd')
+    : String(v).slice(0, 10);
 }
 
 /* El envio vigente de un dia = el del sello 'guardado' mas alto QUE PUSO EL GAS al
