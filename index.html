@@ -131,7 +131,9 @@ video{width:100%;max-width:min(88vw,400px);border-radius:8px;border:1px solid va
 /* ── hojas, cierre, toast ── */
 .hoja{position:fixed;left:0;right:0;bottom:0;z-index:80;background:#141419;
   border-top:1px solid var(--linea2);border-radius:16px 16px 0 0;
-  padding:22px 22px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -14px 40px rgba(0,0,0,.6)}
+  padding:22px 22px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -14px 40px rgba(0,0,0,.6);
+  max-height:72vh;overflow-y:auto;overscroll-behavior:contain}
+.velo{touch-action:none;overscroll-behavior:contain}
 .hoja p{margin:0 0 16px;font-size:15px;line-height:1.6}
 .hoja .fila{display:flex;gap:10px;flex-wrap:wrap}
 .hoja .fila button{flex:1}
@@ -258,6 +260,8 @@ function totales(){
 
 function marcar(pid,i,v,silencio){
   const p=ficha(pid), pr=prop(pid);
+  // ✕ sobre una ya tachada = "quiero decirle que cambio", no "quitar la marca"
+  if(v==='no'&&p.laminas[i]==='no'&&pr&&pr.tipo!=='eje'){ hojaTache(pid,i); return }
   p.laminas[i]=p.laminas[i]===v?null:v;
   if(pr&&pr.tipo==='eje'&&v==='si'&&p.laminas[i]==='si')
     items(pr).forEach((_,j)=>{ if(j!==i&&p.laminas[j]==='si') p.laminas[j]=null });
@@ -282,14 +286,15 @@ function hojaTache(pid,i){
       placeholder="¿Qué esperas de esta lámina? (con tus palabras)">${esc(f.notas[i]||'')}</textarea>
     <div class="fila" style="margin-top:12px"><button class="dorado" id="okTache">Así la rehago</button></div>`;
   document.body.append(velo,h);
-  const cerrar=()=>{ velo.remove(); h.remove(); if(turnoVivo) avanzarTurno() };
-  velo.onclick=cerrar;
+  const quitar=()=>{ velo.remove(); h.remove() };
+  velo.onclick=quitar;                       // cerrar sin avanzar: no te mueve el piso
+  velo.addEventListener('touchmove',e=>e.preventDefault(),{passive:false});
   h.querySelectorAll('input[type=checkbox]').forEach(c=>c.onchange=()=>{
     const j=+c.dataset.j; c.checked?eleg.add(j):eleg.delete(j);
     f.mejoras[i]=[...eleg]; guardarLocal();
   });
   h.querySelector('#notaLam').oninput=e=>{ f.notas[i]=e.target.value; guardarLocal() };
-  h.querySelector('#okTache').onclick=cerrar;
+  h.querySelector('#okTache').onclick=()=>{ quitar(); if(turnoVivo) avanzarTurno() };
 }
 function toast(txt,fn){
   if(deshacer) deshacer.remove();
@@ -765,6 +770,12 @@ $('#dlgSi').onclick=()=>{
   $('#dlg').close(); cargar(fecha); subirCola();
 };
 document.addEventListener('keydown',ev=>{
+  // EL BUG DEL 5-AGO: escribiendo en la casilla, la 'a' aprobaba, la 'x' tiraba
+  // y las flechas movian el carrusel de atras. Con foco en un campo de texto o
+  // con una hoja abierta, los atajos se apagan por completo.
+  const t=ev.target;
+  if(t&&(t.tagName==='TEXTAREA'||t.tagName==='INPUT'||t.isContentEditable)) return;
+  if(document.querySelector('.hoja')) return;
   if(!turnoVivo) return;
   const x=pasos[pasoIdx]; if(!x||(x.tipo!=='lamina'&&x.tipo!=='texto')) return;
   if(ev.key==='a'||ev.key==='A') marcar(x.pid,x.i,'si');
