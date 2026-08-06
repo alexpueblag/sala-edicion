@@ -388,16 +388,25 @@ function pintarPaso(){
     <button class="menor salir" id="salirT">Guardar y salir</button></div>`;
 
   if(x.tipo==='lamina'){
-    const p=prop(x.pid), e=estado(x.pid,x.i);
+    const p=prop(x.pid), e=estado(x.pid,x.i), f=ficha(x.pid);
+    // PASARELA: si la lámina trae candidatas, se elige ENTRE tomas (modo Miranda)
+    const cand=p.candidatas&&p.candidatas[x.i], el=(f.elegidas&&f.elegidas[x.i])||0;
+    const src=cand?cand[Math.min(el,cand.length-1)]:p.laminas[x.i];
     turnoVivo.innerHTML=`${arriba}
       <div class="escena" id="esc">
-        <img src="${esc(p.laminas[x.i])}" alt="Lámina ${x.i+1}">
+        <img src="${esc(src)}" alt="Lámina ${x.i+1}">
+        ${cand?`<div class="pasarela" style="display:flex;gap:10px;justify-content:center;margin:10px 0 2px">
+          ${cand.map((_,k)=>`<button data-k="${k}" style="width:44px;height:44px;border-radius:50%;font-family:inherit;font-size:15px;cursor:pointer;border:1.5px solid ${k===el?'var(--oro-cl,#deb47e)':'rgba(255,255,255,.28)'};background:${k===el?'var(--oro-cl,#deb47e)':'transparent'};color:${k===el?'#141414':'rgba(255,255,255,.75)'}">${String.fromCharCode(65+k)}</button>`).join('')}
+        </div><p class="titProp" style="margin-top:2px">toma ${String.fromCharCode(65+el)} en pantalla — aprueba la que se queda</p>`:''}
         <p class="titProp">${esc(p.titulo)} · lámina ${x.i+1} de ${p.laminas.length}${p.origen?` · <span style="color:var(--oro-cl)">rehecha con tu nota</span>`:''}</p>
       </div>
       <div class="mandoT">
         <button class="tno ${e==='no'?'on':''}" data-v="no" aria-label="Tirar">✕ Tirar</button>
         <button class="tsi ${e==='si'?'on':''}" data-v="si" aria-label="Aprobar">✓ Aprobar</button>
       </div>`;
+    turnoVivo.querySelectorAll('.pasarela button').forEach(b=>
+      b.onclick=ev=>{ev.stopPropagation(); f.elegidas=f.elegidas||[]; f.elegidas[x.i]=+b.dataset.k;
+        guardarLocal(); pintarPaso()});
     turnoVivo.querySelectorAll('.mandoT button').forEach(b=>
       b.onclick=()=>marcar(x.pid,x.i,b.dataset.v));
     gestos($('#esc'),x);
@@ -532,7 +541,11 @@ async function enviar(){
     const f=ficha(p.id);
     envio.propuestas[p.id]={nota:f.nota||'',
       laminas:items(p).map((_,i)=>f.laminas[i]||'pendiente'),
-      notas:items(p).map((_,i)=>(f.notas&&f.notas[i])||''),
+      // la toma elegida en la pasarela viaja como texto en la nota de la lámina:
+      // el GAS no necesita redespliegue y en el Sheet se lee tal cual
+      notas:items(p).map((_,i)=>{const n=(f.notas&&f.notas[i])||'';
+        const c=p.candidatas&&p.candidatas[i];
+        return c?((n?n+' ':'')+'[toma elegida: '+String.fromCharCode(65+((f.elegidas&&f.elegidas[i])||0))+']'):n}),
       mejoras:items(p).map((_,i)=>(f.mejoras&&f.mejoras[i])||[])};
   }
   dec.guardado=new Date().toISOString(); guardarLocal();
@@ -754,8 +767,22 @@ function pintarAvisoEdicion(){
   el.dataset.viejo = (dias>=2 || (D&&D._respaldo)) ? '1' : '';
 }
 
+function normalizarDia(j){
+  // el Sheet ACUMULA filas: la última versión de cada propuesta manda; y las
+  // candidatas de la pasarela pueden venir dentro de opciones_json (el GAS no
+  // conoce el campo) — se suben a p.candidatas para el Turno
+  const porId={};
+  (j.propuestas||[]).forEach(p=>{
+    if(p.opciones&&!Array.isArray(p.opciones)&&p.opciones.candidatas){
+      p.candidatas=p.opciones.candidatas; p.opciones=[];
+    }
+    porId[p.id]=p;
+  });
+  j.propuestas=Object.values(porId);
+  return j;
+}
 async function cargar(f){
-  try{ D=await traer(f) }
+  try{ D=normalizarDia(await traer(f)) }
   catch(e){
     $('#umbral').innerHTML=`<div class="vacio"><p>No pude abrir la sala.</p>
       <p style="font-size:14px">${esc(e.message)} — vuelve a cargar; si sigue, dímelo y lo reviso.</p></div>`;

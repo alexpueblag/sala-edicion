@@ -9,7 +9,7 @@
  "propuestas": [
   {
    "id": "servilleta-g3-d17990",
-   "titulo": "La Servilleta · correcciones aplicadas (L4, L6, L7 con tus notas)",
+   "titulo": "La Servilleta · pasarela (elige la toma en L4, L6 y L7)",
    "tipo": "laminas",
    "laminas": [
     "laminas/servilleta-g3/L1.png",
@@ -21,7 +21,21 @@
     "laminas/servilleta-g3/L7.png"
    ],
    "video": null,
-   "origen": "rehecha-de servilleta-g2-48820d con tus notas del 5-ago"
+   "origen": "rehecha-de servilleta-g2-48820d con tus notas del 5-ago",
+   "candidatas": {
+    "3": [
+     "laminas/servilleta-g3/L4.png",
+     "laminas/servilleta-g3/L4b.png"
+    ],
+    "5": [
+     "laminas/servilleta-g3/L6.png",
+     "laminas/servilleta-g3/L6b.png"
+    ],
+    "6": [
+     "laminas/servilleta-g3/L7.png",
+     "laminas/servilleta-g3/L7b.png"
+    ]
+   }
   }
  ],
  "parrilla": [
