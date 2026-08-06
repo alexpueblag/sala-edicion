@@ -778,7 +778,13 @@ function normalizarDia(j){
     }
     porId[p.id]=p;
   });
-  j.propuestas=Object.values(porId);
+  // una propuesta rehecha RETIRA a su original: sin esto el editor vuelve a ver
+  // (y a decidir) la tira vieja junto a la corregida
+  const retiradas=new Set();
+  Object.values(porId).forEach(p=>{
+    const m=/rehecha-de (\S+)/.exec(p.origen||''); if(m) retiradas.add(m[1]);
+  });
+  j.propuestas=Object.values(porId).filter(p=>!retiradas.has(p.id));
   return j;
 }
 async function cargar(f){
