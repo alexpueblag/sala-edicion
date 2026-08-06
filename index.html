@@ -235,6 +235,15 @@ function ficha(pid){
 const prop=pid=>(D.propuestas||[]).find(x=>x.id===pid);
 const items=p=>p.laminas&&p.laminas.length?p.laminas:(p.opciones||[]);
 const estado=(pid,i)=>ficha(pid).laminas[i]||null;
+function leerLS(k,def){
+  // lectura blindada: JSON roto o tipo equivocado regresan el default (no truena la sala)
+  try{ const v=JSON.parse(localStorage.getItem(k)||'null');
+    if(v===null) return def;
+    if(Array.isArray(def)&&!Array.isArray(v)) return def;
+    if(!Array.isArray(def)&&typeof def==='object'&&(typeof v!=='object'||Array.isArray(v))) return def;
+    return v;
+  }catch(e){ return def }
+}
 function guardarLocal(){
   try{ localStorage.setItem('sala-'+fecha, JSON.stringify({...dec,tocado:Date.now()})) }catch(e){}
 }
