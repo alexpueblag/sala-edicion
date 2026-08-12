@@ -133,8 +133,9 @@ function doGet(e) {
       if (d.lamina !== '' && d.lamina !== null) {
         var m = String(d.marca || '');
         fi.laminas[Number(d.lamina)] = (m === 'si' || m === 'no') ? m : null;
-      }
-      if (d.nota_propuesta) fi.nota = String(d.nota_propuesta);
+        // la nota POR LAMINA es la instruccion de edicion del editor: no se pierde
+        if (d.nota_propuesta) { fi.notas = fi.notas || []; fi.notas[Number(d.lamina)] = String(d.nota_propuesta); }
+      } else if (d.nota_propuesta) fi.nota = String(d.nota_propuesta);
     }
     if (d.nota_dia) dec.nota_general = String(d.nota_dia);
     if (d.nota_estrategia) dec.nota_estrategia = String(d.nota_estrategia);

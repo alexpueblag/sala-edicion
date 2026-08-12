@@ -8,34 +8,20 @@
  ],
  "propuestas": [
   {
-   "id": "servilleta-g3-d17990",
-   "titulo": "La Servilleta · pasarela (elige la toma en L4, L6 y L7)",
+   "id": "servilleta-g4-62c87d",
+   "titulo": "La Servilleta · tu ronda de hoy aplicada (L2, L3, L5 rehechas · tomas B oficiales)",
    "tipo": "laminas",
    "laminas": [
-    "laminas/servilleta-g3/L1.png",
-    "laminas/servilleta-g3/L2.png",
-    "laminas/servilleta-g3/L3.png",
-    "laminas/servilleta-g3/L4.png",
-    "laminas/servilleta-g3/L5.png",
-    "laminas/servilleta-g3/L6.png",
-    "laminas/servilleta-g3/L7.png"
+    "laminas/servilleta-g4/L1.png",
+    "laminas/servilleta-g4/L2.png",
+    "laminas/servilleta-g4/L3.png",
+    "laminas/servilleta-g4/L4.png",
+    "laminas/servilleta-g4/L5.png",
+    "laminas/servilleta-g4/L6.png",
+    "laminas/servilleta-g4/L7.png"
    ],
    "video": null,
-   "origen": "rehecha-de servilleta-g2-48820d con tus notas del 5-ago",
-   "candidatas": {
-    "3": [
-     "laminas/servilleta-g3/L4.png",
-     "laminas/servilleta-g3/L4b.png"
-    ],
-    "5": [
-     "laminas/servilleta-g3/L6.png",
-     "laminas/servilleta-g3/L6b.png"
-    ],
-    "6": [
-     "laminas/servilleta-g3/L7.png",
-     "laminas/servilleta-g3/L7b.png"
-    ]
-   }
+   "origen": "rehecha-de servilleta-g3 con tus notas del 12-ago: la imagen obedece al texto"
   }
  ],
  "parrilla": [
@@ -101,12 +87,12 @@
   "nota": "El cuento ya está en la cancha (publicado 4-ago). La primera pieza que traiga un lead con liga etiquetada se corona control."
  },
  "retro": {
-  "fecha": "2026-08-05",
+  "fecha": "2026-08-12",
   "aprobadas": 4,
   "tiradas": 3,
   "producidas": 3,
   "rehechas": 3,
-  "nota": "Tus 3 tachadas del 5-ago se rehicieron el mismo día con tus notas. El corte del edificio quedó de 7 niveles (el modelo no sabe contar; el mejor de 4 intentos) — si lo quieres de 6 exactos, táchala y elige la sugerencia precargada."
+  "nota": "Tu regla de hoy quedó de ley: la imagen obedece al texto. L2/L3/L5 rehechas con tus notas textuales; tomas B de L4/L6/L7 ya son las oficiales."
  },
  "produccion": [
   {
@@ -336,34 +322,34 @@
  },
  "sugerencias": [
   [
-   "Más contraste entre la pareja y los vendedores",
-   "Un vendedor menos (solo dos)",
-   "Luz más dorada"
+   "Otra toma de la pareja mirando el terreno",
+   "Luz más de mañana",
+   "Acercar más los rostros"
   ],
   [
-   "Garabato más torpe en la servilleta",
+   "Dibujar los seis locales contables (salieron cuatro)",
    "Servilleta más arrugada",
-   "Más luz de mañana"
+   "Quitar el signo de pesos"
   ],
   [
-   "Diálogo más corto",
-   "Otro par de opiniones contradictorias",
-   "Tonos más cálidos"
+   "Más tensión entre los dos",
+   "Que se vean los dos bocetos más claros",
+   "Cocina más mexicana"
   ],
   [
-   "Vendedores más caricaturescos",
-   "Quitar los papeles de las manos",
-   "Atardecer más intenso"
+   "Otra toma de los vendedores",
+   "Atardecer más dorado",
+   "Menos papeles en las manos"
   ],
   [
-   "Texto más grande",
-   "Otra pareja de perfil",
-   "Cocina en vez de sala"
+   "Calculadora más protagonista",
+   "Que él tome el cuaderno",
+   "Más cálido el abrazo de la escena"
   ],
   [
-   "Quitarle un piso al edificio del corte (que queden 6 justos)",
+   "Quitarle un piso al edificio del corte",
    "Números más visibles (sin ser legibles)",
-   "Quitar la servilleta del lado"
+   "Acercar el corte"
   ],
   [
    "Titular alterno: «La servilleta se queda de recuerdo»",
