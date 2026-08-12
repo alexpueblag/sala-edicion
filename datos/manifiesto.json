@@ -8,20 +8,20 @@
  ],
  "propuestas": [
   {
-   "id": "servilleta-g5-6a097d",
-   "titulo": "La Servilleta · solo L3 cambió (tu corrección de diálogo)",
+   "id": "servilleta-final-444bef",
+   "titulo": "La Servilleta · APROBADA 7/7 — tira final (membrete solo Yodesarrollo)",
    "tipo": "laminas",
    "laminas": [
-    "laminas/servilleta-g5/L1.png",
-    "laminas/servilleta-g5/L2.png",
-    "laminas/servilleta-g5/L3.png",
-    "laminas/servilleta-g5/L4.png",
-    "laminas/servilleta-g5/L5.png",
-    "laminas/servilleta-g5/L6.png",
-    "laminas/servilleta-g5/L7.png"
+    "laminas/servilleta-final/L1.png",
+    "laminas/servilleta-final/L2.png",
+    "laminas/servilleta-final/L3.png",
+    "laminas/servilleta-final/L4.png",
+    "laminas/servilleta-final/L5.png",
+    "laminas/servilleta-final/L6.png",
+    "laminas/servilleta-final/L7.png"
    ],
    "video": null,
-   "origen": "rehecha-de servilleta-g4-62c87d con tu nota de las 7:44: «—Pero ayer dijo que bodegas.»"
+   "origen": "rehecha-de servilleta-g5-6a097d — solo capas: crédito Aurum retirado como pediste; imágenes idénticas a las aprobadas"
   }
  ],
  "parrilla": [
@@ -88,11 +88,11 @@
  },
  "retro": {
   "fecha": "2026-08-12",
-  "aprobadas": 6,
-  "tiradas": 1,
-  "producidas": 1,
-  "rehechas": 1,
-  "nota": "6 de 7 ✓ a la primera. Solo L3 volvió, y era de guion: mismo cuadro, diálogo corregido como lo escribiste."
+  "aprobadas": 7,
+  "tiradas": 0,
+  "producidas": 7,
+  "rehechas": 0,
+  "nota": "7/7 ✓ — La Servilleta aprobada completa. Crédito Aurum fuera de las 7 capas (idénticas en imagen). Siguiente compuerta: VIDEO con las voces del cuento."
  },
  "produccion": [
   {
@@ -313,6 +313,11 @@
    "pedido": "que las correcciones pedidas SÍ se corran: nada de día nuevo sin rehacer lo tachado",
    "estado": "cumplida",
    "evidencia": "5-ago: L4/L6/L7 rehechas con las notas textuales del editor y montadas el mismo día (servilleta-g3)"
+  },
+  {
+   "pedido": "el membrete de Aurum no va en publicidad de Yodesarrollo",
+   "estado": "cumplida",
+   "evidencia": "12-ago: crédito retirado del compositor (queda opcional) y las 7 láminas recompuestas idénticas (diff 0.0 bajo el membrete)"
   }
  ],
  "conexion": {
