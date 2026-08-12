@@ -872,6 +872,19 @@ async function cargar(f){
   pintarUmbral(); pintarMesa(); pintarCola();
 }
 $('#sel').onchange=e=>cargar(e.target.value);
+/* el board se actualiza SOLO: al volver a la pestaña y cada 4 minutos.
+   Nunca a media revisión (turnoVivo) ni con una hoja abierta — no se pisa al editor. */
+let _ultRef=Date.now();
+async function refrescar(){
+  if(typeof turnoVivo!=='undefined'&&turnoVivo) return;
+  if(document.querySelector('.hoja,.cierre')) return;
+  if(Date.now()-_ultRef<30000) return;
+  _ultRef=Date.now();
+  try{ await cargar(fecha) }catch(e){}
+}
+document.addEventListener('visibilitychange',()=>{ if(!document.hidden) refrescar() });
+window.addEventListener('focus',refrescar);
+setInterval(refrescar,240000);
 $('#dlgNo').onclick=()=>$('#dlg').close();
 $('#dlgSi').onclick=()=>{
   const u=$('#gasUrl').value.trim();
