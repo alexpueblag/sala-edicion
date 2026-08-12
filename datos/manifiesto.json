@@ -8,20 +8,20 @@
  ],
  "propuestas": [
   {
-   "id": "servilleta-g4-62c87d",
-   "titulo": "La Servilleta · tu ronda de hoy aplicada (L2, L3, L5 rehechas · tomas B oficiales)",
+   "id": "servilleta-g5-6a097d",
+   "titulo": "La Servilleta · solo L3 cambió (tu corrección de diálogo)",
    "tipo": "laminas",
    "laminas": [
-    "laminas/servilleta-g4/L1.png",
-    "laminas/servilleta-g4/L2.png",
-    "laminas/servilleta-g4/L3.png",
-    "laminas/servilleta-g4/L4.png",
-    "laminas/servilleta-g4/L5.png",
-    "laminas/servilleta-g4/L6.png",
-    "laminas/servilleta-g4/L7.png"
+    "laminas/servilleta-g5/L1.png",
+    "laminas/servilleta-g5/L2.png",
+    "laminas/servilleta-g5/L3.png",
+    "laminas/servilleta-g5/L4.png",
+    "laminas/servilleta-g5/L5.png",
+    "laminas/servilleta-g5/L6.png",
+    "laminas/servilleta-g5/L7.png"
    ],
    "video": null,
-   "origen": "rehecha-de servilleta-g3-d17990 con tus notas del 12-ago: la imagen obedece al texto"
+   "origen": "rehecha-de servilleta-g4-62c87d con tu nota de las 7:44: «—Pero ayer dijo que bodegas.»"
   }
  ],
  "parrilla": [
@@ -88,11 +88,11 @@
  },
  "retro": {
   "fecha": "2026-08-12",
-  "aprobadas": 4,
-  "tiradas": 3,
-  "producidas": 3,
-  "rehechas": 3,
-  "nota": "Tu regla de hoy quedó de ley: la imagen obedece al texto. L2/L3/L5 rehechas con tus notas textuales; tomas B de L4/L6/L7 ya son las oficiales."
+  "aprobadas": 6,
+  "tiradas": 1,
+  "producidas": 1,
+  "rehechas": 1,
+  "nota": "6 de 7 ✓ a la primera. Solo L3 volvió, y era de guion: mismo cuadro, diálogo corregido como lo escribiste."
  },
  "produccion": [
   {
@@ -332,9 +332,9 @@
    "Quitar el signo de pesos"
   ],
   [
-   "Más tensión entre los dos",
-   "Que se vean los dos bocetos más claros",
-   "Cocina más mexicana"
+   "Regresar al diálogo corto («—Ayer dijo bodegas.»)",
+   "Otra toma de la pareja",
+   "Bocetos más visibles en la mesa"
   ],
   [
    "Otra toma de los vendedores",
