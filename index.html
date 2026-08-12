@@ -221,6 +221,17 @@ let D={propuestas:[]}, dec={propuestas:{}}, fecha=null, deshacer=null;
   if(h.get('rol')) localStorage.setItem('sala_rol',h.get('rol'));
   history.replaceState(null,'',location.pathname+location.search);
 })();
+/* si la liga con sesión llega DESPUÉS de cargar (navegación al mismo documento),
+   sembrar y recargar — sin esto el fragmento se ignora en silencio */
+window.addEventListener('hashchange',()=>{
+  const h=new URLSearchParams(location.hash.slice(1));
+  if(!h.get('gas')&&!h.get('clave')) return;
+  if(h.get('gas')) localStorage.setItem('sala_gas',h.get('gas'));
+  if(h.get('clave')) localStorage.setItem('sala_clave',h.get('clave'));
+  if(h.get('rol')) localStorage.setItem('sala_rol',h.get('rol'));
+  history.replaceState(null,'',location.pathname+location.search);
+  location.reload();
+});
 const GAS=()=>localStorage.getItem('sala_gas')||'';
 const CLAVE=()=>localStorage.getItem('sala_clave')||'';
 const ROL=()=>localStorage.getItem('sala_rol')||'editor';
