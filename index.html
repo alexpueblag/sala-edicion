@@ -603,11 +603,52 @@ async function subirCola(){
 }
 function pintarCola(){
   const q=leerLS('sala_cola',[]);
-  let b=$('#colaBtn');
+  let b=$('#colaBox');
   if(!q.length){ if(b)b.remove(); return }
-  if(!b){ b=document.createElement('button'); b.id='colaBtn'; b.className='pieCola';
-    b.onclick=subirCola; document.body.appendChild(b) }
-  b.textContent=`subir lo pendiente (${q.length})`;
+  if(!b){ b=document.createElement('div'); b.id='colaBox'; b.className='pieCola';
+    b.style.display='flex'; b.style.gap='8px'; document.body.appendChild(b) }
+  b.innerHTML='';
+  const s=document.createElement('button'); s.textContent=`subir lo pendiente (${q.length})`; s.onclick=subirCola;
+  const c=document.createElement('button'); c.className='menor'; c.textContent='copiar para el chat'; c.onclick=copiarParaChat;
+  b.append(s,c);
+}
+function textoParaChat(){
+  // el rescate manual: TODO lo que no ha llegado al Sheet, en un prompt que
+  // Claude aplica tal cual (el JSON manda; el resumen es para humanos)
+  const q=leerLS('sala_cola',[]);
+  const envios=q.length?q:[(()=>{ // sin cola: el estado de HOY tal como va
+    const e={accion:'decidir',clave:'',fecha,envio_id:uuid(),quien:ROL(),
+      nota_general:dec.nota_general||'',nota_estrategia:dec.nota_estrategia||'',propuestas:{}};
+    for(const p of D.propuestas||[]){ const f=ficha(p.id);
+      e.propuestas[p.id]={nota:f.nota||'',laminas:items(p).map((_,i)=>f.laminas[i]||'pendiente'),
+        notas:items(p).map((_,i)=>(f.notas&&f.notas[i])||''),
+        mejoras:items(p).map((_,i)=>(f.mejoras&&f.mejoras[i])||[])} }
+    return e })()];
+  let res='Claude: te pego mi revisión de la Sala de Edición que no pudo subir sola. Aplícala tal cual al Sheet (acción decidir / parrilla_decision, idempotente por envio_id) y produce lo que dicte.\n\nResumen:\n';
+  for(const e of envios){
+    if(e.accion==='parrilla_decision'){ res+=`· Andón ${e.dia}: ${e.pieza} → ${e.decision}\n`; continue }
+    for(const[pid,p]of Object.entries(e.propuestas||{})){
+      res+=`· ${e.fecha} · ${pid}: `+(p.laminas||[]).map((m,i)=>`L${i+1} ${m==='si'?'✓':m==='no'?'✕':'—'}`).join(' ')+'\n';
+      (p.notas||[]).forEach((n,i)=>{ if(n) res+=`   L${i+1}: ${n}\n` });
+      if(p.nota) res+=`   nota: ${p.nota}\n`;
+    }
+    if(e.nota_general) res+=`   nota del día: ${e.nota_general}\n`;
+  }
+  res+='\nDatos (el JSON manda):\n'+JSON.stringify(envios.map(e=>({...e,clave:''})))+'\n';
+  return res;
+}
+async function copiarParaChat(){
+  const t=textoParaChat();
+  try{ await navigator.clipboard.writeText(t); toast('Copiado — pégamelo en el chat de Claude',null) }
+  catch(e){
+    const velo=document.createElement('div'); velo.className='velo';
+    const h=document.createElement('div'); h.className='hoja';
+    h.innerHTML='<p>Cópialo tú (el navegador no me dejó):</p>';
+    const ta=document.createElement('textarea'); ta.value=t; ta.style.width='100%'; ta.style.height='140px'; ta.readOnly=true;
+    h.appendChild(ta); document.body.append(velo,h);
+    ta.focus(); ta.select();
+    velo.onclick=()=>{velo.remove();h.remove()};
+  }
 }
 window.addEventListener('online',subirCola);
 
@@ -637,9 +678,11 @@ function mostrarCierre(sello,enCola){
     <div class="reparto">${s} se animan hoy · ${rehacen?`${rehacen} vuelven con tu nota · `:''}${falta?`${falta} vuelven una vez más · `:''}${n} se ${n===1?'tiró':'tiraron'}</div>
     <p class="puente">Mañana a las 7:00: lo que firmaste, hecho láminas.</p>
     <span class="sello">✓ ${esc(sello)}</span>
-    <button class="dorado" style="margin-top:22px" id="cerrarC">La sala queda trabajando</button>`;
+    <button class="dorado" style="margin-top:22px" id="cerrarC">La sala queda trabajando</button>
+    ${enCola?'<button class="menor" style="margin-top:10px" id="copiaC">Copiar mi revisión para el chat de Claude</button>':''}`;
   document.body.appendChild(c);
   $('#cerrarC').onclick=()=>{ c.remove(); pintarUmbral(); pintarMesa() };
+  const cc=$('#copiaC'); if(cc) cc.onclick=copiarParaChat;
 }
 
 /* ═══ LA MESA ═══ */
