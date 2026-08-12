@@ -22,6 +22,28 @@
    ],
    "video": null,
    "origen": "rehecha-de servilleta-g5-6a097d — solo capas: crédito Aurum retirado como pediste; imágenes idénticas a las aprobadas"
+  },
+  {
+   "id": "nombre-eje-3ang",
+   "titulo": "El Nombre No Se Mueve · elige el ángulo del guion",
+   "tipo": "eje",
+   "laminas": [],
+   "video": null,
+   "origen": "parrilla jue 13 · gate g0 (idea) → tú eliges el ángulo y produzco el guion",
+   "opciones": [
+    {
+     "titulo": "El apodo del terreno",
+     "texto": "Todo terreno carga un apodo: «el de la esquina», «el del pleito», «el que no se vende». El nombre se mueve con cada rumor — el dato no. Cierre: el Plan de Potencial le pone nombre propio: lo que el suelo puede."
+    },
+    {
+     "titulo": "La escritura no opina",
+     "texto": "Las opiniones cambian de dueño cada sobremesa; la escritura dice lo mismo desde el día uno. Contraste entre el ruido de la familia y la serenidad del documento. Cierre: cuando hablan los papeles, la discusión se acaba."
+    },
+    {
+     "titulo": "El terreno ya tiene nombre (el tuyo)",
+     "texto": "Mientras todos le ponen nombre a tu terreno —negocio, herencia, problema— se olvida el único nombre real: el tuyo en la escritura. Tú decides, pero decide con el número del suelo. Cierre directo al Plan de Potencial."
+    }
+   ]
   }
  ],
  "parrilla": [
@@ -92,7 +114,7 @@
   "tiradas": 0,
   "producidas": 7,
   "rehechas": 0,
-  "nota": "7/7 ✓ — La Servilleta aprobada completa. Crédito Aurum fuera de las 7 capas (idénticas en imagen). Siguiente compuerta: VIDEO con las voces del cuento."
+  "nota": "La Servilleta: tira FINAL confirmada 7/7. Voces del video entregadas para tu oído. Siguiente pieza en boleta: El Nombre No Se Mueve."
  },
  "produccion": [
   {
