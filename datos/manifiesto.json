@@ -1,6 +1,6 @@
 {
  "_que_es": "Manifiesto de respaldo: el portal lo lee cuando el Sheet aún no está conectado. Cuando el GAS ya está en línea, esta copia queda de plan B.",
- "fecha": "2026-08-12",
+ "fecha": "2026-08-13",
  "dias": [
   "2026-08-01",
   "2026-08-04",
@@ -8,40 +8,20 @@
  ],
  "propuestas": [
   {
-   "id": "servilleta-final-444bef",
-   "titulo": "La Servilleta · APROBADA 7/7 — tira final (membrete solo Yodesarrollo)",
-   "tipo": "laminas",
-   "laminas": [
-    "laminas/servilleta-final/L1.png",
-    "laminas/servilleta-final/L2.png",
-    "laminas/servilleta-final/L3.png",
-    "laminas/servilleta-final/L4.png",
-    "laminas/servilleta-final/L5.png",
-    "laminas/servilleta-final/L6.png",
-    "laminas/servilleta-final/L7.png"
-   ],
-   "video": null,
-   "origen": "rehecha-de servilleta-g5-6a097d — solo capas: crédito Aurum retirado como pediste; imágenes idénticas a las aprobadas"
-  },
-  {
-   "id": "nombre-eje-3ang",
-   "titulo": "El Nombre No Se Mueve · elige el ángulo del guion",
+   "id": "nombre-guion-ab",
+   "titulo": "El Apodo del Terreno · elige el guion (tu ángulo 1)",
    "tipo": "eje",
    "laminas": [],
    "video": null,
-   "origen": "parrilla jue 13 · gate g0 (idea) → tú eliges el ángulo y produzco el guion",
+   "origen": "tu boleta de ayer: ángulo «El apodo del terreno» → dos guiones a elegir",
    "opciones": [
     {
-     "titulo": "El apodo del terreno",
-     "texto": "Todo terreno carga un apodo: «el de la esquina», «el del pleito», «el que no se vende». El nombre se mueve con cada rumor — el dato no. Cierre: el Plan de Potencial le pone nombre propio: lo que el suelo puede."
+     "titulo": "A · La lista de apodos (narrado)",
+     "texto": "L1 «A tu terreno ya le pusieron nombre: “el de la esquina”.» · L2 «También “el del pleito”. Y “el que no se vende”.» · L3 «Cada sobremesa le inventa un apodo nuevo.» · L4 «El apodo se mueve con cada rumor.» · L5 «El dato no se mueve.» · L6 «El suelo tiene su propio nombre: lo que puede.» · L7 «Descúbrelo con su Plan de Potencial.»"
     },
     {
-     "titulo": "La escritura no opina",
-     "texto": "Las opiniones cambian de dueño cada sobremesa; la escritura dice lo mismo desde el día uno. Contraste entre el ruido de la familia y la serenidad del documento. Cierre: cuando hablan los papeles, la discusión se acaba."
-    },
-    {
-     "titulo": "El terreno ya tiene nombre (el tuyo)",
-     "texto": "Mientras todos le ponen nombre a tu terreno —negocio, herencia, problema— se olvida el único nombre real: el tuyo en la escritura. Tú decides, pero decide con el número del suelo. Cierre directo al Plan de Potencial."
+     "titulo": "B · La sobremesa (dialogado, como La Servilleta)",
+     "texto": "L1 «“El de la esquina”, le dicen.» · L2 «—¿Cuál terreno? —El del pleito.» · L3 «—¿El que no se vende? —Ese mero.» · L4 «Un terreno, cinco apodos.» · L5 «Los apodos los pone la gente.» · L6 «El nombre lo dice el suelo.» · L7 «Pídele su Plan de Potencial.»"
     }
    ]
   }
@@ -112,9 +92,9 @@
   "fecha": "2026-08-12",
   "aprobadas": 7,
   "tiradas": 0,
-  "producidas": 7,
-  "rehechas": 0,
-  "nota": "La Servilleta: tira FINAL confirmada 7/7. Voces del video entregadas para tu oído. Siguiente pieza en boleta: El Nombre No Se Mueve."
+  "producidas": 8,
+  "rehechas": 1,
+  "nota": "Cosechado tu 8:50: L5 ya dice «¿Y si mejor calculamos en verdad su potencial?» (lámina y voz regrabadas) y tu ángulo del jueves es «El apodo del terreno» — elige el guion."
  },
  "produccion": [
   {
