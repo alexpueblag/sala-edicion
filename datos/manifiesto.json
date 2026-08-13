@@ -8,22 +8,20 @@
  ],
  "propuestas": [
   {
-   "id": "nombre-guion-ab",
-   "titulo": "El Apodo del Terreno · elige el guion (tu ángulo 1)",
-   "tipo": "eje",
-   "laminas": [],
+   "id": "apodo-g1-c5fa4c",
+   "titulo": "El Apodo del Terreno · las 7 láminas (tu guion A)",
+   "tipo": "laminas",
+   "laminas": [
+    "laminas/apodo-g1/L1.png",
+    "laminas/apodo-g1/L2.png",
+    "laminas/apodo-g1/L3.png",
+    "laminas/apodo-g1/L4.png",
+    "laminas/apodo-g1/L5.png",
+    "laminas/apodo-g1/L6.png",
+    "laminas/apodo-g1/L7.png"
+   ],
    "video": null,
-   "origen": "tu boleta de ayer: ángulo «El apodo del terreno» → dos guiones a elegir",
-   "opciones": [
-    {
-     "titulo": "A · La lista de apodos (narrado)",
-     "texto": "L1 «A tu terreno ya le pusieron nombre: “el de la esquina”.» · L2 «También “el del pleito”. Y “el que no se vende”.» · L3 «Cada sobremesa le inventa un apodo nuevo.» · L4 «El apodo se mueve con cada rumor.» · L5 «El dato no se mueve.» · L6 «El suelo tiene su propio nombre: lo que puede.» · L7 «Descúbrelo con su Plan de Potencial.»"
-    },
-    {
-     "titulo": "B · La sobremesa (dialogado, como La Servilleta)",
-     "texto": "L1 «“El de la esquina”, le dicen.» · L2 «—¿Cuál terreno? —El del pleito.» · L3 «—¿El que no se vende? —Ese mero.» · L4 «Un terreno, cinco apodos.» · L5 «Los apodos los pone la gente.» · L6 «El nombre lo dice el suelo.» · L7 «Pídele su Plan de Potencial.»"
-    }
-   ]
+   "origen": "tu boleta de hoy 6:23: guion A «La lista de apodos» → producido el mismo día"
   }
  ],
  "parrilla": [
@@ -89,12 +87,12 @@
   "nota": "El cuento ya está en la cancha (publicado 4-ago). La primera pieza que traiga un lead con liga etiquetada se corona control."
  },
  "retro": {
-  "fecha": "2026-08-12",
-  "aprobadas": 7,
+  "fecha": "2026-08-13",
+  "aprobadas": 0,
   "tiradas": 0,
-  "producidas": 8,
-  "rehechas": 1,
-  "nota": "Cosechado tu 8:50: L5 ya dice «¿Y si mejor calculamos en verdad su potencial?» (lámina y voz regrabadas) y tu ángulo del jueves es «El apodo del terreno» — elige el guion."
+  "producidas": 7,
+  "rehechas": 0,
+  "nota": "Tu guion A de las 6:23 se volvió tira el mismo día: 7 láminas nuevas del Apodo del Terreno esperando tu pasada."
  },
  "produccion": [
   {
@@ -329,39 +327,39 @@
  },
  "sugerencias": [
   [
-   "Otra toma de la pareja mirando el terreno",
-   "Luz más de mañana",
-   "Acercar más los rostros"
+   "Que el terreno vacío se vea claramente en la esquina",
+   "Vecinos más grandes de edad",
+   "Más dorado"
   ],
   [
-   "Dibujar los seis locales contables (salieron cuatro)",
-   "Servilleta más arrugada",
-   "Quitar el signo de pesos"
+   "Quitar un sombrero (que no parezcan gemelos)",
+   "El lote del pleito visible atrás",
+   "Gesto más de desacuerdo"
   ],
   [
-   "Regresar al diálogo corto («—Ayer dijo bodegas.»)",
-   "Otra toma de la pareja",
-   "Bocetos más visibles en la mesa"
+   "La foto del terreno más protagonista en la mesa",
+   "Menos platos, más sobremesa",
+   "Una carcajada franca"
   ],
   [
-   "Otra toma de los vendedores",
-   "Atardecer más dorado",
-   "Menos papeles en las manos"
+   "Más notas pegadas alrededor de la foto",
+   "Otra hora del día",
+   "Gesto más escéptico"
   ],
   [
-   "Calculadora más protagonista",
-   "Que él tome el cuaderno",
-   "Más cálido el abrazo de la escena"
+   "Acercar la hoja del dato",
+   "Menos sombra",
+   "Quitar la pluma"
   ],
   [
-   "Quitarle un piso al edificio del corte",
-   "Números más visibles (sin ser legibles)",
-   "Acercar el corte"
+   "El tripié más cerca",
+   "Terreno más claramente baldío",
+   "Amanecer más intenso"
   ],
   [
-   "Titular alterno: «La servilleta se queda de recuerdo»",
-   "CTA más directo",
-   "Skyline más presente"
+   "Pareja un poco mayor (55+)",
+   "Skyline más presente",
+   "Titular alterno: «Pídele su Plan de Potencial»"
   ]
  ]
 }
