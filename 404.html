@@ -39,8 +39,20 @@ window.YOD_DESTINO = function(pathname, search, hash){
   return BASE + "/" + resto + (search || "") + (hash || "");
 };
 (function(){
+  // Puente de sesión (2-sep-2026): las llaves de la Sala guardadas en ESTE origen
+  // viajan en el fragmento al origen nuevo, para que la liga no se pierda en la mudanza.
+  function yodPuente(hash){
+    try{
+      if (/(^|[#&])clave=/.test(hash || "")) return hash || "";
+      var g = localStorage.getItem("sala_gas"), c = localStorage.getItem("sala_clave"), r = localStorage.getItem("sala_rol");
+      if (!g || !c) return hash || "";
+      var extra = "gas=" + encodeURIComponent(g) + "&clave=" + encodeURIComponent(c) + (r ? "&rol=" + encodeURIComponent(r) : "");
+      var h = (hash || "").replace(/^#/, "");
+      return "#" + (h ? h + "&" : "") + extra;
+    }catch(e){ return hash || ""; }
+  }
   try {
-    location.replace(window.YOD_DESTINO(location.pathname, location.search, location.hash));
+    location.replace(window.YOD_DESTINO(location.pathname, location.search, yodPuente(location.hash)));
   } catch (e) {
     location.replace("https://yodesarrollomx.github.io/sala-edicion/");
   }
