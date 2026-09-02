@@ -9,7 +9,19 @@
 <meta http-equiv="refresh" content="0;url=https://yodesarrollomx.github.io/sala-edicion/">
 <script>
 (function(){
-  var destino = "https://yodesarrollomx.github.io/sala-edicion/" + location.search + location.hash;
+  // Puente de sesión (2-sep-2026): las llaves de la Sala guardadas en ESTE origen
+  // viajan en el fragmento al origen nuevo, para que la liga no se pierda en la mudanza.
+  function yodPuente(hash){
+    try{
+      if (/(^|[#&])clave=/.test(hash || "")) return hash || "";
+      var g = localStorage.getItem("sala_gas"), c = localStorage.getItem("sala_clave"), r = localStorage.getItem("sala_rol");
+      if (!g || !c) return hash || "";
+      var extra = "gas=" + encodeURIComponent(g) + "&clave=" + encodeURIComponent(c) + (r ? "&rol=" + encodeURIComponent(r) : "");
+      var h = (hash || "").replace(/^#/, "");
+      return "#" + (h ? h + "&" : "") + extra;
+    }catch(e){ return hash || ""; }
+  }
+  var destino = "https://yodesarrollomx.github.io/sala-edicion/" + location.search + yodPuente(location.hash);
   location.replace(destino);
 })();
 </script>
